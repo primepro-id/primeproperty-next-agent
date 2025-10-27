@@ -19,7 +19,6 @@ const PriceTag = ({ property }: PriceTagProps) => {
         <span>{formatToCurrencyUnit(property.price, property.currency)}</span>
         {property.purchase_status === PurchaseStatus.ForRent &&
           property.rent_time && <span>{RENT_TIME[property.rent_time]}</span>}
-        <span>per Bulan</span>
       </div>
       <span
         className={cn(
