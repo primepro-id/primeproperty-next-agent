@@ -5,10 +5,11 @@ export const createTokenCookie = async (
   accessToken: string,
   refreshToken: string,
 ) => {
-  const cookieAccessToken = cookies().set("accessToken", accessToken, {
+  const cookie = await cookies();
+  const cookieAccessToken = cookie.set("accessToken", accessToken, {
     maxAge: 60 * 60 * 24,
   }); // 1 day
-  const cookieRefreshToken = cookies().set("refreshToken", refreshToken, {
+  const cookieRefreshToken = cookie.set("refreshToken", refreshToken, {
     maxAge: 60 * 60 * 24,
   });
   return {

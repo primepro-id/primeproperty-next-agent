@@ -3,5 +3,6 @@
 import { cookies } from "next/headers";
 
 export const getAccessToken = async () => {
-  return cookies().get("accessToken")?.value as string;
+  const cookie = await cookies();
+  return cookie.get("accessToken")?.value as string;
 };
