@@ -1,19 +1,17 @@
-import { redirect } from "next/navigation";
 import { DynamicProperty } from "./_components";
 
+export const revalidate = 0;
 type DynamicPropertyPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-const DynamicPropertyPage = ({ params }: DynamicPropertyPageProps) => {
-  if (!params.id) {
-    redirect("/properties");
-  }
+const DynamicPropertyPage = async ({ params }: DynamicPropertyPageProps) => {
+  const { id } = await params;
   return (
     <div className="p-4">
-      <DynamicProperty id={params.id} />
+      <DynamicProperty id={id} />
     </div>
   );
 };
