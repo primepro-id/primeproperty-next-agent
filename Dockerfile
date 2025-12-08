@@ -38,7 +38,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone .
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.mjs .
-COPY --from=builder /app/sentry.client.config.ts .
+COPY --from=builder /app/instrumentation-client.ts .
 COPY --from=builder /app/sentry.edge.config.ts .
 COPY --from=builder /app/sentry.server.config.ts .
 
