@@ -37,6 +37,8 @@ import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { CurrencyUnit } from "@/lib/api/properties/type";
 import { DescriptionSeoInput } from "../../_components/form-input/description-seo";
 import { PriceDownPaymentInput } from "../../_components/form-input/price-down-payment";
+import { env } from "@/lib/env";
+import { useRouter } from "next/navigation";
 
 const SeoForm = () => {
   return (
@@ -87,6 +89,7 @@ const DetailForm = () => {
 };
 
 export const NewPropertyForm = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { facilities, images, setStore, loadingText } = useStore(
     useShallow((state) => ({
@@ -145,10 +148,12 @@ export const NewPropertyForm = () => {
       }
 
       queryClient.invalidateQueries({ queryKey: ["properties"] });
-      toast.success("Property created successfully, refreshing...");
+      toast.success("Property created successfully, redirecting...");
       setTimeout(() => {
-        window.location.reload();
-      }, 1500);
+        router.push(
+          `${env.NEXT_PUBLIC_CLIENT_URL}/properties/${property?.data?.id}`,
+        );
+      }, 1000);
       return;
     } catch (error) {
       console.error(error);
