@@ -1,5 +1,5 @@
 export const REGENCIES = {
-  31: [
+  1: [
     {
       id: "3101",
       nama: "Kepulauan Seribu",
@@ -7,7 +7,7 @@ export const REGENCIES = {
       longitude: 106.5789559022,
     },
     {
-      id: "3171",
+      id: "171",
       nama: "Jakarta Pusat",
       latitude: -6.1812569413,
       longitude: 106.8347847742,
@@ -37,7 +37,7 @@ export const REGENCIES = {
       longitude: 106.9006320648,
     },
   ],
-  34: [
+  2: [
     {
       id: "3401",
       nama: "Kulon Progo",
@@ -69,7 +69,7 @@ export const REGENCIES = {
       longitude: 110.374357935,
     },
   ],
-  51: [
+  3: [
     {
       id: "5101",
       nama: "JEMBRANA",
@@ -125,7 +125,7 @@ export const REGENCIES = {
       longitude: 115.2208162921,
     },
   ],
-  32: [
+  4: [
     {
       id: "3201",
       nama: "BOGOR",
@@ -289,7 +289,7 @@ export const REGENCIES = {
       longitude: 108.5672046175,
     },
   ],
-  33: [
+  5: [
     {
       id: "3301",
       nama: "CILACAP",
@@ -501,7 +501,7 @@ export const REGENCIES = {
       longitude: 109.1157470874,
     },
   ],
-  35: [
+  6: [
     {
       id: "3501",
       nama: "PACITAN",
@@ -729,6 +729,32 @@ export const REGENCIES = {
       nama: "KOTA BATU",
       latitude: -7.8346737976,
       longitude: 112.5337555741,
+    },
+  ],
+  7: [
+    {
+      id: "71",
+      nama: "SERANG",
+    },
+    {
+      id: "72",
+      nama: "BSD",
+    },
+    {
+      id: "73",
+      nama: "SERPONG",
+    },
+    {
+      id: "74",
+      nama: "TANGERANG",
+    },
+    {
+      id: "75",
+      nama: "TANGERANG SELATAN",
+    },
+    {
+      id: "76",
+      nama: "BINTARO",
     },
   ],
 };

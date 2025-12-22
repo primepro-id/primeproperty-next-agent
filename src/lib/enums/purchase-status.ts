@@ -1,7 +1,6 @@
 export enum PurchaseStatus {
   ForSale = "ForSale",
   ForRent = "ForRent",
-  ForSaleOrRent = "ForSaleOrRent",
 }
 
 export const PURCHASE_STATUS = [
