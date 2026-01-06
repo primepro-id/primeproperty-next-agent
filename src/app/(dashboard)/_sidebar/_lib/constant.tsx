@@ -1,4 +1,11 @@
-import { LuHandshake, LuHouse, LuStar, LuUser, LuUsers } from "react-icons/lu";
+import {
+  LuHammer,
+  LuHandshake,
+  LuHouse,
+  LuStar,
+  LuUser,
+  LuUsers,
+} from "react-icons/lu";
 
 export const ADMIN_SIDEBAR_MENU = [
   {
@@ -20,6 +27,11 @@ export const ADMIN_SIDEBAR_MENU = [
     title: "AGENTS",
     url: "/agents",
     icon: <LuUsers />,
+  },
+  {
+    title: "DEVELOPERS",
+    url: "/developers",
+    icon: <LuHammer />,
   },
   {
     title: "ACCOUNT",
