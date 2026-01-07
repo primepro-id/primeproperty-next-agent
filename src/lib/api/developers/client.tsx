@@ -29,3 +29,9 @@ export const updateDeveloper = async (
     body: JSON.stringify({ logo_path, name }),
   });
 };
+
+export const deleteDeveloper = async (id: string) => {
+  return await fetchApi<Developer>(`${basePath}/${id}`, {
+    method: "DELETE",
+  });
+};

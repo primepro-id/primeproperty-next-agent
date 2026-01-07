@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import Link from "next/link";
 import { LuPen } from "react-icons/lu";
+import { DeleteDialog } from "./delete-dialog";
 
 export const TABLE_COLUMNS: ColumnDef<Developer>[] = [
   {
@@ -53,6 +54,7 @@ export const TABLE_COLUMNS: ColumnDef<Developer>[] = [
         >
           <LuPen />
         </Link>
+        <DeleteDialog row={row} />
       </div>
     ),
   },
