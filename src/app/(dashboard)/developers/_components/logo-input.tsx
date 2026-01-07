@@ -55,7 +55,6 @@ export const LogoInput = ({ defaultUrl }: LogoInputProps) => {
         className="hidden"
         onChange={handleImageChange}
         name="logo"
-        required
       />
     </div>
   );

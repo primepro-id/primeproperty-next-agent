@@ -20,7 +20,7 @@ export const createDeveloper = async (logo_path: string, name: string) => {
 };
 
 export const updateDeveloper = async (
-  id: number,
+  id: string,
   logo_path: string | null,
   name: string | null,
 ) => {
