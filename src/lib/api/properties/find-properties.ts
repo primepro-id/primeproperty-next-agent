@@ -11,6 +11,7 @@ export type FindPropertyQuery = {
   is_popular?: string;
   sold_status?: SoldStatus;
   limit?: string;
+  developer_id?: string;
 };
 
 export type PropertyWithAgent = [Property, Agent];
@@ -40,6 +41,9 @@ export const findProperties = async (query?: FindPropertyQuery) => {
     query?.sold_status === SoldStatus.Sold
   ) {
     path += `&sold_status=${query.sold_status}`;
+  }
+  if (query?.developer_id && query?.developer_id !== "0") {
+    path += `&developer_id=${query?.developer_id}`;
   }
   return await fetchApi<JsonFindApiResponse<PropertyWithAgent>>(path);
 };
