@@ -54,7 +54,8 @@ export const DeleteDialog = ({ property, role }: DeleteDialogProps) => {
   return (
     <Dialog>
       <DialogTrigger
-        className={cn(buttonVariants({ variant: "destructive", size: "icon" }))}
+        className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
+        title="Delete"
       >
         <LuX />
       </DialogTrigger>

@@ -29,6 +29,7 @@ export type PropertyFormData = {
   rent_time?: string;
   description_seo?: string;
   price_down_payment?: string;
+  developer_id?: string;
 };
 
 export const converPropertyFormDataToApiData = (
@@ -72,5 +73,9 @@ export const converPropertyFormDataToApiData = (
     price_down_payment: formData.price_down_payment
       ? parseInt(formData.price_down_payment)
       : 0,
+    developer_id:
+      formData.developer_id && formData.developer_id !== "0"
+        ? Number(formData.developer_id)
+        : null,
   };
 };

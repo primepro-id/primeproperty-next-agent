@@ -123,26 +123,22 @@ export const getTableColumns = (
       const text = `
         *${row.original[0].title}*\nLokasi: ${row.original[0].street},${row.original[0].regency}\n${row.original[0].description}\n\nContact:\n${row.original[1].instagram ? `https://instagram.com/${row.original[1].instagram}` : ""}\nWhatsapp:\nwa.me/62${row.original[1].phone_number}\nLink:\n${env.NEXT_PUBLIC_CLIENT_URL}/properties/${row.original[0].id}`;
       return (
-        <div className="flex flex-col gap-1 justify-start">
-          <div className="flex gap-1 items-center">
-            <Link
-              href={`/properties/${row.original[0].id}`}
-              className={cn(buttonVariants({ size: "icon" }))}
-            >
-              <LuPencil />
-            </Link>
-            <DeleteDialog property={row.original[0]} role={role} />
-          </div>
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/properties/${row.original[0].id}`}
+            className={cn(buttonVariants({ size: "icon", variant: "outline" }))}
+            title="Edit"
+          >
+            <LuPencil />
+          </Link>
+          <DeleteDialog property={row.original[0]} role={role} />
           <Link
             href={encodeURI(whatsappUrl + text)}
             target="_blank"
-            className={cn(
-              buttonVariants({ size: "sm" }),
-              "bg-green-500 hover:bg-green-400",
-            )}
+            className={cn(buttonVariants({ size: "icon", variant: "outline" }))}
+            title="Share"
           >
             <MdWhatsapp />
-            Share
           </Link>
         </div>
       );

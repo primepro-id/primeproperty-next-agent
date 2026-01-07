@@ -13,6 +13,7 @@ import {
   FacilitiesSelect,
   ImagesUpload,
   CurrencySelect,
+  DeveloperSelect,
 } from "../../_components";
 import { GmapIframeInput } from "../../_components/form-input/gmap_iframe_input";
 import { LocationInput } from "../../_components/form-input/location-input";
@@ -35,10 +36,11 @@ import { RentTimeSelect } from "../../_components/form-input/rent-time-select";
 import { useState } from "react";
 import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { CurrencyUnit } from "@/lib/api/properties/type";
-import { DescriptionSeoInput } from "../../_components/form-input/description-seo";
 import { PriceDownPaymentInput } from "../../_components/form-input/price-down-payment";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
+import { useAgentTokenData } from "@/hooks/agents/use-agent-token-data";
+import { AgentRole } from "@/lib/api/agents/type";
 
 const SeoForm = () => {
   return (
@@ -46,7 +48,6 @@ const SeoForm = () => {
       <h3 className="text-lg">SEO</h3>
       <TitleInput />
       <DescriptionInput />
-      <DescriptionSeoInput />
       <div className="grid md:grid-cols-3 gap-6 md:gap-4">
         <LocationInput />
         <StreetInput />
@@ -75,6 +76,7 @@ const PriceForm = () => {
 };
 
 const DetailForm = () => {
+  const agent = useAgentTokenData();
   return (
     <div className="grid gap-4 md:flex md:flex-col">
       <h3 className="text-lg">PROPERTY DETAILS</h3>
@@ -83,6 +85,7 @@ const DetailForm = () => {
         <BuildingConditionSelect />
         <BuildingCertificateSelect />
         <BuildingFurnitureSelect />
+        {agent.data?.role === AgentRole.Admin && <DeveloperSelect />}
       </div>
     </div>
   );

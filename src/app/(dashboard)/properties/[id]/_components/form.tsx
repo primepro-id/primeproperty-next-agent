@@ -6,6 +6,7 @@ import {
   BuildingTypeSelect,
   CurrencySelect,
   DescriptionInput,
+  DeveloperSelect,
   FacilitiesSelect,
   ImagesUpload,
   LocationInput,
@@ -38,7 +39,6 @@ import { useState } from "react";
 import { CurrencyUnit } from "@/lib/api/properties/type";
 import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { RentTimeSelect } from "../../_components/form-input/rent-time-select";
-import { DescriptionSeoInput } from "../../_components/form-input/description-seo";
 import { PriceDownPaymentInput } from "../../_components/form-input/price-down-payment";
 
 type EditPropertyFormProps = {
@@ -52,9 +52,6 @@ const SeoForm = ({ propertyWithAgent }: EditPropertyFormProps) => {
       <h3 className="text-lg">SEO</h3>
       <TitleInput defaultValue={propertyWithAgent[0].title} />
       <DescriptionInput defaultValue={propertyWithAgent[0].description} />
-      <DescriptionSeoInput
-        defaultValue={propertyWithAgent[0].description_seo}
-      />
       <div className="grid md:grid-cols-3 gap-4">
         <LocationInput
           defaultProvinceValue={propertyWithAgent[0].province}
@@ -121,6 +118,11 @@ const DetailForm = ({ propertyWithAgent, userRole }: EditPropertyFormProps) => {
         {userRole === AgentRole.Admin && (
           <SoldChannelSelect
             defaultValue={propertyWithAgent[0].sold_channel ?? undefined}
+          />
+        )}
+        {userRole === AgentRole.Admin && (
+          <DeveloperSelect
+            defaultValue={String(propertyWithAgent[0].developer_id ?? 0)}
           />
         )}
       </div>

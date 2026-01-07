@@ -61,6 +61,7 @@ export type Property = {
   rent_time?: RentTimeUnit;
   description_seo?: string | null;
   price_down_payment?: number | null;
+  developer_id: number | null;
 };
 
 export type PropertyMeasurements = {
