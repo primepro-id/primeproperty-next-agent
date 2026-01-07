@@ -12,11 +12,11 @@ export const TABLE_COLUMNS: ColumnDef<Developer>[] = [
     accessorKey: "picture_url",
     header: "LOGO",
     cell: ({ row }) => {
-      const picturePath = row.original.picture_url;
-      const profilePicUrl = env.NEXT_PUBLIC_S3_ENDPOINT + picturePath;
+      const picturePath = row.original.logo_path;
+      const pictureUrl = env.NEXT_PUBLIC_S3_ENDPOINT + picturePath;
       return (
         <Image
-          src={profilePicUrl}
+          src={pictureUrl}
           alt={row.original.name}
           width={400}
           height={400}
@@ -33,13 +33,13 @@ export const TABLE_COLUMNS: ColumnDef<Developer>[] = [
     accessorKey: "created_at",
     header: "CREATED AT",
     cell: ({ row }) =>
-      new Date(row.original.created_at).toLocaleDateString("id-ID"),
+      new Date(row.original.created_at).toLocaleString("id-ID"),
   },
   {
     accessorKey: "updated_at",
     header: "UPDATED AT",
     cell: ({ row }) =>
-      new Date(row.original.updated_at).toLocaleDateString("id-ID"),
+      new Date(row.original.updated_at).toLocaleString("id-ID"),
   },
   {
     accessorKey: "slug",

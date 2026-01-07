@@ -1,14 +1,15 @@
+"use client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { LuHammer } from "react-icons/lu";
 
-type PictureInputProps = {
+type LogoInputProps = {
   defaultUrl?: string;
 };
 
-export const PictureInput = ({ defaultUrl }: PictureInputProps) => {
-  const [profileImage, setProfileImage] = useState<string>(defaultUrl ?? "");
+export const LogoInput = ({ defaultUrl }: LogoInputProps) => {
+  const [logoUrl, setLogoUrl] = useState<string>(defaultUrl ?? "");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +17,7 @@ export const PictureInput = ({ defaultUrl }: PictureInputProps) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setProfileImage(reader.result as string);
+        setLogoUrl(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -31,10 +32,10 @@ export const PictureInput = ({ defaultUrl }: PictureInputProps) => {
           "border border-dashed w-full h-48 text-muted-foreground/50 hover:bg-muted flex flex-col items-center justify-center rounded gap-2",
         )}
       >
-        {profileImage ? (
+        {logoUrl ? (
           <Image
-            src={profileImage}
-            alt="Profile Image"
+            src={logoUrl}
+            alt="Logo"
             className="w-full h-48 object-fill border rounded bg-background"
             width={400}
             height={400}
@@ -53,7 +54,7 @@ export const PictureInput = ({ defaultUrl }: PictureInputProps) => {
         accept="image/*"
         className="hidden"
         onChange={handleImageChange}
-        name="picture"
+        name="logo"
         required
       />
     </div>

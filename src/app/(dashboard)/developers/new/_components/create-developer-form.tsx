@@ -1,79 +1,73 @@
 "use client";
 import { Label } from "@/components/ui/label";
-import { PictureInput } from "./picture-input";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LuLoader } from "react-icons/lu";
-import { useStore } from "../_stores/use-store";
 import { toast } from "react-toastify";
 import { uploadPicture } from "@/lib/s3";
-import { createDeveloper, findDeveloperBySlug } from "@/lib/api/developers";
+import { createDeveloper } from "@/lib/api/developers";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useTransition } from "react";
+import { LogoInput } from "../../_components/logo-input";
+import { useRouter } from "next/navigation";
 
-export const DeveloperForm = () => {
-  const { name, setStore, loadingText, resetStore } = useStore();
+export const CreateDeveloperForm = () => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const handleAction = async (formData: FormData) => {
-    const newName = formData.get("name") as string;
-    const picture = formData.get("picture") as File;
+    const name = formData.get("name") as string;
+    const logo = formData.get("logo") as File;
 
     try {
-      if (!newName) {
+      if (!name) {
         toast.error("Please enter a name");
         return;
       }
 
-      if (picture.size === 0) {
-        toast.error("Please upload a picture");
-        return;
-      }
-
-      const slug = newName.trim().toLowerCase().replaceAll(" ", "-");
-      const previousDev = await findDeveloperBySlug(slug);
-      if (previousDev.data?.id) {
-        toast.error("Developer with the same name already exists");
-        return;
-      }
-
       let uploadedPicturePath = null;
-      if (picture.size > 0) {
-        setStore("loadingText", "Uploading picture...");
+      if (logo.size > 0) {
         uploadedPicturePath = await uploadPicture(
-          newName.toLowerCase().replaceAll(" ", "-"),
+          name.toLowerCase().replaceAll(" ", "-"),
           formData,
+          "logo",
         );
+      } else {
+        toast.error("Please upload a logo");
+        return;
       }
 
       if (!uploadedPicturePath) {
-        toast.error("Failed to upload picture");
+        toast.error("Failed to upload logo, please reupload");
         return;
       }
 
-      const developer = await createDeveloper(
-        uploadedPicturePath,
-        newName.trim(),
-      );
+      const developer = await createDeveloper(uploadedPicturePath, name.trim());
       if (developer.status === 201) {
         toast.success("Developer added successfully");
-        resetStore();
+        router.push("/developers");
       } else if (developer.status === 400) {
         toast.error(developer.message);
-        return;
       }
+      return;
     } catch (error) {
       console.error(error);
       toast.error("Server error, please try again later");
-    } finally {
-      setStore("loadingText", "");
+      return;
     }
   };
 
   return (
-    <form className="flex flex-col gap-4 max-w-lg" action={handleAction}>
+    <form
+      className="flex flex-col gap-4 max-w-lg"
+      action={(formData) =>
+        startTransition(async () => await handleAction(formData))
+      }
+    >
       <div className="flex flex-col gap-2">
         <Label htmlFor="profile_picture">Logo (recommended .png)</Label>
-        <PictureInput />
+        <LogoInput />
       </div>
 
       <div className="flex flex-col gap-2">
@@ -84,8 +78,6 @@ export const DeveloperForm = () => {
           name="name"
           placeholder="Padepokan Merpati Putih"
           required
-          value={name}
-          onChange={(e) => setStore("name", e.target.value)}
         />
       </div>
 
@@ -98,13 +90,13 @@ export const DeveloperForm = () => {
         </Link>
         <Button
           type="submit"
-          disabled={loadingText !== ""}
+          disabled={isPending}
           className="flex-1 w-[33.3%] max-w-[50%] ml-auto"
         >
-          {loadingText !== "" ? (
+          {isPending ? (
             <span className="flex items-center gap-2">
               <LuLoader className="animate-spin" />
-              {loadingText}
+              Processing
             </span>
           ) : (
             "ADD"
