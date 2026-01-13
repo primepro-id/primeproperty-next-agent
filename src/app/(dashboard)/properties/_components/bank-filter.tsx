@@ -6,7 +6,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { findManyBanksOptions } from "@/hooks/banks";
-import { findManyDevelopersOptions } from "@/hooks/developers";
 import { useQuery } from "@tanstack/react-query";
 
 type BankFilterProps = {

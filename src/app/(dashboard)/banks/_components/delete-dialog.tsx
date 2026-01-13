@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { deleteBank } from "@/lib/api/banks";
-import { deleteDeveloper, Developer } from "@/lib/api/developers";
+import { Developer } from "@/lib/api/developers";
 import { cn } from "@/lib/utils";
 import { Row } from "@tanstack/react-table";
 import { LuTrash } from "react-icons/lu";
