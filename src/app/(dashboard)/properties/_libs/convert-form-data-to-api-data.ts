@@ -30,6 +30,7 @@ export type PropertyFormData = {
   description_seo?: string;
   price_down_payment?: string;
   developer_id?: string;
+  bank_id?: string;
 };
 
 export const converPropertyFormDataToApiData = (
@@ -76,6 +77,10 @@ export const converPropertyFormDataToApiData = (
     developer_id:
       formData.developer_id && formData.developer_id !== "0"
         ? Number(formData.developer_id)
+        : null,
+    bank_id:
+      formData.bank_id && formData.bank_id !== "0"
+        ? Number(formData.bank_id)
         : null,
   };
 };

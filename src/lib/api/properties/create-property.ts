@@ -33,6 +33,7 @@ export type CreateUpdatePropertyPayload = {
   description_seo?: string | null;
   price_down_payment?: number | null;
   developer_id?: number | null;
+  bank_id?: number | null;
 };
 
 export const createProperty = async (payload: CreateUpdatePropertyPayload) => {

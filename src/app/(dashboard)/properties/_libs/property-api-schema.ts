@@ -16,4 +16,5 @@ export const PropertyApiSchema = z.object({
   building_condition: z.string().min(1, "Kondisi properti tidak boleh kosong"),
   building_furniture_capacity: z.string().nullable(),
   developer_id: z.number().optional().nullable(),
+  bank_id: z.number().optional().nullable(),
 });

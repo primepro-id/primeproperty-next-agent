@@ -14,6 +14,7 @@ import {
   ImagesUpload,
   CurrencySelect,
   DeveloperSelect,
+  BankSelect,
 } from "../../_components";
 import { GmapIframeInput } from "../../_components/form-input/gmap_iframe_input";
 import { LocationInput } from "../../_components/form-input/location-input";
@@ -85,7 +86,13 @@ const DetailForm = () => {
         <BuildingConditionSelect />
         <BuildingCertificateSelect />
         <BuildingFurnitureSelect />
-        {agent.data?.role === AgentRole.Admin && <DeveloperSelect />}
+        {agent.data?.role === AgentRole.Admin && (
+          <>
+            <DeveloperSelect />
+
+            <BankSelect />
+          </>
+        )}
       </div>
     </div>
   );
