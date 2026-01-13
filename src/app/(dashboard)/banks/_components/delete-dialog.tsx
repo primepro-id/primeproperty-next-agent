@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { deleteBank } from "@/lib/api/banks";
 import { deleteDeveloper, Developer } from "@/lib/api/developers";
 import { cn } from "@/lib/utils";
 import { Row } from "@tanstack/react-table";
@@ -21,10 +22,10 @@ type DeleteDialogProps = {
 export const DeleteDialog = ({ row }: DeleteDialogProps) => {
   const onDeleteClick = async () => {
     try {
-      const dev = await deleteDeveloper(String(row.original.id));
+      const dev = await deleteBank(String(row.original.id));
 
       if (dev.data?.id) {
-        toast.success("Developer deleted successfully");
+        toast.success("Bank deleted successfully");
         setTimeout(() => {
           window.location.reload();
         }, 500);
@@ -45,7 +46,7 @@ export const DeleteDialog = ({ row }: DeleteDialogProps) => {
       <DialogContent className="flex flex-col gap-4">
         <div>
           <DialogTitle className="font-bold ">
-            Delete developer &quot;{row.original.name}&quot;?
+            Delete bank &quot;{row.original.name}&quot;?
           </DialogTitle>
           <DialogDescription>
             This will also delete its entire propery listing.

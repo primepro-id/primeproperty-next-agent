@@ -1,4 +1,5 @@
 import {
+  LuBanknote,
   LuHammer,
   LuHandshake,
   LuHouse,
@@ -32,6 +33,11 @@ export const ADMIN_SIDEBAR_MENU = [
     title: "DEVELOPERS",
     url: "/developers",
     icon: <LuHammer />,
+  },
+  {
+    title: "BANKS",
+    url: "/banks",
+    icon: <LuBanknote />,
   },
   {
     title: "ACCOUNT",
