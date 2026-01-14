@@ -1,5 +1,6 @@
 import { PropertyWithAgent } from "@/lib/api/properties/find-properties";
 import {
+  BankSelect,
   BuildingCertificateSelect,
   BuildingConditionSelect,
   BuildingFurnitureSelect,
@@ -121,9 +122,14 @@ const DetailForm = ({ propertyWithAgent, userRole }: EditPropertyFormProps) => {
           />
         )}
         {userRole === AgentRole.Admin && (
-          <DeveloperSelect
-            defaultValue={String(propertyWithAgent[0].developer_id ?? 0)}
-          />
+          <>
+            <DeveloperSelect
+              defaultValue={String(propertyWithAgent[0].developer_id ?? 0)}
+            />
+            <BankSelect
+              defaultValue={String(propertyWithAgent[0].bank_id ?? 0)}
+            />
+          </>
         )}
       </div>
     </div>

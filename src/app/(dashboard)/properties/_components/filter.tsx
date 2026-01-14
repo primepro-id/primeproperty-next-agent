@@ -14,6 +14,7 @@ import { SoldFilter } from "./sold-filter";
 import { useAgentTokenData } from "@/hooks/agents/use-agent-token-data";
 import { AgentRole } from "@/lib/api/agents/type";
 import { DeveloperFilter } from "./developer-filter";
+import { BankFilter } from "./bank-filter";
 
 type PropertyFilterProps = {
   searchParams: FindPropertyQuery;
@@ -51,12 +52,24 @@ export const PropertyFilter = ({ searchParams }: PropertyFilterProps) => {
     newParams.set("page", "1");
     router.replace(`/properties?${newParams.toString()}`);
   };
+  const onBankIdChange = (id: string) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("bank_id", id === "0" ? "" : id);
+    newParams.set("page", "1");
+    router.replace(`/properties?${newParams.toString()}`);
+  };
 
+  const isAdmin = agent.data?.role === AgentRole.Admin;
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="flex items-center gap-2">
         <SearchFilter searchParams={searchParams} />
-        <div className="hidden md:grid grid-cols-4 gap-2">
+        <div
+          className={cn(
+            "hidden md:grid gap-2",
+            isAdmin ? "grid-cols-5" : "grid-cols-3",
+          )}
+        >
           <ProvinceSelect
             isFilter
             onProvinceChange={onProvinceChange}
@@ -72,11 +85,17 @@ export const PropertyFilter = ({ searchParams }: PropertyFilterProps) => {
             onValueChange={onSoldStatusChange}
             defaultValue={searchParams.sold_status}
           />
-          {agent.data?.role === AgentRole.Admin && (
-            <DeveloperFilter
-              onValueChange={onDeveloperIdChange}
-              defaultValue={searchParams.developer_id ?? "0"}
-            />
+          {isAdmin && (
+            <>
+              <DeveloperFilter
+                onValueChange={onDeveloperIdChange}
+                defaultValue={searchParams.developer_id ?? "0"}
+              />
+              <BankFilter
+                onValueChange={onBankIdChange}
+                defaultValue={searchParams.bank_id ?? "0"}
+              />
+            </>
           )}
         </div>
       </div>
