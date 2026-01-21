@@ -68,7 +68,7 @@ export const DynamicProperty = async ({ propertyId }: DynamicPropertyProps) => {
   const relatedAreaLd = createRelatedAreaSchema(property.data[0]);
   return (
     <>
-      <div className="relative">
+      <div className="relative container mx-auto lg:px-2">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
