@@ -3,43 +3,136 @@ import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { env } from "@/lib/env";
 import { MetadataRoute } from "next";
 
+const cleanUrl = (url: string) =>
+  String(url).replaceAll("&", "&amp;").replaceAll(" ", "+");
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
   const filters = [
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "province",
+      secondValue: "jakarta",
+    },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "regency",
+      secondValue: "jakarta selatan",
+    },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "regency",
+      secondValue: "jakarta pusat",
+    },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "kuningan",
+    },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "kemang",
+    },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "kebayoran baru",
+    },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "pondok indah",
+    },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "lebak bulus",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "regency",
+      secondValue: "jakarta selatan",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "regency",
+      secondValue: "jakarta pusat",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "kuningan",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "lebak bulus",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "kemang",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "pondok indah",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "kebayoran baru",
+    },
     {
       key: "province",
       value: "jawa barat",
     },
     {
-      key: "building_type",
+      key: "buiding_type",
       value: "rumah",
     },
     {
-      key: "building_type",
+      key: "buiding_type",
       value: "apartemen",
     },
     {
-      key: "building_type",
+      key: "buiding_type",
       value: "tanah",
     },
     {
-      key: "building_type",
+      key: "buiding_type",
       value: "gedung",
     },
     {
-      key: "building_type",
+      key: "buiding_type",
       value: "ruko",
     },
     {
-      key: "building_type",
+      key: "buiding_type",
       value: "ruang usaha",
     },
     {
-      key: "building_type",
+      key: "buiding_type",
       value: "rumah kantor",
     },
     {
-      key: "building_type",
+      key: "buiding_type",
       value: "space kantor",
     },
     {
@@ -79,8 +172,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       value: PurchaseStatus.ForRent,
     },
   ];
-  const promises = await Promise.allSettled(
-    filters.map(async ({ key, value }) => {
+  const promises = await Promise.allSettled([
+    ...filters.map(async ({ key, value }) => {
       const response = await findProperties({
         [key]: value,
         page: String(1),
@@ -88,7 +181,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
       return response;
     }),
-  );
+  ]);
 
   const sitemaps = [];
   for (let i = 0; i < filters.length; i++) {
@@ -99,12 +192,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         filterPromise.value?.data?.total_pages > 0
       ) {
         for (let j = 1; j <= filterPromise.value.data.total_pages; j++) {
-          const filterValue = filters[i].value.replaceAll(" ", "+");
-          const url =
-            env.NEXT_PUBLIC_HOST_URL +
-            `/properties?${filters[i].key}=${filterValue}&amp;page=${j}`;
+          const url = new URL(env.NEXT_PUBLIC_HOST_URL + `/properties`);
+          const filterValue = filters[i].value;
+          url.searchParams.set(filters[i].key, filterValue);
+
+          if (filters[i].secondKey && filters[i].secondValue) {
+            const secondFilterValue = String(filters[i].secondValue);
+            url.searchParams.set(
+              String(filters[i]?.secondKey),
+              secondFilterValue,
+            );
+          }
+
+          url.searchParams.set("page", String(j));
           sitemaps.push({
-            url,
+            url: cleanUrl(url.toString()),
             lastModified: new Date(),
           });
         }
