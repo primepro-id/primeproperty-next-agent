@@ -24,9 +24,9 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
               className: "uppercase justify-between",
             }),
           )}
-          title={`${property.building_type} ${property.purchase_status === "ForSale" ? "dijual" : "disewa"} di ${property.province.replaceAll(" ", "-")}`}
-          aria-label={`${property.building_type} ${property.purchase_status === "ForSale" ? "dijual" : "disewa"} di ${property.province.replaceAll(" ", "-")}`}
-          href={`/properties/${property.purchase_status === "ForSale" ? "dijual" : "disewa"}/${property.building_type}/${property.province.replaceAll(" ", "-")}`}
+          title={`Properti di ${property.province}`}
+          aria-label={`Properti di ${property.province}`}
+          href={`/properties?buiding_type=${property.building_type.replaceAll(" ", "+")}&province=${property.province.replaceAll(" ", "+")}&page=1`}
         >
           <span>
             {property.building_type} di {property.province}
@@ -40,9 +40,9 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
               className: "uppercase justify-between",
             }),
           )}
-          title={`${property.building_type} ${property.purchase_status === "ForSale" ? "dijual" : "disewa"} di ${property.regency.replaceAll(" ", "-")}, ${property.province.replaceAll(" ", "-")}`}
-          aria-label={`${property.building_type} ${property.purchase_status === "ForSale" ? "dijual" : "disewa"} di ${property.regency.replaceAll(" ", "-")}, ${property.province.replaceAll(" ", "-")}`}
-          href={`/properties/${property.purchase_status === "ForSale" ? "dijual" : "disewa"}/${property.building_type}/${property.province.replaceAll(" ", "-")}/${property.regency.replaceAll(" ", "-")}`}
+          title={`Properti di ${property.regency}`}
+          aria-label={`Properti di ${property.regency}`}
+          href={`/properties?buiding_type=${property.building_type.replaceAll(" ", "+")}&regency=${property.regency.replaceAll(" ", "+")}&page=1`}
         >
           <span>
             {property.building_type} di {property.regency}
@@ -56,9 +56,9 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
               className: "uppercase justify-between",
             }),
           )}
-          title={`${property.building_type} ${property.purchase_status === "ForSale" ? "dijual" : "disewa"} di ${property.street.replaceAll(" ", "-")}, ${property.regency.replaceAll(" ", "-")}`}
-          aria-label={`${property.building_type} ${property.purchase_status === "ForSale" ? "dijual" : "disewa"} di ${property.street.replaceAll(" ", "-")}, ${property.regency.replaceAll(" ", "-")}`}
-          href={`/properties/${property.purchase_status === "ForSale" ? "dijual" : "disewa"}/${property.building_type}/${property.province.replaceAll(" ", "-")}/${property.regency.replaceAll(" ", "-")}/${property.street.replaceAll(" ", "-")}`}
+          title={`Properti di ${property.street}`}
+          aria-label={`Properti di ${property.street}`}
+          href={`/properties?buiding_type=${property.building_type.replaceAll(" ", "+")}&street=${property.street.replaceAll(" ", "+")}&page=1`}
         >
           <span>
             {property.building_type} di {property.street}
