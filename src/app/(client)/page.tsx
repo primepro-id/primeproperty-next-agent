@@ -11,6 +11,9 @@ import { Metadata } from "next";
 import { createMetadata } from "@/lib/metadata";
 import { createWebsiteSchema } from "@/lib/schema";
 import Script from "next/script";
+import { PrimeProperties } from "./properties/_components/prime-properties";
+import { findManyDevelopers } from "@/lib/api/developers";
+import { env } from "@/lib/env";
 
 const seo = {
   title: "Jual Beli Rumah Apartemen | PRIMEPRO INDONESIA",
@@ -135,16 +138,43 @@ const VideoThumbnail = () => {
   );
 };
 
+const Developers = async () => {
+  const developers = await findManyDevelopers();
+  if (developers.data && developers.data?.data.length > 0) {
+    return (
+      <div className="flex flex-col gap-4">
+        <h3 className="text-3xl font-bold ">Rekan Kami</h3>
+        <div className="grid grid-cols-3 lg:grid-cols-5 gap-4">
+          {developers.data.data.map((dev) => (
+            <Image
+              key={dev.name}
+              src={env.NEXT_PUBLIC_S3_ENDPOINT + dev.logo_path}
+              alt={dev.name}
+              width={576}
+              height={576}
+              className="w-full h-20 lg:h-40 border p-2 object-contain aspect-square rounded "
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return <></>;
+};
+
 const HomePage = () => {
   return (
     <>
       <div className="flex flex-col gap-8 ">
         <div className="container mx-auto flex flex-col gap-8 p-4 sm:px-0">
           <Hero />
-          <div className="lg:px-4">
+          <div className="lg:px-4 flex flex-col gap-16">
             <PopularProperties />
+            <PrimeProperties />
           </div>
           <Partners />
+          <Developers />
           <Faq defaultTab="PRIMEPRO" />
         </div>
         <VideoThumbnail />

@@ -4,6 +4,7 @@ import { JsonFindApiResponse } from "../types/find-response";
 import { Property } from "./type";
 import { BuildingType } from "@/lib/enums/building-type";
 import { Agent } from "./find-property-by-agent";
+import { Developer } from "../developers";
 
 export enum FindPropertySort {
   LowestPrice = "LowestPrice",
@@ -20,10 +21,11 @@ export type FindPropertyQuery = {
   buiding_type?: BuildingType | string;
   sort?: FindPropertySort | string;
   is_popular?: "true" | "false";
+  is_prime?: "true" | "false";
   limit?: string;
 };
 
-export type PropertyWithAgent = [Property, Agent];
+export type PropertyWithAgent = [Property, Agent, Developer | null];
 
 export const findProperties = async (query?: FindPropertyQuery) => {
   let path = "/properties?";
@@ -53,6 +55,9 @@ export const findProperties = async (query?: FindPropertyQuery) => {
   }
   if (query?.is_popular) {
     path += `&is_popular=${query.is_popular}`;
+  }
+  if (query?.is_prime) {
+    path += `&is_prime=${query.is_prime}`;
   }
   return await fetchApi<JsonFindApiResponse<PropertyWithAgent>>(path);
 };
