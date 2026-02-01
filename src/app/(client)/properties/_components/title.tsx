@@ -53,7 +53,7 @@ const Title = ({
             searchParams.purchase_status as PurchaseStatus
           ].toLowerCase()
         : ""}{" "}
-      {"di"}{" "}
+      <p className="lowercase">di</p>
       {createLocation(
         searchParams.province,
         searchParams.regency,

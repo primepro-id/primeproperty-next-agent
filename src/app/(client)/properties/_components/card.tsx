@@ -56,9 +56,10 @@ const PropertyContent = ({ propertyWithAgent }: PropertyCardProps) => {
       <h2 className="text-xl group-hover:underline line-clamp-2">
         {propertyWithAgent[0].title}
       </h2>
-      <p className="text-sm font-semibold text-muted-foreground group-hover:underline capitalize">
-        {propertyWithAgent[0].street} - {propertyWithAgent[0].regency}
-      </p>
+      <h3 className="text-sm font-semibold text-muted-foreground group-hover:underline capitalize flex gap-1">
+        {propertyWithAgent[0].building_type} <p className="lowercase">di</p>
+        {propertyWithAgent[0].street}, {propertyWithAgent[0].regency}
+      </h3>
       <p className="text-xs line-clamp-2 mb-1">
         {propertyWithAgent[0].description_seo
           ? propertyWithAgent[0].description_seo
@@ -83,6 +84,17 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
         href={`/properties/${propertyWithAgent[0].id}`}
         className="relative group"
       >
+        {propertyWithAgent?.[2] && (
+          <div className="bg-white absolute top-1 left-1 z-10 rounded p-1 opacity-50">
+            <Image
+              width={100}
+              height={100}
+              src={env.NEXT_PUBLIC_S3_ENDPOINT + propertyWithAgent[2].logo_path}
+              alt={propertyWithAgent[2].name}
+              className="w-full object-cover "
+            />
+          </div>
+        )}
         <WatermarkImage
           watermarkProps={{
             fontSize: 20,
