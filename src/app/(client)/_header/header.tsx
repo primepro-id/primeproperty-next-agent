@@ -1,14 +1,26 @@
 "use client";
+import Link from "next/link";
 import { LogoLink } from "./logo-link";
-import { Navigation } from "./navigation";
 import { HeaderSheet } from "./sheet";
+import { Navigation } from "./navigation";
 import ThemeButton from "./theme-button";
 
 export const Header = () => {
   return (
-    <div className="flex items-center justify-between container mx-auto p-2">
-      <LogoLink />
-      <HeaderSheet />
+    <div className="flex items-center justify-between container mx-auto p-2 border-b border-primary ">
+      <div className="flex items-center justify-between lg:gap-2 w-full lg:w-fit">
+        <LogoLink />
+
+        <Link
+          href="/"
+          title="PrimePro Indonesia"
+          aria-label="PrimePro Indonesia"
+          className="text-xl lg:text-2xl lg:text-primary font-bold"
+        >
+          PRIMEPRO INDONESIA
+        </Link>
+        <HeaderSheet />
+      </div>
       <div className="hidden lg:flex items-center gap-2">
         <Navigation />
         <ThemeButton />
