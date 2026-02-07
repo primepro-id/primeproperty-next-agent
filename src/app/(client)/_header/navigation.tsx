@@ -9,137 +9,144 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import {
-  FOR_RENT_PROPERTIES,
-  FOR_SALE_PROPERTIES,
   PROPERTIES_TYPES,
+  FOOTER_PROVINCE,
+  FOOTER_STREET_HOME,
 } from "./constant";
-import { LuChevronRight } from "react-icons/lu";
+import Link from "next/link";
+import { IoIosArrowForward } from "react-icons/io";
+
+const PropertyNavigation = () => {
+  return (
+    <div className="w-[600px] p-4 border border-primary rounded flex flex-col gap-4">
+      <h2 className="text-lg font-bold">PROPERTI</h2>
+      <div className="grid grid-cols-3 gap-4 ">
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold">TIPE</h3>
+          <ul className="flex flex-col gap-2">
+            {PROPERTIES_TYPES.map((tipe) => (
+              <li key={tipe.key}>
+                <Link
+                  title={tipe.key}
+                  href={tipe.value}
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "w-full justify-start border border-primary hover:font-semibold",
+                  )}
+                >
+                  {tipe.key.toUpperCase()}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold">PROVINSI</h3>
+          <ul className="flex flex-col gap-2">
+            {FOOTER_PROVINCE.map((tipe) => (
+              <li key={tipe.key} className="w-full">
+                <Link
+                  title={tipe.key}
+                  href={tipe.value}
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "w-full justify-start border border-primary hover:font-semibold",
+                  )}
+                >
+                  {tipe.key.toUpperCase()}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold">JALAN</h3>
+          <ul className="flex flex-col gap-2">
+            {FOOTER_STREET_HOME.map((tipe) => (
+              <li key={tipe.key} className="w-full">
+                <Link
+                  title={tipe.key}
+                  href={tipe.value}
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "w-full justify-start border border-primary hover:font-semibold",
+                  )}
+                >
+                  {tipe.key.toUpperCase()}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-muted-foreground">
+          PRIMEPRO INDONESIA {new Date().getFullYear()}
+        </span>
+        <Link
+          href="/properties"
+          className={cn(buttonVariants({ variant: "outline" }))}
+          title="LIHAT SEMUA"
+        >
+          LIHAT SEMUA
+          <IoIosArrowForward />
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export const Navigation = () => {
+  const MENU = [
+    {
+      title: "AGEN",
+      href: "/agents",
+    },
+    {
+      title: "BLOG",
+      href: "/blog",
+    },
+    {
+      title: "KARIR",
+      href: "/jobs",
+    },
+    {
+      title: "FRANCHISE",
+      href: "/franchise",
+    },
+    {
+      title: "TENTANG",
+      href: "/about",
+    },
+  ];
   return (
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className="gap-1">
         <NavigationMenuItem>
-          <NavigationMenuLink
-            href="/properties"
-            title="Semua Properti"
-            className={cn(buttonVariants({ variant: "link" }))}
-          >
-            Properti
-          </NavigationMenuLink>
+          <NavigationMenuTrigger className="font-sans">
+            PROPERTI
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <PropertyNavigation />
+          </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenu>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Dijual</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <div className="w-fit flex flex-col">
-                {FOR_SALE_PROPERTIES.map((prop) => (
-                  <NavigationMenuLink
-                    key={prop.value}
-                    href={prop.value}
-                    className={cn(
-                      buttonVariants({ size: "lg", variant: "ghost" }),
-                      "justify-between w-full gap-4 px-3 rounded-none first:rounded-t last:rounded-b",
-                    )}
-                  >
-                    {prop.key}
-                    <LuChevronRight />
-                  </NavigationMenuLink>
-                ))}
-              </div>
-            </NavigationMenuContent>
+        {MENU.map((item) => (
+          <NavigationMenuItem key={item.title}>
+            <NavigationMenuLink asChild>
+              <Link
+                href={item.href}
+                title={item.title}
+                className={cn(
+                  buttonVariants({ variant: "ghost" }),
+                  "font-sans",
+                )}
+              >
+                {item.title}
+              </Link>
+            </NavigationMenuLink>
           </NavigationMenuItem>
-        </NavigationMenu>
-        <NavigationMenu>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Disewa</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <div className="w-fit flex flex-col">
-                {FOR_RENT_PROPERTIES.map((prop) => (
-                  <NavigationMenuLink
-                    key={prop.value}
-                    href={prop.value}
-                    className={cn(
-                      buttonVariants({ size: "lg", variant: "ghost" }),
-                      "justify-between w-full gap-4 px-3 rounded-none first:rounded-t last:rounded-b",
-                    )}
-                  >
-                    {prop.key}
-                    <LuChevronRight />
-                  </NavigationMenuLink>
-                ))}
-              </div>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </NavigationMenu>
-        <NavigationMenu>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Tipe</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <div className="w-fit flex flex-col">
-                {PROPERTIES_TYPES.map((prop) => (
-                  <NavigationMenuLink
-                    key={prop.value}
-                    href={prop.value}
-                    className={cn(
-                      buttonVariants({ size: "lg", variant: "ghost" }),
-                      "justify-between w-full gap-4 px-3 rounded-none first:rounded-t last:rounded-b",
-                    )}
-                  >
-                    {prop.key}
-                    <LuChevronRight />
-                  </NavigationMenuLink>
-                ))}
-              </div>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </NavigationMenu>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            href="/agents"
-            title="Agen Properti"
-            className={cn(buttonVariants({ variant: "link" }))}
-          >
-            Agen
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            href="/blog"
-            title="Tips dan Trik Properti"
-            className={cn(buttonVariants({ variant: "link" }))}
-          >
-            Blog
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            href="/jobs"
-            title="Lowongan Kerja PrimePro Indonesia"
-            className={cn(buttonVariants({ variant: "link" }))}
-          >
-            Lowongan
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            href="/franchise"
-            title="Franchise Properti PrimePro"
-            className={cn(buttonVariants({ variant: "link" }))}
-          >
-            Franchise
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            href="/about"
-            title="Tentang PrimePro"
-            className={cn(buttonVariants({ variant: "link" }))}
-          >
-            Tentang
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+        ))}
       </NavigationMenuList>
     </NavigationMenu>
   );
