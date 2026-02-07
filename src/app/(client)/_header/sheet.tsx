@@ -12,178 +12,51 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { LogoLink } from "./logo-link";
-import { LuChevronRight, LuX } from "react-icons/lu";
 import { useRef } from "react";
-import { TbMenuDeep } from "react-icons/tb";
+import { IoIosArrowForward, IoIosArrowUp, IoIosMenu } from "react-icons/io";
 import Link from "next/link";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  FOR_RENT_PROPERTIES,
-  FOR_SALE_PROPERTIES,
-  PROPERTIES_TYPES,
-} from "./constant";
 import ThemeButton from "./theme-button";
 
-type SheetMenuProps = {
-  onClick: () => void;
-};
-
-const SheetMenu = ({ onClick }: SheetMenuProps) => {
+const SheetMenu = () => {
+  const MENU = [
+    {
+      title: "Properti",
+      href: "/properties",
+    },
+    {
+      title: "Agen",
+      href: "/agents",
+    },
+    {
+      title: "Blog",
+      href: "/blog",
+    },
+    {
+      title: "Lowongan",
+      href: "/jobs",
+    },
+    {
+      title: "Franchise",
+      href: "/franchise",
+    },
+    {
+      title: "Tentang",
+      href: "/about",
+    },
+  ];
   return (
-    <div className="flex flex-col">
-      <Link
-        className={cn(buttonVariants({ variant: "link" }), "justify-between")}
-        href="/"
-        onClick={onClick}
-        title="PrimePro Indonesia Home"
-      >
-        Beranda
-        <LuChevronRight />
-      </Link>
-      <Link
-        className={cn(buttonVariants({ variant: "link" }), "justify-between")}
-        href="/properties"
-        onClick={onClick}
-        title="PrimePro Indonesia Properties"
-      >
-        Properti (Semua)
-        <LuChevronRight />
-      </Link>
-
-      <Accordion type="single" collapsible>
-        <AccordionItem value="dijual" className="border-b-0">
-          <AccordionTrigger
-            className={cn(
-              buttonVariants({ variant: "link" }),
-              "justify-between",
-            )}
-          >
-            Properti (Dijual)
-          </AccordionTrigger>
-          <AccordionContent className="pl-2">
-            {FOR_SALE_PROPERTIES.map((property) => (
-              <Link
-                key={property.key}
-                className={cn(
-                  buttonVariants({ variant: "link" }),
-                  "justify-between ",
-                )}
-                href={property.value}
-                onClick={onClick}
-                title={property.key}
-              >
-                {property.key}
-                <LuChevronRight />
-              </Link>
-            ))}
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="disewa" className="border-b-0">
-          <AccordionTrigger
-            className={cn(
-              buttonVariants({ variant: "link" }),
-              "justify-between",
-            )}
-          >
-            Properti (Disewa)
-          </AccordionTrigger>
-          <AccordionContent className="pl-2">
-            {FOR_RENT_PROPERTIES.map((property) => (
-              <Link
-                key={property.key}
-                className={cn(
-                  buttonVariants({ variant: "link" }),
-                  "justify-between ",
-                )}
-                href={property.value}
-                onClick={onClick}
-                title={property.key}
-              >
-                {property.key}
-                <LuChevronRight />
-              </Link>
-            ))}
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="jenis" className="border-b-0">
-          <AccordionTrigger
-            className={cn(
-              buttonVariants({ variant: "link" }),
-              "justify-between",
-            )}
-          >
-            Tipe Properti
-          </AccordionTrigger>
-          <AccordionContent className="pl-2">
-            {PROPERTIES_TYPES.map((property) => (
-              <Link
-                key={property.key}
-                className={cn(
-                  buttonVariants({ variant: "link" }),
-                  "w-full justify-start",
-                )}
-                href={property.value}
-                onClick={onClick}
-                title={property.key}
-              >
-                {property.key}
-                <LuChevronRight />
-              </Link>
-            ))}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
-      <Link
-        className={cn(buttonVariants({ variant: "link" }), "justify-between")}
-        href="/agents"
-        onClick={onClick}
-        title="PrimePro Indonesia Agents"
-      >
-        Agen
-        <LuChevronRight />
-      </Link>
-      <Link
-        className={cn(buttonVariants({ variant: "link" }), "justify-between")}
-        href="/blog"
-        onClick={onClick}
-        title="PrimePro Indonesia Blog"
-      >
-        Blog
-        <LuChevronRight />
-      </Link>
-      <Link
-        className={cn(buttonVariants({ variant: "link" }), "justify-between")}
-        href="/jobs"
-        onClick={onClick}
-        title="Lowongan di PrimePro Indonesia"
-      >
-        Lowongan
-        <LuChevronRight />
-      </Link>
-      <Link
-        className={cn(buttonVariants({ variant: "link" }), "justify-between")}
-        href="/franchise"
-        onClick={onClick}
-        title="PrimePro Indonesia Franchise"
-      >
-        Franchise
-        <LuChevronRight />
-      </Link>
-      <Link
-        className={cn(buttonVariants({ variant: "link" }), "justify-between")}
-        href="/about"
-        onClick={onClick}
-        title="PrimePro Indonesia Franchise"
-      >
-        Tentang
-        <LuChevronRight />
-      </Link>
+    <div className="flex flex-col border-y border-primary ">
+      {MENU.map((item) => (
+        <Link
+          key={item.title}
+          href={item.href}
+          title={item.title}
+          className="p-4 flex items-center justify-between hover:bg-primary"
+        >
+          {item.title}
+          <IoIosArrowForward />
+        </Link>
+      ))}
     </div>
   );
 };
@@ -197,33 +70,27 @@ export const HeaderSheet = () => {
     <Sheet>
       <SheetTrigger
         aria-label="PrimePro Menu"
-        title="PrimePro Menu"
-        className={cn(
-          buttonVariants({ variant: "outline", size: "icon" }),
-          "lg:hidden",
-        )}
+        title="Menu"
+        className={cn(buttonVariants({ size: "icon" }), "lg:hidden")}
       >
-        <TbMenuDeep />
+        <IoIosMenu />
       </SheetTrigger>
-      <SheetContent className="p-2" side="top">
-        <SheetHeader className="flex-row items-center w-full justify-between space-y-0">
-          <SheetTitle className="font-normal">
-            <LogoLink onClick={closeSheet} />
-          </SheetTitle>
+      <SheetContent className="p-0" side="top">
+        <SheetHeader className="flex-row items-center w-full justify-between space-y-0 p-2">
+          <LogoLink onClickAction={closeSheet} />
+          <SheetTitle className="text-xl">PRIMEPRO INDONESIA</SheetTitle>
           <SheetClose
             ref={closeRef}
-            className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
+            className={cn(buttonVariants({ size: "icon" }))}
           >
-            <LuX />
+            <IoIosArrowUp />
           </SheetClose>
         </SheetHeader>
-        <SheetDescription className="my-2 pb-2 border-b border-b-primary">
-          Menu
-        </SheetDescription>
-        <SheetMenu onClick={closeSheet} />
-        <SheetFooter className="mt-4 flex-row items-center justify-between w-full px-1">
+        <SheetDescription />
+        <SheetMenu />
+        <SheetFooter className="flex-row items-center justify-between w-full p-2">
           <span className="text-xs text-muted-foreground">
-            PrimePro Indonesia {new Date().getFullYear()}
+            PRIMEPRO INDONESIA {new Date().getFullYear()}
           </span>
           <ThemeButton />
         </SheetFooter>
