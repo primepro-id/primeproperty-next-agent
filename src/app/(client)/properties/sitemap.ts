@@ -20,8 +20,6 @@ const generateDynamicPropertySitemaps = async () => {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
   const dynamicPropertySitemaps = await generateDynamicPropertySitemaps();
-  const sitePaths = await findPropertiesSitePaths();
-  console.log(sitePaths);
 
   return [
     {
