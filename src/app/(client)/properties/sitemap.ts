@@ -1,4 +1,5 @@
 import { findProperties } from "@/lib/api/properties/find-properties";
+import { findPropertiesSitePaths } from "@/lib/api/properties/find-properties-site-paths";
 import { env } from "@/lib/env";
 import { MetadataRoute } from "next";
 
@@ -19,6 +20,8 @@ const generateDynamicPropertySitemaps = async () => {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
   const dynamicPropertySitemaps = await generateDynamicPropertySitemaps();
+  const sitePaths = await findPropertiesSitePaths();
+  console.log(sitePaths);
 
   return [
     {

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Properties } from "../../_components";
-import { parseFilterParams } from "../_lib/parse-filter-params";
+import { parseFilterParams } from "../../_lib/parse-filter-params";
 
 type PageProps = {
   params: Promise<{ params: string[] }>;
