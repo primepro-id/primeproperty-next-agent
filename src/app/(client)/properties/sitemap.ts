@@ -1,5 +1,4 @@
 import { findProperties } from "@/lib/api/properties/find-properties";
-import { findPropertiesSitePaths } from "@/lib/api/properties/find-properties-site-paths";
 import { env } from "@/lib/env";
 import { MetadataRoute } from "next";
 
