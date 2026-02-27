@@ -1,12 +1,27 @@
 import { findProperties } from "@/lib/api/properties/find-properties";
+import { findPropertiesSitePaths } from "@/lib/api/properties/find-properties-site-paths";
 import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { env } from "@/lib/env";
 import { MetadataRoute } from "next";
 
+const generatePropertySitePathSitemaps = async () => {
+  const properties = await findPropertiesSitePaths();
+  if (Array.isArray(properties?.data)) {
+    return properties.data?.map((path) => {
+      return {
+        url: env.NEXT_PUBLIC_HOST_URL + `/properties/filter${path}`,
+        lastModified: new Date(),
+      };
+    }) as MetadataRoute.Sitemap;
+  }
+
+  return [];
+};
+
 const cleanUrl = (url: string) =>
   String(url).replaceAll("&", "&amp;").replaceAll(" ", "+");
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+async function generatePropertyFiltersSitemaps() {
   // Google's limit is 50,000 URLs per sitemap
   const filters = [
     {
@@ -219,4 +234,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   return [];
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Google's limit is 50,000 URLs per sitemap
+  const sitePathsSitemaps = await generatePropertySitePathSitemaps();
+  const filterSitemaps = await generatePropertyFiltersSitemaps();
+
+  return [...sitePathsSitemaps, ...filterSitemaps];
 }
