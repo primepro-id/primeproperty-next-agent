@@ -1,7 +1,6 @@
 import {
   generateDescription,
   generateTitle,
-  pathParamsToSearchParams,
 } from "@/app/(client)/properties/_lib/create-properties-metadata";
 import {
   FindPropertyQuery,
@@ -12,11 +11,7 @@ import { env } from "@/lib/env";
 export const createPropertiesSchema = (
   properties: PropertyWithAgent[],
   searchParams: FindPropertyQuery,
-  paramsPath?: string[],
 ) => {
-  if (paramsPath) {
-    searchParams = pathParamsToSearchParams(paramsPath);
-  }
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
