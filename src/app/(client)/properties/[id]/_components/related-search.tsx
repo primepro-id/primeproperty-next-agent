@@ -1,5 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Property } from "@/lib/api/properties/type";
+import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { LuChevronRight } from "react-icons/lu";
@@ -10,6 +11,13 @@ type RelatedSearchProps = {
 };
 
 export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
+  const purchaseStatus =
+    property.purchase_status === PurchaseStatus.ForRent ? "dijual" : "disewa";
+  const buildingType = property.building_type.replaceAll(" ", "-");
+  const province = property.province.replaceAll(" ", "-");
+  const regency = property.regency.replaceAll(" ", "-");
+  const street = property.street.replaceAll(" ", "-");
+
   return (
     <div id="related" className={cn("rounded border h-fit", className)}>
       <h3 className="text-lg font-bold border-b py-2 px-4">
@@ -26,7 +34,7 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
           )}
           title={`Properti di ${property.province}`}
           aria-label={`Properti di ${property.province}`}
-          href={`/properties?buiding_type=${property.building_type.replaceAll(" ", "+")}&province=${property.province.replaceAll(" ", "+")}&page=1`}
+          href={`/properties/filter/${purchaseStatus}/${buildingType}/${province}`}
         >
           <span>
             {property.building_type} di {property.province}
@@ -42,7 +50,7 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
           )}
           title={`Properti di ${property.regency}`}
           aria-label={`Properti di ${property.regency}`}
-          href={`/properties?buiding_type=${property.building_type.replaceAll(" ", "+")}&regency=${property.regency.replaceAll(" ", "+")}&page=1`}
+          href={`/properties/filter/${purchaseStatus}/${buildingType}/${province}/${regency}`}
         >
           <span>
             {property.building_type} di {property.regency}
@@ -58,7 +66,7 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
           )}
           title={`Properti di ${property.street}`}
           aria-label={`Properti di ${property.street}`}
-          href={`/properties?buiding_type=${property.building_type.replaceAll(" ", "+")}&street=${property.street.replaceAll(" ", "+")}&page=1`}
+          href={`/properties/filter/${purchaseStatus}/${buildingType}/${province}/${regency}/${street}`}
         >
           <span>
             {property.building_type} di {property.street}
