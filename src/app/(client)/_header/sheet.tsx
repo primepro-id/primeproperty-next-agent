@@ -24,10 +24,10 @@ import {
 } from "@/components/ui/accordion";
 
 type SheetMenuProps = {
-  onClick?: () => void
-}
+  onClick?: () => void;
+};
 
-const SheetMenu = ({onClick}: SheetMenuProps) => {
+const SheetMenu = ({ onClick }: SheetMenuProps) => {
   const MENU = [
     {
       title: "Agen",
@@ -60,6 +60,7 @@ const SheetMenu = ({onClick}: SheetMenuProps) => {
               href="/properties"
               title="Semua Properti"
               className="p-4 pr-2 flex items-center justify-between hover:bg-primary text-foreground"
+              onClick={onClick}
             >
               Semua Properti
               <IoIosArrowForward />
@@ -68,6 +69,7 @@ const SheetMenu = ({onClick}: SheetMenuProps) => {
               href="/properties/filter/dijual"
               title="Semua Properti Dijual"
               className="p-4 pr-2 flex items-center justify-between hover:bg-primary text-foreground"
+              onClick={onClick}
             >
               Semua Properti Dijual
               <IoIosArrowForward />
@@ -76,6 +78,7 @@ const SheetMenu = ({onClick}: SheetMenuProps) => {
               href="/properties/filter/disewa"
               title="Semua Properti Disewa"
               className="p-4 pr-2 flex items-center justify-between hover:bg-primary text-foreground"
+              onClick={onClick}
             >
               Semua Properti Disewa
               <IoIosArrowForward />
