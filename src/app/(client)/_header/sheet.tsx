@@ -16,13 +16,15 @@ import { useRef } from "react";
 import { IoIosArrowForward, IoIosArrowUp, IoIosMenu } from "react-icons/io";
 import Link from "next/link";
 import ThemeButton from "./theme-button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const SheetMenu = () => {
   const MENU = [
-    {
-      title: "Properti",
-      href: "/properties",
-    },
     {
       title: "Agen",
       href: "/agents",
@@ -46,6 +48,37 @@ const SheetMenu = () => {
   ];
   return (
     <div className="flex flex-col border-y border-primary ">
+      <Accordion type="multiple">
+        <AccordionItem value="property" className="border-b-0">
+          <AccordionTrigger className="p-4">Properti</AccordionTrigger>
+          <AccordionContent className="border-y">
+            <Link
+              href="/properties"
+              title="Semua Properti"
+              className="p-4 pr-2 flex items-center justify-between hover:bg-primary text-foreground"
+            >
+              Semua Properti
+              <IoIosArrowForward />
+            </Link>
+            <Link
+              href="/properties/filter/dijual"
+              title="Semua Properti Dijual"
+              className="p-4 pr-2 flex items-center justify-between hover:bg-primary text-foreground"
+            >
+              Semua Properti Dijual
+              <IoIosArrowForward />
+            </Link>
+            <Link
+              href="/properties/filter/disewa"
+              title="Semua Properti Disewa"
+              className="p-4 pr-2 flex items-center justify-between hover:bg-primary text-foreground"
+            >
+              Semua Properti Disewa
+              <IoIosArrowForward />
+            </Link>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
       {MENU.map((item) => (
         <Link
           key={item.title}
