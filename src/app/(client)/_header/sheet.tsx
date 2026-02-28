@@ -23,7 +23,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const SheetMenu = () => {
+type SheetMenuProps = {
+  onClick?: () => void
+}
+
+const SheetMenu = ({onClick}: SheetMenuProps) => {
   const MENU = [
     {
       title: "Agen",
@@ -85,6 +89,7 @@ const SheetMenu = () => {
           href={item.href}
           title={item.title}
           className="p-4 flex items-center justify-between hover:bg-primary"
+          onClick={onClick}
         >
           {item.title}
           <IoIosArrowForward />
@@ -120,7 +125,7 @@ export const HeaderSheet = () => {
           </SheetClose>
         </SheetHeader>
         <SheetDescription />
-        <SheetMenu />
+        <SheetMenu onClick={closeSheet} />
         <SheetFooter className="flex-row items-center justify-between w-full p-2">
           <span className="text-xs text-muted-foreground">
             PRIMEPRO INDONESIA {new Date().getFullYear()}
