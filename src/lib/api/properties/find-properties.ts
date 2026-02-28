@@ -38,7 +38,7 @@ export const findProperties = async (query?: FindPropertyQuery) => {
   if (query?.regency) {
     path += `&regency=${query.regency}`;
   }
-  if (query?.regency) {
+  if (query?.street) {
     path += `&street=${query.street}`;
   }
   if (query?.limit) {

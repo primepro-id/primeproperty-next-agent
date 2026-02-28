@@ -44,6 +44,11 @@ const Title = ({
     );
   }
 
+  const location = createLocation(
+    searchParams.province,
+    searchParams.regency,
+    searchParams.street,
+  );
   return (
     <h1 className={cn(baseClassname, className)}>
       {propertyCount === 0 && "Pencarian tidak ditemukan untuk "}
@@ -53,11 +58,13 @@ const Title = ({
             searchParams.purchase_status as PurchaseStatus
           ].toLowerCase()
         : ""}{" "}
-      <p className="lowercase">di</p>
-      {createLocation(
-        searchParams.province,
-        searchParams.regency,
-        searchParams.street,
+      {searchParams.province || searchParams.regency || searchParams.street ? (
+        <>
+          <p className="lowercase">di</p>
+          <p>{location}</p>
+        </>
+      ) : (
+        <p>Primepro Indonesia</p>
       )}
     </h1>
   );
