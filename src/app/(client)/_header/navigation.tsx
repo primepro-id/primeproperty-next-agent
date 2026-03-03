@@ -8,90 +8,186 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import {
-  PROPERTIES_TYPES,
-  FOOTER_PROVINCE,
-  FOOTER_STREET_HOME,
-} from "./constant";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
+import { usePropertiesNavigation } from "@/hooks/properties/use-properties-navigation";
+import { PropertyNavigation } from "@/lib/api/properties/find-property-navigation";
+import { PurchaseStatus } from "@/lib/enums/purchase-status";
+import { useState } from "react";
+import { toSlug } from "@/lib/utils";
 
-const PropertyNavigation = () => {
-  return (
-    <div className="w-[600px] p-4 border border-primary rounded flex flex-col gap-4">
-      <h2 className="text-lg font-bold">PROPERTI</h2>
-      <div className="grid grid-cols-3 gap-4 ">
-        <div className="flex flex-col gap-4">
-          <h3 className="font-bold">TIPE</h3>
-          <ul className="flex flex-col gap-2">
-            {PROPERTIES_TYPES.map((tipe) => (
-              <li key={tipe.key}>
-                <Link
-                  title={tipe.key}
-                  href={tipe.value}
-                  className={cn(
-                    buttonVariants({ variant: "outline" }),
-                    "w-full justify-start border border-primary hover:font-semibold",
-                  )}
-                >
-                  {tipe.key.toUpperCase()}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="flex flex-col gap-4">
-          <h3 className="font-bold">PROVINSI</h3>
-          <ul className="flex flex-col gap-2">
-            {FOOTER_PROVINCE.map((tipe) => (
-              <li key={tipe.key} className="w-full">
-                <Link
-                  title={tipe.key}
-                  href={tipe.value}
-                  className={cn(
-                    buttonVariants({ variant: "outline" }),
-                    "w-full justify-start border border-primary hover:font-semibold",
-                  )}
-                >
-                  {tipe.key.toUpperCase()}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="flex flex-col gap-4">
-          <h3 className="font-bold">JALAN</h3>
-          <ul className="flex flex-col gap-2">
-            {FOOTER_STREET_HOME.map((tipe) => (
-              <li key={tipe.key} className="w-full">
-                <Link
-                  title={tipe.key}
-                  href={tipe.value}
-                  className={cn(
-                    buttonVariants({ variant: "outline" }),
-                    "w-full justify-start border border-primary hover:font-semibold",
-                  )}
-                >
-                  {tipe.key.toUpperCase()}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+type PropertyNavigationMenuContentProps = {
+  isLoading: boolean;
+  data?: PropertyNavigation[];
+  purchaseStatus: PurchaseStatus;
+};
+
+const PropertyNavigationMenuContent = ({
+  isLoading,
+  data,
+  purchaseStatus,
+}: PropertyNavigationMenuContentProps) => {
+  const purchaseStatusPath =
+    purchaseStatus === PurchaseStatus.ForSale ? "/dijual" : "/disewa";
+  const [selectedBuildType, setSelectedBuildType] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedRegency, setSelectedRegency] = useState("");
+
+  if (isLoading) {
+    return (
+      <div className="w-[600px] p-4">
+        <div className="bg-primary h-10 animate-pulse rounded" />
       </div>
+    );
+  }
 
-      <div className="flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">
-          PRIMEPRO INDONESIA {new Date().getFullYear()}
-        </span>
-        <Link
-          href="/properties"
-          className={cn(buttonVariants({ variant: "outline" }))}
-          title="LIHAT SEMUA"
-        >
-          LIHAT SEMUA
-          <IoIosArrowForward />
-        </Link>
+  const buildingTypes = new Map(
+    data
+      ?.sort((a, b) => a.building_type.localeCompare(b.building_type))
+      .map((d) => [
+        d.building_type,
+        {
+          label: d.building_type,
+          value: `${purchaseStatusPath}/${toSlug(d.building_type)}`,
+        },
+      ]),
+  );
+
+  const distinctProvinceByBuildingType = new Map(
+    data
+      ?.filter((d) => d.building_type === selectedBuildType)
+      ?.sort((a, b) => a.province.localeCompare(b.province))
+      .map((d) => [
+        d.province,
+        {
+          label: d.province,
+          value: `${purchaseStatusPath}/${toSlug(selectedBuildType)}/${toSlug(d.province)}`,
+        },
+      ]),
+  );
+  const distinctRegencyByProvince = new Map(
+    data
+      ?.filter(
+        (d) =>
+          d.building_type === selectedBuildType &&
+          d.province === selectedProvince,
+      )
+      .sort((a, b) => a.regency.localeCompare(b.regency))
+      .map((d) => [
+        d.regency,
+        {
+          label: d.regency,
+          value: `${purchaseStatusPath}/${toSlug(selectedBuildType)}/${toSlug(selectedProvince)}/${toSlug(d.regency)}`,
+        },
+      ]),
+  );
+  const distinctStreetByRegency = new Map(
+    data
+      ?.filter(
+        (d) =>
+          d.building_type === selectedBuildType &&
+          d.province === selectedProvince &&
+          d.regency === selectedRegency,
+      )
+      .sort((a, b) => a.street.localeCompare(b.street))
+      .map((d) => [
+        d.street,
+        {
+          label: d.street,
+          value: `${purchaseStatusPath}/${toSlug(selectedBuildType)}/${toSlug(selectedProvince)}/${toSlug(selectedRegency)}/${toSlug(d.street)}`,
+        },
+      ]),
+  );
+
+  return (
+    <div className="w-[800px] grid grid-cols-4 divide-x-2 overflow-x-hidden">
+      <div className="flex flex-col divide-y">
+        {Array.from(buildingTypes?.values()).map((item) => (
+          <Link
+            href={`/properties/filter${item.value}`}
+            key={item.value}
+            className={cn(
+              "p-4 flex items-center justify-between gap-2 capitalize hover:bg-primary",
+              selectedBuildType === item.label ? "bg-primary" : "",
+            )}
+            onMouseEnter={() => {
+              setSelectedBuildType(item.label);
+              setSelectedProvince("");
+              setSelectedRegency("");
+            }}
+          >
+            {item.label}
+
+            <IoIosArrowForward />
+          </Link>
+        ))}
+      </div>
+      <div
+        className={cn(
+          "flex-col divide-y",
+          selectedBuildType !== "" ? "flex" : "hidden",
+        )}
+      >
+        {Array.from(distinctProvinceByBuildingType?.values()).map((item) => (
+          <Link
+            href={`/properties/filter${item.value}`}
+            key={item.value}
+            className={cn(
+              "p-4 flex items-center justify-between gap-2 capitalize hover:bg-primary",
+              selectedProvince === item.label ? "bg-primary" : "",
+            )}
+            onMouseEnter={() => {
+              setSelectedProvince(item.label);
+              setSelectedRegency("");
+            }}
+          >
+            {item.label}
+
+            <IoIosArrowForward />
+          </Link>
+        ))}
+      </div>
+      <div
+        className={cn(
+          "flex-col divide-y",
+          Array.from(distinctRegencyByProvince).length > 0 ? "flex" : "hidden",
+        )}
+      >
+        {Array.from(distinctRegencyByProvince?.values()).map((item) => (
+          <Link
+            href={`/properties/filter${item.value}`}
+            key={item.value}
+            className={cn(
+              "p-4 flex items-center justify-between gap-2 capitalize hover:bg-primary",
+              selectedRegency === item.label ? "bg-primary" : "",
+            )}
+            onMouseEnter={() => setSelectedRegency(item.label)}
+          >
+            {item.label}
+
+            <IoIosArrowForward />
+          </Link>
+        ))}
+      </div>
+      <div
+        className={cn(
+          "flex-col divide-y  max-h-[600px] overflow-y-auto",
+          Array.from(distinctStreetByRegency).length > 0 ? "flex" : "hidden",
+        )}
+      >
+        {Array.from(distinctStreetByRegency?.values()).map((item) => (
+          <Link
+            href={`/properties/filter${item.value}`}
+            key={item.value}
+            className={cn(
+              "p-4 flex items-center justify-between gap-2 capitalize hover:bg-primary",
+            )}
+          >
+            {item.label}
+
+            <IoIosArrowForward />
+          </Link>
+        ))}
       </div>
     </div>
   );
@@ -120,15 +216,50 @@ export const Navigation = () => {
       href: "/about",
     },
   ];
+
+  const nav = usePropertiesNavigation();
+  const forSaleNav = nav?.data?.data?.filter(
+    (b) => b.purchase_status === PurchaseStatus.ForSale,
+  );
+  const forRentNav = nav?.data?.data?.filter(
+    (b) => b.purchase_status === PurchaseStatus.ForRent,
+  );
   return (
     <NavigationMenu>
       <NavigationMenuList className="gap-1">
         <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link
+              href="/properties"
+              title="Properti"
+              className={cn(buttonVariants({ variant: "ghost" }), "font-sans")}
+            >
+              PROPERTI
+            </Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <NavigationMenuTrigger className="font-sans">
-            PROPERTI
+            DIJUAL
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <PropertyNavigation />
+            <PropertyNavigationMenuContent
+              isLoading={nav.isLoading}
+              data={forSaleNav}
+              purchaseStatus={PurchaseStatus.ForSale}
+            />
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="font-sans">
+            DISEWA
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <PropertyNavigationMenuContent
+              isLoading={nav.isLoading}
+              data={forRentNav}
+              purchaseStatus={PurchaseStatus.ForRent}
+            />
           </NavigationMenuContent>
         </NavigationMenuItem>
         {MENU.map((item) => (
