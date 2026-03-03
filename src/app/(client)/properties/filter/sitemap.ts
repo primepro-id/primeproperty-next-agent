@@ -25,98 +25,12 @@ async function generatePropertyFiltersSitemaps() {
   // Google's limit is 50,000 URLs per sitemap
   const filters = [
     {
-      key: "buiding_type",
-      value: "rumah",
-      secondKey: "province",
-      secondValue: "jakarta",
+      key: "purchase_status",
+      value: PurchaseStatus.ForSale,
     },
     {
-      key: "buiding_type",
-      value: "rumah",
-      secondKey: "regency",
-      secondValue: "jakarta selatan",
-    },
-    {
-      key: "buiding_type",
-      value: "rumah",
-      secondKey: "regency",
-      secondValue: "jakarta pusat",
-    },
-    {
-      key: "buiding_type",
-      value: "rumah",
-      secondKey: "street",
-      secondValue: "kuningan",
-    },
-    {
-      key: "buiding_type",
-      value: "rumah",
-      secondKey: "street",
-      secondValue: "kemang",
-    },
-    {
-      key: "buiding_type",
-      value: "rumah",
-      secondKey: "street",
-      secondValue: "kebayoran baru",
-    },
-    {
-      key: "buiding_type",
-      value: "rumah",
-      secondKey: "street",
-      secondValue: "pondok indah",
-    },
-    {
-      key: "buiding_type",
-      value: "rumah",
-      secondKey: "street",
-      secondValue: "lebak bulus",
-    },
-    {
-      key: "buiding_type",
-      value: "apartemen",
-      secondKey: "regency",
-      secondValue: "jakarta selatan",
-    },
-    {
-      key: "buiding_type",
-      value: "apartemen",
-      secondKey: "regency",
-      secondValue: "jakarta pusat",
-    },
-    {
-      key: "buiding_type",
-      value: "apartemen",
-      secondKey: "street",
-      secondValue: "kuningan",
-    },
-    {
-      key: "buiding_type",
-      value: "apartemen",
-      secondKey: "street",
-      secondValue: "lebak bulus",
-    },
-    {
-      key: "buiding_type",
-      value: "apartemen",
-      secondKey: "street",
-      secondValue: "kemang",
-    },
-    {
-      key: "buiding_type",
-      value: "apartemen",
-      secondKey: "street",
-      secondValue: "pondok indah",
-    },
-    {
-      key: "buiding_type",
-      value: "apartemen",
-      secondKey: "street",
-      secondValue: "kebayoran baru",
-    },
-    {
-      key: "province",
-      value: "jawa barat",
+      key: "purchase_status",
+      value: PurchaseStatus.ForRent,
     },
     {
       key: "buiding_type",
@@ -130,26 +44,73 @@ async function generatePropertyFiltersSitemaps() {
       key: "buiding_type",
       value: "tanah",
     },
+    // province
     {
-      key: "buiding_type",
-      value: "gedung",
+      key: "province",
+      value: "jakarta",
+    },
+    {
+      key: "province",
+      value: "jawa barat",
     },
     {
       key: "buiding_type",
-      value: "ruko",
+      value: "rumah",
+      secondKey: "province",
+      secondValue: "jakarta",
     },
     {
       key: "buiding_type",
-      value: "ruang usaha",
+      value: "rumah",
+      secondKey: "province",
+      secondValue: "jawa barat",
     },
     {
       key: "buiding_type",
-      value: "rumah kantor",
+      value: "apartemen",
+      secondKey: "province",
+      secondValue: "jakarta",
+    },
+    // regencies
+    {
+      key: "regency",
+      value: "jakarta pusat",
+    },
+    {
+      key: "regency",
+      value: "jakarta selatan",
     },
     {
       key: "buiding_type",
-      value: "space kantor",
+      value: "rumah",
+      secondKey: "regency",
+      secondValue: "jakarta pusat",
     },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "regency",
+      secondValue: "jakarta selatan",
+    },
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "regency",
+      secondValue: "depok",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "regency",
+      secondValue: "jakarta pusat",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "regency",
+      secondValue: "jakarta selatan",
+    },
+    // street
     {
       key: "street",
       value: "kuningan",
@@ -167,26 +128,72 @@ async function generatePropertyFiltersSitemaps() {
       value: "kebayoran baru",
     },
     {
-      key: "regency",
-      value: "jakarta pusat",
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "kuningan",
+    },
+    // street home
+    {
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "kemang",
     },
     {
-      key: "regency",
-      value: "jakarta selatan",
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "pondok indah",
     },
     {
-      key: "province",
-      value: "jakarta",
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "kebayoran baru",
     },
     {
-      key: "purchase_status",
-      value: PurchaseStatus.ForSale,
+      key: "buiding_type",
+      value: "rumah",
+      secondKey: "street",
+      secondValue: "lebak bulus",
+    },
+    // street apartment
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "kuningan",
     },
     {
-      key: "purchase_status",
-      value: PurchaseStatus.ForRent,
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "lebak bulus",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "kemang",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "pondok indah",
+    },
+    {
+      key: "buiding_type",
+      value: "apartemen",
+      secondKey: "street",
+      secondValue: "kebayoran baru",
     },
   ];
+  const basePropertySitemap = await findProperties({
+    page: String(1),
+    limit: String(30),
+  });
   const promises = await Promise.allSettled([
     ...filters.map(async ({ key, value }) => {
       const response = await findProperties({
@@ -199,6 +206,16 @@ async function generatePropertyFiltersSitemaps() {
   ]);
 
   const sitemaps = [];
+
+  if (Array.isArray(basePropertySitemap?.data?.data)) {
+    for (let i = 0; i < basePropertySitemap.data.total_pages; i++) {
+      sitemaps.push({
+        url: env.NEXT_PUBLIC_HOST_URL + `/properties?page=${i + 1}`,
+        date: new Date(),
+      });
+    }
+  }
+
   for (let i = 0; i < filters.length; i++) {
     const filterPromise = promises[i];
     if (filterPromise.status === "fulfilled") {
@@ -238,8 +255,8 @@ async function generatePropertyFiltersSitemaps() {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
-  const sitePathsSitemaps = await generatePropertySitePathSitemaps();
   const filterSitemaps = await generatePropertyFiltersSitemaps();
+  const sitePathsSitemaps = await generatePropertySitePathSitemaps();
 
-  return [...sitePathsSitemaps, ...filterSitemaps];
+  return [...filterSitemaps, ...sitePathsSitemaps];
 }
