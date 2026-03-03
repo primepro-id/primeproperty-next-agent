@@ -14,14 +14,12 @@ import { usePropertiesNavigation } from "@/hooks/properties/use-properties-navig
 import { PropertyNavigation } from "@/lib/api/properties/find-property-navigation";
 import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { useState } from "react";
+import { toSlug } from "@/lib/utils";
 
 type PropertyNavigationMenuContentProps = {
   isLoading: boolean;
   data?: PropertyNavigation[];
   purchaseStatus: PurchaseStatus;
-};
-const toSlug = (str: string) => {
-  return str.replaceAll(" ", "-");
 };
 
 const PropertyNavigationMenuContent = ({
