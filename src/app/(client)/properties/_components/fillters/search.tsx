@@ -39,8 +39,8 @@ export const SearchResult = ({ isLoading, results }: SearchResultProps) => {
           >
             {result[0].building_type}{" "}
             {result[0].purchase_status === PurchaseStatus.ForRent
-              ? "dijual"
-              : "disewa"}{" "}
+              ? "disewa"
+              : "dijual"}{" "}
             {result[0].street} {result[0].regency}
           </Link>
         );
