@@ -59,10 +59,7 @@ const Title = ({
           ].toLowerCase()
         : ""}{" "}
       {searchParams.province || searchParams.regency || searchParams.street ? (
-        <>
-          <p className="lowercase">di</p>
-          <p>{location}</p>
-        </>
+        <p>{location}</p>
       ) : (
         <p>Primepro Indonesia</p>
       )}

@@ -29,7 +29,7 @@ export const SearchResult = ({ isLoading, results }: SearchResultProps) => {
       {results.map((result, index) => {
         return (
           <Link
-            href={`/properties${result[0].site_path}`}
+            href={`/properties/filter/${result[0].site_path}`}
             key={`${index}_search`}
             className={cn(
               buttonVariants({ variant: "link" }),
@@ -41,7 +41,7 @@ export const SearchResult = ({ isLoading, results }: SearchResultProps) => {
             {result[0].purchase_status === PurchaseStatus.ForRent
               ? "dijual"
               : "disewa"}{" "}
-            {"di"} {result[0].street} {result[0].regency}
+            {result[0].street} {result[0].regency}
           </Link>
         );
       })}
@@ -59,13 +59,16 @@ export const Search = () => {
   const dismiss = useDismiss(context);
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
 
+  const typingTimeoutRef = useRef<any>(null);
   const searchMutation = useMutation({
     mutationFn: async (keyword: string) => {
-      return await findProperties({ s: keyword });
+      if (keyword) {
+        return await findProperties({ s: keyword });
+      }
+      return null;
     },
   });
 
-  const typingTimeoutRef = useRef<any>(null);
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsOpen(true);
     if (typingTimeoutRef.current) {
@@ -78,7 +81,7 @@ export const Search = () => {
 
   return (
     <div
-      className="flex items-center w-full  relative"
+      className="flex items-center w-full relative "
       ref={refs.setReference}
       {...getReferenceProps()}
     >
@@ -95,7 +98,7 @@ export const Search = () => {
           ref={typingTimeoutRef}
           type="text"
           id="property-search"
-          placeholder="Cari lokasi/area"
+          placeholder="Cari tipe bangunan, lokasi, area"
           className="rounded-l-none border-l-transparent focus-visible:ring-transparent focus-visible:ring-offset-transparent w-full pl-0 "
           onChange={onInputChange}
         />
