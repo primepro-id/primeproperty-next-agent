@@ -16,8 +16,35 @@ const generateDynamicPropertySitemaps = async () => {
   return [];
 };
 
+async function generatePropertyPagesSitemaps() {
+  // Google's limit is 50,000 URLs per sitemap
+
+  const basePropertySitemap = await findProperties({
+    page: String(1),
+    limit: String(30),
+  });
+
+  const sitemaps = [];
+
+  if (Array.isArray(basePropertySitemap?.data?.data)) {
+    for (let i = 0; i < basePropertySitemap.data.total_pages; i++) {
+      sitemaps.push({
+        url: env.NEXT_PUBLIC_HOST_URL + `/properties?page=${i + 1}`,
+        date: new Date(),
+      });
+    }
+  }
+
+  if (sitemaps.length > 0) {
+    return sitemaps;
+  }
+
+  return [];
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
+  const propertyPagesSitemaps = await generatePropertyPagesSitemaps();
   const dynamicPropertySitemaps = await generateDynamicPropertySitemaps();
 
   return [
@@ -29,6 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: env.NEXT_PUBLIC_HOST_URL + `/properties/filter/sitemap.xml`,
       lastModified: new Date(),
     },
+    ...propertyPagesSitemaps,
     ...dynamicPropertySitemaps,
   ];
 }
