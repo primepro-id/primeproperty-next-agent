@@ -6,43 +6,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { BUILDING_TYPES, BuildingType } from "@/lib/enums/building-type";
+import { PropertyNavigation } from "@/lib/api/properties/find-property-navigation";
 
 type PropertyTypeFilterProps = {
   defaultValue?: string;
-  onValueChange: (propType: BuildingType | undefined) => void;
+  propertyNavigations?: PropertyNavigation[] | null;
+  onValueChange: (propType: string) => void;
 };
 
 export const PropertyTypeFilter = ({
   defaultValue,
+  propertyNavigations,
   onValueChange,
 }: PropertyTypeFilterProps) => {
+  const buildingTypes = new Map(
+    propertyNavigations?.map((nav) => [nav.building_type, nav.building_type]),
+  );
   return (
     <div className="grid gap-2">
-      <Label htmlFor="building_type">Tipe Properti</Label>
+      <Label htmlFor="building_type">Tipe Bangunan</Label>
       <Select
         name="building_type"
         defaultValue={defaultValue}
-        onValueChange={(val) =>
-          val === "-"
-            ? onValueChange(undefined)
-            : onValueChange(val as BuildingType)
-        }
+        onValueChange={(val) => onValueChange(val === "-" ? "" : val)}
       >
-        <SelectTrigger className="capitalize">
-          <SelectValue placeholder="Semua Tipe Properti" />
+        <SelectTrigger className="uppercase">
+          <SelectValue placeholder="SEMUA PROPERTI" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="-" className="capitalize">
-            Semua Tipe Properti
-          </SelectItem>
-          {BUILDING_TYPES.map((building, index) => (
+          <SelectItem value="-">SEMUA PROPERTI</SelectItem>
+          {Array.from(buildingTypes.values()).map((building, index) => (
             <SelectItem
-              key={`${index}_${building.value}`}
-              value={building.value}
-              className="capitalize"
+              key={`${index}_${building}`}
+              value={building}
+              className="uppercase"
             >
-              {building.value}
+              {building}
             </SelectItem>
           ))}
         </SelectContent>

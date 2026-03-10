@@ -7,23 +7,31 @@ import { cn } from "@/lib/utils";
 import { FilterSort } from "./sort";
 import { PropertyTypeFilter } from "./property-type-filter";
 import { MdWhatsapp } from "react-icons/md";
-import { SearchTypeFilter } from "./search-type-filter";
 import { useRouter } from "next/navigation";
-import { LocationFilter } from "./location-filter";
 import Link from "next/link";
 import { createAskUrl } from "@/lib/create-ask-url";
 import { sendGAEvent } from "@next/third-parties/google";
+import { PropertyNavigation } from "@/lib/api/properties/find-property-navigation";
+import { PurchaseStatusFilter } from "./purchase-status-filter";
+import { PurchaseStatus } from "@/lib/enums/purchase-status";
+import { ProvinceFilter } from "./province-filter";
+import { RegencyFilter } from "./regency-filter";
+import { StreetFilter } from "./street-filter";
 
 type FilterFormProps = {
   searchParams: FindPropertyQuery;
+  propertyNavigations?: PropertyNavigation[] | null;
 };
 
-export const FilterForm = ({ searchParams }: FilterFormProps) => {
+export const FilterForm = ({
+  searchParams,
+  propertyNavigations,
+}: FilterFormProps) => {
   const router = useRouter();
   const [filterParams, setFilterParams] =
     useState<FindPropertyQuery>(searchParams);
 
-  const onCloseClick = () => {
+  const onSearchClick = () => {
     sendGAEvent("event", "filter_submit");
     const newParams = new URLSearchParams(filterParams);
     newParams.set("page", "1");
@@ -32,61 +40,79 @@ export const FilterForm = ({ searchParams }: FilterFormProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <SearchTypeFilter
-        searchType={filterParams.purchase_status}
-        onClick={(purchase_status) => {
-          setFilterParams({
-            ...filterParams,
-            purchase_status: purchase_status ?? "",
-          });
-        }}
-      />
-      <LocationFilter
-        searchParams={searchParams}
-        onProvinceChange={(bpsDomain) => {
-          setFilterParams({
-            ...filterParams,
-            province: bpsDomain ? bpsDomain?.nama.toLowerCase() : "",
-          });
-        }}
-        onRegencyChange={(bpsDomain) => {
-          setFilterParams({
-            ...filterParams,
-            regency: bpsDomain ? bpsDomain.nama.toLowerCase() : "",
-          });
-        }}
-      />
-      <PropertyTypeFilter
-        defaultValue={searchParams.buiding_type}
-        onValueChange={(buildType) => {
-          setFilterParams({
-            ...filterParams,
-            buiding_type: buildType ?? "",
-          });
-        }}
-      />
-      <FilterSort
-        defaultValue={searchParams.sort}
-        onValueChange={(val) => {
-          setFilterParams({
-            ...filterParams,
-            sort: val === "Newest" ? "" : val,
-          });
-        }}
-      />
+      <div className="md:grid md:grid-cols-3 gap-4">
+        <PropertyTypeFilter
+          defaultValue={searchParams.buiding_type}
+          propertyNavigations={propertyNavigations}
+          onValueChange={(buiding_type) => {
+            setFilterParams({
+              ...filterParams,
+              buiding_type,
+            });
+          }}
+        />
+        <PurchaseStatusFilter
+          defaultValue={
+            searchParams.purchase_status as PurchaseStatus | undefined
+          }
+          onValueChange={(purchase_status) => {
+            setFilterParams({
+              ...filterParams,
+              purchase_status,
+            });
+          }}
+        />
+        <FilterSort
+          defaultValue={searchParams.sort}
+          onValueChange={(val) => {
+            setFilterParams({
+              ...filterParams,
+              sort: val === "Newest" ? "" : val,
+            });
+          }}
+        />
+        <ProvinceFilter
+          defaultValue={searchParams.province}
+          propertyNavigations={propertyNavigations}
+          onProvinceChange={(province) =>
+            setFilterParams({
+              ...filterParams,
+              province,
+              regency: "",
+              street: "",
+            })
+          }
+        />
+        <RegencyFilter
+          province={filterParams.province}
+          defaultValue={filterParams.regency}
+          propertyNavigations={propertyNavigations}
+          onValueChange={(regency) =>
+            setFilterParams({ ...filterParams, regency, street: "" })
+          }
+        />
+        <StreetFilter
+          regency={filterParams.regency}
+          defaultValue={filterParams.street}
+          propertyNavigations={propertyNavigations}
+          onValueChange={(street) =>
+            setFilterParams({ ...filterParams, street })
+          }
+        />
+      </div>
       <div className="flex items-center justify-between mt-4">
         <Link
           href={createAskUrl()}
           target="_blank"
           className={cn(buttonVariants({ variant: "outline" }))}
-          title="Tanya langsung"
-          aria-label="Tanya langsung"
+          title="Tanya Agen"
+          aria-label="Tanya Agen"
         >
           <MdWhatsapp />
-          Tanya langsung
+          Tanya Agen
         </Link>
-        <DialogClose className={cn(buttonVariants())} onClick={onCloseClick}>
-          Tampilkan
+        <DialogClose className={cn(buttonVariants())} onClick={onSearchClick}>
+          Tampilkan Hasil
         </DialogClose>
       </div>
     </div>

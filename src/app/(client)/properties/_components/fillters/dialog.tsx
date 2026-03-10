@@ -1,3 +1,4 @@
+"use client";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,45 +12,46 @@ import { cn } from "@/lib/utils";
 import { LuListFilter, LuX } from "react-icons/lu";
 import { FilterForm } from "./form";
 import { FindPropertyQuery } from "@/lib/api/properties/find-properties";
+import { usePropertiesNavigation } from "@/hooks/properties/use-properties-navigation";
 
 type FilterDialogProps = {
   searchParams: FindPropertyQuery;
-  title?: string;
-  isHomePage?: boolean;
 };
 
-export const FilterDialog = ({
-  searchParams,
-  title,
-  isHomePage,
-}: FilterDialogProps) => {
+export const FilterDialog = ({ searchParams }: FilterDialogProps) => {
+  const { data } = usePropertiesNavigation();
   return (
     <Dialog>
       <DialogTrigger
         className={cn(
           buttonVariants({
-            variant: isHomePage ? "default" : "outline",
+            variant: "outline",
           }),
           "relative",
         )}
       >
         <LuListFilter />
-        <span>{title || "Filter"}</span>
+        FILTER &amp; CARI
         {Object.values(searchParams).filter((val) => val).length > 0 && (
           <span className="absolute -top-2 -right-2 bg-foreground text-background rounded-full h-4 w-4 text-xs font-semibold">
             {Object.values(searchParams).filter((val) => val).length}
           </span>
         )}
       </DialogTrigger>
-      <DialogContent className="flex flex-col gap-4 z-40">
+      <DialogContent className="flex flex-col gap-4 z-40 max-w-2xl">
         <div className="flex items-center justify-between">
-          <DialogTitle className="font-semibold">Filter Properti</DialogTitle>
+          <DialogTitle className="font-semibold">
+            Filter dan cari properti
+          </DialogTitle>
           <DialogDescription />
           <DialogClose>
             <LuX />
           </DialogClose>
         </div>
-        <FilterForm searchParams={searchParams} />
+        <FilterForm
+          searchParams={searchParams}
+          propertyNavigations={data?.data}
+        />
       </DialogContent>
     </Dialog>
   );

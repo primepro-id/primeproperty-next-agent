@@ -9,54 +9,52 @@ import {
 import { PropertyNavigation } from "@/lib/api/properties/find-property-navigation";
 import { useMemo } from "react";
 
-type RegencyFilterProps = {
-  province?: string;
-  onValueChange: (regency: string) => void;
+type StreetFilterProps = {
+  regency?: string;
+  onValueChange: (street: string) => void;
   defaultValue?: string;
   propertyNavigations?: PropertyNavigation[] | null;
 };
 
-export const RegencyFilter = ({
-  province,
+export const StreetFilter = ({
+  regency,
   defaultValue,
   propertyNavigations,
   onValueChange,
-}: RegencyFilterProps) => {
-  const regencies = useMemo(() => {
-    if (province) {
+}: StreetFilterProps) => {
+  const streets = useMemo(() => {
+    if (regency) {
       return new Map(
         propertyNavigations
-          ?.filter((nav) => nav.province === province)
-          ?.map((nav) => [nav.regency, nav.regency]),
+          ?.filter((nav) => nav.regency === regency)
+          ?.map((nav) => [nav.street, nav.street]),
       );
     }
-    return new Map(
-      propertyNavigations?.map((nav) => [nav.regency, nav.regency]),
-    );
-  }, [province, propertyNavigations]);
+    return new Map(propertyNavigations?.map((nav) => [nav.street, nav.street]));
+  }, [regency, propertyNavigations]);
 
   return (
     <div className="grid gap-2">
-      <Label htmlFor="regency">Kabupaten</Label>
+      <Label htmlFor="street">Jalan</Label>
       <Select
-        name="regency"
+        name="street"
         defaultValue={defaultValue ? defaultValue : "-"}
         onValueChange={(val) => onValueChange(val === "-" ? "" : val)}
       >
-        <SelectTrigger disabled={!province} className="uppercase">
+        <SelectTrigger disabled={!regency} className="uppercase">
           <SelectValue
-            placeholder={!province ? "PILIH PROVINSI" : "PILIH KABUPATEN"}
+            placeholder={!regency ? "PILIH KABUPATEN" : "PILIH JALAN"}
           />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="-">SEMUA KABUPATEN</SelectItem>
-          {Array.from(regencies.values())?.map((regency) => (
+          <SelectItem value="-">SEMUA JALAN</SelectItem>
+          {Array.from(streets.values())?.map((street) => (
             <SelectItem
-              key={regency}
-              value={regency.toLowerCase()}
+              key={street}
+              value={street.toLowerCase()}
               className="uppercase"
             >
-              {regency}
+              {street}
             </SelectItem>
           ))}
         </SelectContent>
