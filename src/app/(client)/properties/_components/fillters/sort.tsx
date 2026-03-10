@@ -24,13 +24,13 @@ export const FilterSort = ({
         defaultValue={defaultValue ?? "Newest"}
         onValueChange={onValueChange}
       >
-        <SelectTrigger>
+        <SelectTrigger className="uppercase">
           <SelectValue placeholder="Terbaru" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="Newest">Terbaru</SelectItem>
-          <SelectItem value="LowestPrice">Harga Terendah</SelectItem>
-          <SelectItem value="HighestPrice">Harga Tertinggi</SelectItem>
+          <SelectItem value="Newest">TERBARU</SelectItem>
+          <SelectItem value="LowestPrice">HARGA TERENDAH</SelectItem>
+          <SelectItem value="HighestPrice">HARGA TERTINGGI</SelectItem>
         </SelectContent>
       </Select>
     </div>

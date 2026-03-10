@@ -7,54 +7,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { BpsDomain } from "@/lib/bps/find-bps-domain-province";
-import { PROVINCES } from "@/lib/enums/provinces";
-import { useEffect } from "react";
+import { PropertyNavigation } from "@/lib/api/properties/find-property-navigation";
 
 type ProvinceFilterProps = {
   defaultValue?: string;
-  onProvinceChange(bpsDomain: BpsDomain | undefined): void;
+  propertyNavigations?: PropertyNavigation[] | null;
+  onProvinceChange(province: string | undefined): void;
 };
 
 export const ProvinceFilter = ({
-  onProvinceChange,
   defaultValue,
+  propertyNavigations,
+  onProvinceChange,
 }: ProvinceFilterProps) => {
-  useEffect(() => {
-    if (defaultValue) {
-      const selectedProvince = PROVINCES?.find(
-        (prov) => prov.nama.toLowerCase() === defaultValue,
-      );
-      onProvinceChange(selectedProvince);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultValue]);
-
+  const provinces = new Map(
+    propertyNavigations?.map((nav) => [nav.province, nav.province]),
+  );
   return (
     <div className="grid gap-2">
       <Label htmlFor="province">Provinsi</Label>
       <Select
         name="province"
         defaultValue={defaultValue}
-        onValueChange={(val) => {
-          const selectedProvince = PROVINCES?.find(
-            (prov) => prov.nama.toLowerCase() === val,
-          );
-          onProvinceChange(selectedProvince);
-        }}
+        onValueChange={(val) => onProvinceChange(val === "-" ? "" : val)}
       >
-        <SelectTrigger>
-          <SelectValue placeholder="Pilih provinsi" />
+        <SelectTrigger className="uppercase">
+          <SelectValue placeholder="SEMUA PROVINSI" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="-">Semua Provinsi</SelectItem>
-          {PROVINCES?.map((province, index) => (
+          <SelectItem value="-">SEMUA PROVINSI</SelectItem>
+          {Array.from(provinces.values())?.map((province) => (
             <SelectItem
-              key={`${index}_${province.id}`}
-              value={province.nama.toLowerCase()}
-              className="capitalize"
+              key={province}
+              value={province.toLowerCase()}
+              className="uppercase"
             >
-              {province.nama.toLowerCase()}
+              {province}
             </SelectItem>
           ))}
         </SelectContent>

@@ -56,7 +56,7 @@ const Hero = () => {
         <div className="flex flex-col gap-4">
           <div className="flex items-center mx-auto p-2 bg-secondary md:max-w-2xl w-full rounded gap-1">
             <Search />
-            <FilterDialog isHomePage searchParams={{}} />
+            <FilterDialog searchParams={{}} />
           </div>
           <Link
             href="/properties"
