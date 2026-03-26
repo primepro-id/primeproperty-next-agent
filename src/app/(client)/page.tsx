@@ -7,23 +7,12 @@ import Image from "next/image";
 import { Search } from "./properties/_components/fillters/search";
 import { FilterDialog } from "./properties/_components/fillters";
 import { Faq } from "./properties/_components/faq";
-import { Metadata } from "next";
-import { createMetadata } from "@/lib/metadata";
 import { createWebsiteSchema } from "@/lib/schema";
 import Script from "next/script";
 import { PrimeProperties } from "./properties/_components/prime-properties";
 import { findManyDevelopers } from "@/lib/api/developers";
 import { env } from "@/lib/env";
 
-const seo = {
-  title: "Jual Beli Rumah Apartemen | PRIMEPRO INDONESIA",
-  description:
-    "Your private key to exceptional properties. Jual dan beli properti secara online dengan layanan terbaik di PrimePro Indonesia.",
-  keywords:
-    "PrimePro Indonesia, Properti, Properti Prime, Properti Jakarta Selatan",
-  path: "/",
-};
-export const metadata: Metadata = createMetadata(seo);
 export const revalidate = 0;
 
 const Hero = () => {
