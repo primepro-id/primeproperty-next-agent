@@ -9,7 +9,6 @@ import { FilterDialog } from "./properties/_components/fillters";
 import { Faq } from "./properties/_components/faq";
 import { createWebsiteSchema } from "@/lib/schema";
 import Script from "next/script";
-import { PrimeProperties } from "./properties/_components/prime-properties";
 import { findManyDevelopers } from "@/lib/api/developers";
 import { env } from "@/lib/env";
 
