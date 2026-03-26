@@ -158,10 +158,7 @@ const HomePage = () => {
       <div className="flex flex-col gap-8 ">
         <div className="container mx-auto flex flex-col gap-8 p-4 sm:px-0">
           <Hero />
-          <div className="lg:px-4 flex flex-col gap-16">
-            <PopularProperties />
-            <PrimeProperties />
-          </div>
+          <PopularProperties />
           <Partners />
           <Developers />
           <Faq defaultTab="PRIMEPRO" />
