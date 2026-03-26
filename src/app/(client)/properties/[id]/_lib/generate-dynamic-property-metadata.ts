@@ -1,4 +1,5 @@
 import { findPropertyById } from "@/lib/api/properties/find-property-by-id";
+import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { env } from "@/lib/env";
 import { Metadata } from "next";
 
@@ -9,11 +10,20 @@ export const generateDynamicPropertyMetadata = async (
 
   const property = await findPropertyById(Number(id));
   if (property.data) {
+    const purchaseStatus =
+      property.data[0].purchase_status === PurchaseStatus.ForRent
+        ? "disewa"
+        : "dijual";
+    const description =
+      property.data[0].building_type +
+      " " +
+      purchaseStatus +
+      " " +
+      `di ${property.data[0].street}, ${property.data[0].regency}. ` +
+      `Properti dipasang oleh ${property.data[1].fullname}`;
     return {
-      title: property.data[0].title,
-      description: property.data[0].description_seo
-        ? property.data[0].description_seo
-        : property.data[0].description,
+      title: property.data[0].title + " " + "PRIMEPRO INDONESIA",
+      description,
       keywords: property.data[0].site_path
         .replaceAll("-", " ")
         .replaceAll("/", ","),
@@ -26,7 +36,7 @@ export const generateDynamicPropertyMetadata = async (
       },
       openGraph: {
         title: property.data[0].title,
-        description: property.data[0].description,
+        description,
         siteName: "Primepro Indonesia",
         locale: "id_ID",
       },

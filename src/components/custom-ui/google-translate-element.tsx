@@ -18,7 +18,7 @@ export const GoogleTranslateElement = () => {
     window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
   return (
-    <div className="relative ">
+    <div className="relative">
       <Script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
       <div id="google_translate_element" />
     </div>

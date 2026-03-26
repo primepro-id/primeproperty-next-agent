@@ -34,7 +34,7 @@ export const Properties = async ({ searchParams }: PropertiesProps) => {
         }}
       />
       <PropertiesFilter searchParams={searchParams} />
-      <div className="container mx-auto flex flex-col gap-4 py-4 px-2">
+      <div className="container mx-auto flex flex-col gap-4 lg:gap-8 py-4 px-2">
         <div className="flex items-center justify-between">
           <PropertiesTitle
             propertyCount={properties.data.total_data}

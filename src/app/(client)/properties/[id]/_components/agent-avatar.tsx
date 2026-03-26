@@ -18,6 +18,7 @@ export const AgentAvatar = ({ property, className }: AgentAvatarProps) => {
           <Image
             src={env.NEXT_PUBLIC_S3_ENDPOINT + property[1].profile_picture_url}
             alt={property[1].fullname}
+            title={`Agen properti ${property[1].fullname}`}
             width={100}
             height={100}
             className="w-full h-full rounded-full object-cover"
@@ -32,8 +33,8 @@ export const AgentAvatar = ({ property, className }: AgentAvatarProps) => {
         href={`/agents/${property[1].fullname.replaceAll(" ", "-")}`}
         className="flex flex-col hover:underline hover:underline-offset-4"
       >
-        <span className="text-sm capitalize">{property[1].fullname}</span>
-        <span className="text-xs text-muted-foreground">PrimePro Agent</span>
+        <span className="capitalize font-sans">{property[1].fullname}</span>
+        <span className="text-muted-foreground">AGEN PRIMEPRO INDONESIA</span>
       </Link>
     </div>
   );

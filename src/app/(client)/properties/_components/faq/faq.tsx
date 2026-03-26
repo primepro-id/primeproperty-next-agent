@@ -13,22 +13,20 @@ export const Faq = ({ defaultTab }: FaqProps) => {
     <>
       <FaqSchema />
       <section className="flex flex-col max-w-2xl gap-4 my-4" id="faq">
-        <h2 className="text-foreground text-2xl font-sans">
-          FAQ Primepro Indonesia
-        </h2>
+        <h3 className="text-foreground font-sans">FAQ PRIMEPRO INDONESIA</h3>
         <Tabs defaultValue={defaultTab} className="max-w-2xl">
           <TabsList className="rounded">
             <TabsTrigger
               value="PRIMEPRO"
               className="data-[state=active]:font-bold font-sans"
             >
-              GENERAL FAQ
+              FAQ UMUM
             </TabsTrigger>
             <TabsTrigger
               value="PROPERTY"
               className="data-[state=active]:font-bold font-sans"
             >
-              PROPERTY FAQ
+              FAQ PROPERTI
             </TabsTrigger>
           </TabsList>
           <TabsContent value="PRIMEPRO">

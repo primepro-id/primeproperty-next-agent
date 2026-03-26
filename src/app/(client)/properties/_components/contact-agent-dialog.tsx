@@ -130,7 +130,7 @@ export const ContactAgentDialog = ({
         ) : isWhatsapp ? (
           <>
             <MdWhatsapp />
-            WhatsApp
+            WHATSAPP
           </>
         ) : (
           <>

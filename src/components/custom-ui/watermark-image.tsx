@@ -17,10 +17,12 @@ export const WatermarkImage = ({
     <Watermark
       image="/images/watermark.png"
       rotate={0}
+      height={50}
+      width={50}
       onContextMenu={(e) => e.preventDefault()}
       {...restOfWatermarkProps}
     >
-      <Image alt={alt} {...restOfImageProps} />
+      <Image alt={alt} title={alt} {...restOfImageProps} />
     </Watermark>
   );
 };

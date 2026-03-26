@@ -50,16 +50,16 @@ export const FAQ_ONE = [
 const FaqOne = () => {
   return (
     <div className="flex flex-col ">
-      <h3 className="text-muted-foreground text-xl">
+      <h3 className="text-muted-foreground">
         A. Informasi Titip Jual &amp; Sewa Di Primepro Indonesia
       </h3>
       <Accordion type="single" collapsible className="w-full">
         {FAQ_ONE.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
-            <AccordionTrigger className="text-left gap-4 text-lg tracking-tight ">
+            <AccordionTrigger className="text-left gap-4 tracking-tight ">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="text-base leading-7">
+            <AccordionContent className="leading-7">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>
@@ -98,16 +98,16 @@ export const FAQ_TWO = [
 const FaqTwo = () => {
   return (
     <div className="flex flex-col ">
-      <h3 className="text-muted-foreground text-xl">
+      <h3 className="text-muted-foreground">
         B. Informasi cari beli dan sewa Properti
       </h3>
       <Accordion type="single" collapsible className="w-full">
         {FAQ_TWO.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
-            <AccordionTrigger className="text-left gap-4 text-lg tracking-tight">
+            <AccordionTrigger className="text-left gap-4 tracking-tight">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="text-base leading-7">
+            <AccordionContent className="leading-7">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>
@@ -148,16 +148,16 @@ export const FAQ_THREE = [
 const FaqThree = () => {
   return (
     <div className="flex flex-col ">
-      <h3 className="text-muted-foreground text-xl">
+      <h3 className="text-muted-foreground">
         C. Informasi tentang PrimePro Indonesia
       </h3>
       <Accordion type="single" collapsible className="w-full">
         {FAQ_THREE.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
-            <AccordionTrigger className="text-left gap-4 text-lg tracking-tight">
+            <AccordionTrigger className="text-left gap-4 tracking-tight">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="text-base leading-7">
+            <AccordionContent className="leading-7">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>

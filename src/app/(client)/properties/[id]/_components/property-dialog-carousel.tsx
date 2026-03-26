@@ -32,7 +32,7 @@ export const PropertyDialogCarousel = ({
         onClick={onCloseClick}
         className={cn(
           buttonVariants({ size: "icon" }),
-          "absolute -top-2 -right-2 z-50 rounded-full",
+          "absolute -top-2 -right-2 z-50 rounded-full border border-background",
         )}
       >
         <LuX />
@@ -52,7 +52,7 @@ export const PropertyDialogCarousel = ({
                     width: 1024,
                     height: 768,
                     className:
-                      "w-full rounded-md size-96 md:h-[75vh] object-cover aspect-square",
+                      "w-full rounded-lg size-96 md:h-[75vh] object-fill aspect-square",
                   }}
                 />
                 {propImg.indonesian_label && (

@@ -25,7 +25,7 @@ const MobileAgentCard = ({ property }: AgentCardProps) => {
   return (
     <>
       <AgentAvatar property={property} className="lg:hidden" />
-      <div className="grid grid-cols-2 gap-4 sticky bottom-0 w-full p-4 border-t bg-background lg:hidden ">
+      <div className="grid grid-cols-2 gap-4 sticky bottom-0 w-full py-4 border-t bg-background lg:hidden ">
         <ContactAgentDialog isWhatsapp={false} propertyWithAgent={property} />
         <ContactAgentDialog isWhatsapp={true} propertyWithAgent={property} />
       </div>
@@ -43,7 +43,7 @@ const MobileAgentCard = ({ property }: AgentCardProps) => {
 
 const DesktopAgentCard = ({ property }: AgentCardProps) => {
   return (
-    <div className="hidden lg:flex flex-col gap-4 sticky top-4 h-fit">
+    <div className="hidden lg:flex flex-col gap-4 sticky top-4 h-fit w-96">
       <div className="border rounded p-4 flex flex-col gap-4">
         <AgentAvatar property={property} />
         <div className="grid grid-cols-2 gap-4 w-full border-t pt-4">
@@ -68,7 +68,7 @@ export const DynamicProperty = async ({ propertyId }: DynamicPropertyProps) => {
   const relatedAreaLd = createRelatedAreaSchema(property.data[0]);
   return (
     <>
-      <div className="relative container mx-auto lg:px-2">
+      <div className="relative container mx-auto px-2 py-4 flex flex-col gap-2 lg:gap-4">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -88,12 +88,12 @@ export const DynamicProperty = async ({ propertyId }: DynamicPropertyProps) => {
           }}
         />
         <PropertyImages propertyWithAgent={property.data} />
-        <div className="py-4 px-2 md:px-0">
-          <div className="flex flex-col gap-4  lg:gap-8 lg:flex-row">
-            <PropertyOverview property={property.data} />
-            <MobileAgentCard property={property.data} />
-            <DesktopAgentCard property={property.data} />
-          </div>
+        <div className="flex flex-col gap-4 lg:flex-row md:pt-4">
+          <PropertyOverview property={property.data} />
+          <MobileAgentCard property={property.data} />
+          <DesktopAgentCard property={property.data} />
+        </div>
+        <div className="mt-16 flex flex-col gap-16">
           <RelatedProperties propertyId={propertyId} />
           <Faq defaultTab="PROPERTY" />
         </div>
