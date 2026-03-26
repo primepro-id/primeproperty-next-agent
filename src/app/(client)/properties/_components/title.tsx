@@ -32,7 +32,7 @@ const Title = ({
   searchParams,
   className,
 }: PropertiesTitleProps) => {
-  const baseClassname = "flex gap-1 text-3xl font-sans flex-wrap capitalize";
+  const baseClassname = "flex gap-1 font-sans flex-wrap uppercase";
   if (
     propertyCount === 0 &&
     Object.values(searchParams).filter((val) => val).length === 0

@@ -20,24 +20,22 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
 
   return (
     <div id="related" className={cn("rounded border h-fit", className)}>
-      <h3 className="text-lg font-bold border-b py-2 px-4">
-        Pencarian Terkait
-      </h3>
+      <h3 className="border-b py-2 px-4">PENCARIAN TERKAIT</h3>
 
       <div className="flex flex-col gap-2">
         <Link
           className={cn(
             buttonVariants({
               variant: "link",
-              className: "uppercase justify-between",
+              className: "capitalize text-base justify-between",
             }),
           )}
-          title={`Properti di ${property.province}`}
-          aria-label={`Properti di ${property.province}`}
+          title={`${property.building_type} ${purchaseStatus} ${property.province}`}
+          aria-label={`${property.building_type} ${purchaseStatus} ${property.province}`}
           href={`/properties/filter/${purchaseStatus}/${buildingType}/${province}`}
         >
           <span>
-            {property.building_type} di {property.province}
+            {property.building_type} {purchaseStatus} {property.province}
           </span>
           <LuChevronRight />
         </Link>
@@ -45,15 +43,15 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
           className={cn(
             buttonVariants({
               variant: "link",
-              className: "uppercase justify-between",
+              className: "capitalize text-base justify-between",
             }),
           )}
-          title={`Properti di ${property.regency}`}
-          aria-label={`Properti di ${property.regency}`}
+          title={`${property.building_type} ${purchaseStatus} ${property.regency}`}
+          aria-label={`${property.building_type} ${purchaseStatus} ${property.regency}`}
           href={`/properties/filter/${purchaseStatus}/${buildingType}/${province}/${regency}`}
         >
           <span>
-            {property.building_type} di {property.regency}
+            {property.building_type} {purchaseStatus} {property.regency}
           </span>
           <LuChevronRight />
         </Link>
@@ -61,15 +59,15 @@ export const RelatedSearch = ({ property, className }: RelatedSearchProps) => {
           className={cn(
             buttonVariants({
               variant: "link",
-              className: "uppercase justify-between",
+              className: "capitalize text-base justify-between",
             }),
           )}
-          title={`Properti di ${property.street}`}
-          aria-label={`Properti di ${property.street}`}
+          title={`${property.building_type} ${purchaseStatus} ${property.street}`}
+          aria-label={`${property.building_type} ${purchaseStatus} ${property.street}`}
           href={`/properties/filter/${purchaseStatus}/${buildingType}/${province}/${regency}/${street}`}
         >
           <span>
-            {property.building_type} di {property.street}
+            {property.building_type} {purchaseStatus} {property.street}
           </span>
           <LuChevronRight />
         </Link>

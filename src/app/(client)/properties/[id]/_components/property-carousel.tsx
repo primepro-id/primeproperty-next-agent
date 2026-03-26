@@ -19,6 +19,7 @@ type ImageCarouselProps = {
   images: PropertyImage[];
   onImageClick: (index: number) => void;
   propertyTitle: string;
+  buildingType: string;
 };
 
 const ImageCarousel = ({
@@ -26,6 +27,7 @@ const ImageCarousel = ({
   images,
   propertyTitle,
   onImageClick,
+  buildingType,
 }: ImageCarouselProps) => {
   const router = useRouter();
   return (
@@ -56,12 +58,13 @@ const ImageCarousel = ({
                     height: 768,
                     priority: true,
                     className:
-                      "w-full h-60 md:h-80 lg:h-96 aspect-16/9 object-cover",
+                      "w-full h-60 md:h-80 lg:h-96 aspect-16/9 object-fill rounded-lg",
                   }}
                 />
                 {propImg.indonesian_label && (
-                  <div className="bg-primary text-primary-foreground text-xs flex gap-1 absolute right-1 top-1 items-center px-2 py-1 rounded">
+                  <div className="bg-primary text-primary-foreground text-xs flex gap-1 absolute right-1 bottom-1 items-center px-2 py-1 rounded">
                     <LuTag />
+                    <span>ahoi</span>
                     <span>{propImg.indonesian_label}</span>
                   </div>
                 )}
@@ -70,8 +73,8 @@ const ImageCarousel = ({
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="bg-background/75 text-foreground absolute right-1 bottom-1 text-xs p-1 rounded">
-        Click to zoom, slide to change
+      <div className="bg-primary text-primary-foreground absolute top-1 right-1 text-xs p-1 rounded uppercase">
+        {buildingType}
       </div>
     </div>
   );
@@ -89,7 +92,7 @@ const ImageThumbnail = ({
   onImageClick,
 }: ImageThumbnailProps) => {
   return (
-    <div className="grid grid-cols-3 lg:grid-cols-2 lg:h-80">
+    <div className="grid grid-cols-3 lg:grid-cols-2 lg:h-80 gap-1 lg:gap-2">
       {images.slice(0, 3).map((img, index) => (
         <React.Fragment key={`${index}_${img.indonesian_label}_preview`}>
           <WatermarkImage
@@ -102,7 +105,7 @@ const ImageThumbnail = ({
               width: 512,
               height: 512,
               className:
-                "w-full h-20 md:h-40 lg:h-48 cursor-pointer object-cover aspect-square",
+                "w-full h-20 md:h-40 lg:h-48 cursor-pointer object-cover aspect-square rounded-lg",
               onClick: () => onImageClick(index),
             }}
           />
@@ -119,7 +122,7 @@ const ImageThumbnail = ({
             alt: images[0].indonesian_label ?? propertyTitle,
             width: 512,
             height: 512,
-            className: "w-full h-48 cursor-pointer",
+            className: "w-full h-48 cursor-pointer rounded-lg",
             onClick: () => onImageClick(0),
           }}
         />
@@ -154,7 +157,7 @@ export const PropertyCarousel = ({
 
   return (
     <div
-      className="lg:grid lg:grid-cols-3 xl:grid-cols-4"
+      className="grid lg:grid-cols-3 xl:grid-cols-4 gap-1 lg:gap-2"
       onContextMenu={(e) => e.preventDefault()}
     >
       <ImageCarousel
@@ -162,6 +165,7 @@ export const PropertyCarousel = ({
         images={propertyWithAgent[0].images}
         propertyTitle={propertyWithAgent[0].title}
         onImageClick={onImageClick}
+        buildingType={propertyWithAgent[0].building_type}
       />
       <ImageThumbnail
         images={propertyWithAgent[0].images}

@@ -4,6 +4,6 @@ export enum RentTimeUnit {
 }
 
 export const RENT_TIME = {
-  [RentTimeUnit.Monthly]: "per bulan",
-  [RentTimeUnit.Yearly]: "per tahun",
+  [RentTimeUnit.Monthly]: "/bulan",
+  [RentTimeUnit.Yearly]: "/tahun",
 };

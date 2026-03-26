@@ -19,24 +19,24 @@ type PropertyCardProps = {
 
 const PropertyContent = ({ propertyWithAgent }: PropertyCardProps) => {
   return (
-    <div className="flex flex-col gap-1 mt-1">
-      <div className="flex items-center gap-2 ">
-        <strong className="text-2xl flex items-center gap-1 group-hover:underline">
-          <span>
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2 text-primary font-semibold">
+        <div className="font-semibold text-lg flex items-center gap-1 group-hover:underline">
+          <p>
             {formatToCurrencyUnit(
               propertyWithAgent[0].price,
               propertyWithAgent[0].currency,
             )}
-          </span>
+          </p>
           {propertyWithAgent[0].purchase_status === PurchaseStatus.ForRent &&
             propertyWithAgent[0].rent_time && (
-              <span>{RENT_TIME[propertyWithAgent[0].rent_time]}</span>
+              <p>{RENT_TIME[propertyWithAgent[0].rent_time]}</p>
             )}
-        </strong>
+        </div>
 
-        <span
+        <p
           className={cn(
-            "text-md text-muted-foreground",
+            "text-md",
             propertyWithAgent[0].price_down_payment &&
               propertyWithAgent[0].price_down_payment > 0
               ? "block"
@@ -51,19 +51,16 @@ const PropertyContent = ({ propertyWithAgent }: PropertyCardProps) => {
               propertyWithAgent[0].currency,
             )}
           )
-        </span>
+        </p>
       </div>
-      <h2 className="text-xl group-hover:underline line-clamp-2">
+      <p className=" text-lg group-hover:underline line-clamp-2 font-sans">
         {propertyWithAgent[0].title}
-      </h2>
-      <h3 className="text-sm font-semibold text-muted-foreground group-hover:underline capitalize flex gap-1">
-        {propertyWithAgent[0].building_type} <p className="lowercase">di</p>
+      </p>
+      <p className="text-muted-foreground group-hover:underline capitalize flex gap-1">
         {propertyWithAgent[0].street}, {propertyWithAgent[0].regency}
-      </h3>
-      <p className="text-xs line-clamp-2 mb-1">
-        {propertyWithAgent[0].description_seo
-          ? propertyWithAgent[0].description_seo
-          : propertyWithAgent[0].description}
+      </p>
+      <p className="text-sm line-clamp-2 my-2 text-muted-foreground">
+        {propertyWithAgent[0].description}
       </p>
       <Specifications propertyWithAgent={propertyWithAgent} />
     </div>
@@ -82,7 +79,7 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
         title={propertyWithAgent[0].title}
         aria-label={propertyWithAgent[0].title}
         href={`/properties/${propertyWithAgent[0].id}`}
-        className="relative group"
+        className="relative group flex flex-col gap-2"
       >
         {propertyWithAgent?.[2] && (
           <div className="bg-white absolute top-1 left-1 z-10 rounded p-1 opacity-50">
@@ -108,7 +105,7 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
           }}
         />
 
-        <div className="bg-background bg-opacity-50 px-2 py-1 text-xs rounded capitalize absolute top-1 right-1">
+        <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded capitalize absolute top-1 right-1">
           {propertyWithAgent[0].building_type}
         </div>
         <PropertyContent propertyWithAgent={propertyWithAgent} />
@@ -118,7 +115,7 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
           title={propertyWithAgent[1].fullname}
           aria-label={propertyWithAgent[1].fullname}
           href={`/agents/${propertyWithAgent[1].fullname.replaceAll(" ", "-")}`}
-          className="flex items-center gap-1 hover:underline hover:underline-offset-4"
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
         >
           <div className="w-8 h-8">
             {propertyWithAgent[1].profile_picture_url ? (
@@ -136,12 +133,14 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
               <LuCircleUser className="w-full h-full text-muted-foreground/50" />
             )}
           </div>
-          <div className="flex flex-col text-xs">
-            <span>
+          <div className="flex flex-col font-sans ">
+            <span className="text-xs text-muted-foreground">
               Diperbarui{" "}
               {formatDateToIndonesian(propertyWithAgent[0].updated_at)}
             </span>
-            <span className="capitalize">{propertyWithAgent[1].fullname}</span>
+            <span className="text-sm capitalize">
+              {propertyWithAgent[1].fullname}
+            </span>
           </div>
         </Link>
         <ContactAgentDialog
