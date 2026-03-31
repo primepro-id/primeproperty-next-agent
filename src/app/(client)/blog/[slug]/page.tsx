@@ -44,11 +44,14 @@ const BlogSlug = async ({ params }: BlogSlugProps) => {
         </div>
         <div className="container gap-16 flex flex-col p-4 mx-auto ">
           <div className="flex flex-col gap-4 md:flex-row md:justify-between">
-
-          <BlogPost article={article} />
-          <BlogRelated slug={slug} allArticles={allArticles} />
+            <BlogPost article={article} />
+            <BlogRelated slug={slug} allArticles={allArticles} />
           </div>
-          {article.showRelatedProperties && <BlogRelatedProperties relatedProperties={article.relatedProperties} />}
+          {article.showRelatedProperties && (
+            <BlogRelatedProperties
+              relatedProperties={article.relatedProperties}
+            />
+          )}
         </div>
       </div>
     </>

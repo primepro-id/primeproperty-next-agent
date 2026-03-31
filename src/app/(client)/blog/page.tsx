@@ -6,7 +6,6 @@ import Image from "next/image";
 import { AllArticles, Latest, Spotlight } from "./_components";
 import {
   PopularProperties,
-  RelatedProperties,
 } from "../properties/_components";
 
 export const revalidate = 0;
