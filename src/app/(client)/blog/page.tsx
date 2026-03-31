@@ -4,6 +4,7 @@ import { findAllArticles } from "@/lib/dato/find-all-articles";
 import { generateBlogHomeSchema } from "./_lib/generate-blog-home-schema";
 import Image from "next/image";
 import { AllArticles, Latest, Spotlight } from "./_components";
+import { PopularProperties } from "../properties/_components";
 
 export const revalidate = 0;
 
@@ -74,6 +75,7 @@ const Blog = async () => {
           <Latest articles={allArticles.slice(1, 4)} />
         </div>
         <AllArticles articles={allArticles.slice(4, allArticles.length)} />
+        <PopularProperties />
       </section>
     </>
   );

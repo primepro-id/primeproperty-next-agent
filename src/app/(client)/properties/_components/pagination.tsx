@@ -72,7 +72,7 @@ export const Pagination = ({
           ref={typingTimeoutRef}
           min={1}
           max={totalPages}
-          className="h-8 w-12"
+          className="h-8 w-10"
           placeholder={searchParams.page ? searchParams.page : "1"}
           onChange={(e) => {
             if (isNaN(+e.target.value)) {

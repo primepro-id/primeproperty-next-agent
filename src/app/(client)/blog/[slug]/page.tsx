@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { generateBlogSchema } from "../_lib/generate-blog-schema";
 import { BlogPost } from "./_components/blog-post";
 import { BlogRelated } from "./_components/blog-related";
+import { BlogRelatedProperties } from "./_components/blog-related-properties";
 
 export const revalidate = 0;
 
@@ -41,9 +42,16 @@ const BlogSlug = async ({ params }: BlogSlugProps) => {
             priority
           />
         </div>
-        <div className="container flex flex-col gap-4 p-4 mx-auto md:flex-row md:justify-between">
-          <BlogPost article={article} />
-          <BlogRelated slug={slug} allArticles={allArticles} />
+        <div className="container gap-16 flex flex-col p-4 mx-auto ">
+          <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+            <BlogPost article={article} />
+            <BlogRelated slug={slug} allArticles={allArticles} />
+          </div>
+          {article.showRelatedProperties && (
+            <BlogRelatedProperties
+              relatedProperties={article.relatedProperties}
+            />
+          )}
         </div>
       </div>
     </>
