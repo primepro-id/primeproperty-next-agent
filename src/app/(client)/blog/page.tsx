@@ -4,9 +4,7 @@ import { findAllArticles } from "@/lib/dato/find-all-articles";
 import { generateBlogHomeSchema } from "./_lib/generate-blog-home-schema";
 import Image from "next/image";
 import { AllArticles, Latest, Spotlight } from "./_components";
-import {
-  PopularProperties,
-} from "../properties/_components";
+import { PopularProperties } from "../properties/_components";
 
 export const revalidate = 0;
 
