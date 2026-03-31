@@ -18,6 +18,8 @@ const ARTICLE_QUERY = gql`
         title
         description
       }
+      showRelatedProperties
+      relatedProperties
     }
     allArticles(filter: { slug: { neq: $slug } }, first: 10) {
       title
