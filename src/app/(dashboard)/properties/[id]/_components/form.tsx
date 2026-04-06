@@ -200,7 +200,6 @@ export const EditPropertyForm = ({
         propertyWithAgent[0].id,
         propertyApiData,
       );
-      console.log("b", property.data?.configurations);
       if (property.status !== 200) {
         toast.error("Error: please check your input and try again");
         return;
