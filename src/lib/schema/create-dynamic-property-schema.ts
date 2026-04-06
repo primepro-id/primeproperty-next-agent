@@ -26,22 +26,10 @@ export const createDynamicPropertySchema = (property: Property) => {
       url: env.NEXT_PUBLIC_HOST_URL,
     },
     description: property.description,
-    floorSize: {
-      "@type": "QuantitativeValue",
-      unitCode: "MTK",
-      value: property.measurements.building_area,
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "",
-      longitude: "",
-    },
     image: property.images.map(
       (image) => `${env.NEXT_PUBLIC_S3_ENDPOINT}${image.path}`,
     ),
     name: property.title,
-    numberOfBathroomsTotal: property.specifications.bathrooms,
-    numberOfBedrooms: property.specifications.bedrooms,
     offers: {
       "@type": "Offer",
       availability: "https://schema.org/InStock",

@@ -7,11 +7,15 @@ import {
   Registration,
 } from "./_components";
 import { Cta } from "./_components/cta";
+import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Peluang Franchise - PRIMEPRO INDONESIA",
   description:
     "Kembangkan Bisnis Anda dengan Jaringan Properti Terkemuka di Indonesia",
+  alternates: {
+    canonical: env.NEXT_PUBLIC_API_URL + "/franchise",
+  },
 };
 
 const FranchisePage = () => {

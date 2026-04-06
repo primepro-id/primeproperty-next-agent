@@ -24,9 +24,10 @@ export const generateDynamicPropertyMetadata = async (
     return {
       title: property.data[0].title + " " + "PRIMEPRO INDONESIA",
       description,
-      keywords: property.data[0].site_path
-        .replaceAll("-", " ")
-        .replaceAll("/", ","),
+      keywords:
+        property.data[0].site_path.replaceAll("-", " ").replaceAll("/", ",") +
+        "|" +
+        property.data[0].title,
       twitter: {
         title: property.data[0].title,
         site: "@primeproindonesia",

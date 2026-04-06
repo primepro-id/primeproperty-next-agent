@@ -40,16 +40,9 @@ export const createPropertiesSchema = (
           },
           name: property[0].title,
           description: property[0].description.replaceAll("\n", " "),
-          floorSize: {
-            "@type": "QuantitativeValue",
-            unitCode: "MTK",
-            value: property[0].measurements.building_area,
-          },
           image: [
             `${env.NEXT_PUBLIC_S3_ENDPOINT}${property[0].images[0].path}`,
           ],
-          numberOfBathroomsTotal: property[0].specifications.bathrooms,
-          numberOfBedrooms: property[0].specifications.bedrooms,
           url: `${env.NEXT_PUBLIC_HOST_URL}/properties/${property[0].id}`,
         };
       }),
