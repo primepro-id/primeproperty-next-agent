@@ -108,6 +108,11 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
         <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded capitalize absolute top-1 right-1">
           {propertyWithAgent[0].building_type}
         </div>
+        {propertyWithAgent[0].configurations.is_njop_price && (
+          <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded capitalize absolute top-1 left-1 font-bold">
+            HARGA NJOP
+          </div>
+        )}
         <PropertyContent propertyWithAgent={propertyWithAgent} />
       </Link>
       <div className="flex items-center justify-between gap-4 w-full">

@@ -39,6 +39,7 @@ export type Property = {
   is_deleted: boolean;
   configurations: {
     is_popular?: boolean;
+    is_njop_price?: boolean;
   };
   currency: CurrencyUnit;
   rent_time?: RentTimeUnit;
