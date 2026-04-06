@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { PropertyWithAgent } from "@/lib/api/properties/find-properties";
+import { Property } from "@/lib/api/properties/type";
 import { updatePropertyConfigurations } from "@/lib/api/properties/update-property-configurations";
 import { cn } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
@@ -22,11 +23,15 @@ type DeleteDialogProps = {
 export const DeleteDialog = ({ row }: DeleteDialogProps) => {
   const queryClient = useQueryClient();
 
-  const handleClick = async (propertyId: number) => {
+  const handleClick = async (
+    propertyId: number,
+    configurations: Pick<Property, "configurations">,
+  ) => {
     try {
-      const updatedProperty = await updatePropertyConfigurations(propertyId, {
-        configurations: { is_popular: false },
-      });
+      const updatedProperty = await updatePropertyConfigurations(
+        propertyId,
+        configurations,
+      );
       if (updatedProperty.status !== 200) {
         toast.error("Fail to remove property, contact admin immediately");
         return;
@@ -57,7 +62,14 @@ export const DeleteDialog = ({ row }: DeleteDialogProps) => {
           </DialogClose>
           <DialogClose
             className={cn(buttonVariants({ variant: "destructive" }))}
-            onClick={() => handleClick(row.original[0].id)}
+            onClick={() =>
+              handleClick(row.original[0].id, {
+                configurations: {
+                  ...row.original[0].configurations,
+                  is_popular: false,
+                },
+              })
+            }
           >
             Yes remove
           </DialogClose>

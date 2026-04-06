@@ -31,6 +31,7 @@ export type PropertyFormData = {
   price_down_payment?: string;
   developer_id?: string;
   bank_id?: string;
+  is_njop_price?: string;
 };
 
 export const converPropertyFormDataToApiData = (

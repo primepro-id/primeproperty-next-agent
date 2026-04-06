@@ -41,6 +41,8 @@ import { CurrencyUnit } from "@/lib/api/properties/type";
 import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { RentTimeSelect } from "../../_components/form-input/rent-time-select";
 import { PriceDownPaymentInput } from "../../_components/form-input/price-down-payment";
+import { NjopSwitch } from "../../_components/form-input";
+import { updatePropertyConfigurations } from "@/lib/api/properties/update-property-configurations";
 
 type EditPropertyFormProps = {
   userRole?: AgentRole;
@@ -92,6 +94,9 @@ const PriceForm = ({ propertyWithAgent }: EditPropertyFormProps) => {
         <CurrencySelect
           onValueChange={setCurrency}
           defaultValue={propertyWithAgent[0].currency}
+        />
+        <NjopSwitch
+          isNjopPrice={propertyWithAgent[0].configurations?.is_njop_price}
         />
       </div>
     </div>
@@ -162,6 +167,7 @@ export const EditPropertyForm = ({
       facilities,
       images,
     );
+
     try {
       if (images.length < 3) {
         toast.error("Minimum 3 gambar");
@@ -181,12 +187,20 @@ export const EditPropertyForm = ({
         return;
       }
 
-      setStore("loadingText", "Creating property...");
+      setStore("loadingText", "Updating property...");
+
+      await updatePropertyConfigurations(propertyWithAgent[0].id, {
+        configurations: {
+          ...propertyWithAgent[0].configurations,
+          is_njop_price: dataEntry?.is_njop_price === "on",
+        },
+      });
       propertyApiData.images = uploadedImages;
       const property = await updateProperty(
         propertyWithAgent[0].id,
         propertyApiData,
       );
+      console.log("b", property.data?.configurations);
       if (property.status !== 200) {
         toast.error("Error: please check your input and try again");
         return;

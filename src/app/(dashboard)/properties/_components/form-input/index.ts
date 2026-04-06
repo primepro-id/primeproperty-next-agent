@@ -18,3 +18,4 @@ export * from "./sold-channel-select";
 export * from "./currency-select";
 export * from "./developer-select";
 export * from "./bank-select";
+export * from "./njop-switch";

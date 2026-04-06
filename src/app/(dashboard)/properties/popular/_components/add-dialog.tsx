@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { updatePropertyConfigurations } from "@/lib/api/properties/update-property-configurations";
+import { Property } from "@/lib/api/properties/type";
 
 export const AddDialog = () => {
   const queryClient = useQueryClient();
@@ -29,11 +30,15 @@ export const AddDialog = () => {
     }, 500);
   };
 
-  const handleClick = async (propertyId: number, is_popular: boolean) => {
+  const handleClick = async (
+    propertyId: number,
+    configurations: Pick<Property, "configurations">,
+  ) => {
     try {
-      const updatedProperty = await updatePropertyConfigurations(propertyId, {
-        configurations: { is_popular },
-      });
+      const updatedProperty = await updatePropertyConfigurations(
+        propertyId,
+        configurations,
+      );
       if (updatedProperty.status !== 200) {
         toast.error(
           "Fail to update popular property, contact admin immediately",
@@ -88,10 +93,12 @@ export const AddDialog = () => {
                 key={`${index}_${property[0].id}_search`}
                 className="justify-between h-fit"
                 onClick={() =>
-                  handleClick(
-                    property[0].id,
-                    !property[0].configurations.is_popular,
-                  )
+                  handleClick(property[0].id, {
+                    configurations: {
+                      ...property[0].configurations,
+                      is_popular: !property[0].configurations.is_popular,
+                    },
+                  })
                 }
               >
                 <div className="flex items-center gap-4 max-w-60 text-wrap text-left">

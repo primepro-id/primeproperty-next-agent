@@ -46,7 +46,6 @@ export const findProperties = async (query?: FindPropertyQuery) => {
   if (query?.developer_id && query?.developer_id !== "0") {
     path += `&developer_id=${query?.developer_id}`;
   }
-  console.log(query?.bank_id);
   if (query?.bank_id && query?.bank_id !== "0") {
     path += `&bank_id=${query?.bank_id}`;
   }

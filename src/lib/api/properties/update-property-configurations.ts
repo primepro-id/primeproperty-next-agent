@@ -3,7 +3,8 @@ import { Property } from "./type";
 
 type UpdatePropertyConfigurationsPayload = {
   configurations: {
-    is_popular: boolean;
+    is_popular?: boolean;
+    is_njop_price?: boolean;
   };
 };
 

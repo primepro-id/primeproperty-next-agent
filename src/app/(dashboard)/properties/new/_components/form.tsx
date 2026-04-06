@@ -15,6 +15,7 @@ import {
   CurrencySelect,
   DeveloperSelect,
   BankSelect,
+  NjopSwitch,
 } from "../../_components";
 import { GmapIframeInput } from "../../_components/form-input/gmap_iframe_input";
 import { LocationInput } from "../../_components/form-input/location-input";
@@ -42,6 +43,7 @@ import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
 import { useAgentTokenData } from "@/hooks/agents/use-agent-token-data";
 import { AgentRole } from "@/lib/api/agents/type";
+import { updatePropertyConfigurations } from "@/lib/api/properties/update-property-configurations";
 
 const SeoForm = () => {
   return (
@@ -71,6 +73,7 @@ const PriceForm = () => {
         <PriceInput currency={currency} />
         <PriceDownPaymentInput currency={currency} />
         <CurrencySelect onValueChange={setCurrency} />
+        <NjopSwitch />
       </div>
     </div>
   );
@@ -150,11 +153,20 @@ export const NewPropertyForm = () => {
       }
 
       setStore("loadingText", "Creating property...");
+
       propertyApiData.images = uploadedImages;
       const property = await createProperty(propertyApiData);
       if (property.status !== 201) {
         toast.error("Error: please check your input and try again");
         return;
+      }
+
+      if (property.data) {
+        await updatePropertyConfigurations(property?.data.id, {
+          configurations: {
+            is_njop_price: dataEntry?.is_njop_price === "on",
+          },
+        });
       }
 
       queryClient.invalidateQueries({ queryKey: ["properties"] });

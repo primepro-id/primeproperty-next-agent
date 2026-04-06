@@ -56,6 +56,7 @@ export type Property = {
   sold_channel: SoldChannel | null;
   configurations: {
     is_popular?: boolean;
+    is_njop_price?: boolean;
   };
   currency: CurrencyUnit;
   rent_time?: RentTimeUnit;
