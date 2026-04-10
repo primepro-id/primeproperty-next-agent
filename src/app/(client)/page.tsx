@@ -32,12 +32,12 @@ const Hero = () => {
             alt="Primepro Hero"
             width={175}
             height={175}
-            className="mb-8"
+            className="mb-8 size-40"
           />
           <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight lg:tracking-normal">
             PRIMEPRO INDONESIA
           </h1>
-          <h2 className="border-b text-xl lg:text-2xl tracking-tight text-muted-foreground lg:tracking-normal">
+          <h2 className="underline text-lg lg:text-xl tracking-tight text-muted-foreground lg:tracking-normal font-sans">
             Your Private Key to Exceptional Properties
           </h2>
         </div>
@@ -49,12 +49,12 @@ const Hero = () => {
           <Link
             href="/properties"
             className={cn(
-              buttonVariants({ variant: "outline" }),
-              "w-fit mx-auto",
+              buttonVariants({ variant: "default" }),
+              "w-fit mx-auto font-sans",
             )}
           >
             <LuHouse />
-            Lihat Semua
+            Semua Properti
           </Link>
         </div>
       </div>
@@ -155,7 +155,7 @@ const HomePage = () => {
   return (
     <>
       <div className="flex flex-col gap-8 ">
-        <div className="container mx-auto flex flex-col gap-8 p-4 sm:px-0">
+        <div className="container mx-auto flex flex-col gap-8 p-4 lg:px-0">
           <Hero />
           <PopularProperties />
           <Partners />

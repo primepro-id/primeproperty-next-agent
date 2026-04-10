@@ -99,7 +99,7 @@ export const Search = () => {
           type="text"
           id="property-search"
           placeholder="Cari tipe bangunan, lokasi, area"
-          className="rounded-l-none border-l-transparent focus-visible:ring-transparent focus-visible:ring-offset-transparent w-full pl-0 "
+          className="rounded-l-none border-l-transparent focus-visible:ring-transparent focus-visible:ring-offset-transparent w-full pl-0 placeholder:font-sans"
           onChange={onInputChange}
         />
       </>

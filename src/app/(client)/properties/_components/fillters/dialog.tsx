@@ -27,11 +27,11 @@ export const FilterDialog = ({ searchParams }: FilterDialogProps) => {
           buttonVariants({
             variant: "outline",
           }),
-          "relative",
+          "relative font-sans",
         )}
       >
         <LuListFilter />
-        FILTER &amp; CARI
+        Filter
         {Object.values(searchParams).filter((val) => val).length > 0 && (
           <span className="absolute -top-2 -right-2 bg-foreground text-background rounded-full h-4 w-4 text-xs font-semibold">
             {Object.values(searchParams).filter((val) => val).length}
