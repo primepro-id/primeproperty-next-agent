@@ -48,7 +48,7 @@ const ImageCarousel = ({
               key={`${index}_${propImg.path}_carousel`}
               onClick={() => onImageClick(index)}
             >
-              <div className="relative cursor-ew-resize">
+              <div className="relative cursor-zoom-in">
                 <WatermarkImage
                   watermarkProps={{}}
                   imageProps={{
@@ -58,7 +58,7 @@ const ImageCarousel = ({
                     height: 768,
                     priority: true,
                     className:
-                      "w-full h-60 md:h-80 lg:h-96 aspect-16/9 object-fill rounded-lg",
+                      "w-full h-60 md:h-80 lg:h-96 aspect-16/9 object-cover rounded-lg",
                   }}
                 />
                 {propImg.indonesian_label && (
