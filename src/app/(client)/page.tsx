@@ -11,6 +11,7 @@ import { createWebsiteSchema } from "@/lib/schema";
 import Script from "next/script";
 import { findManyDevelopers } from "@/lib/api/developers";
 import { env } from "@/lib/env";
+import { Banner } from "@/components/custom-ui/banner";
 
 export const revalidate = 0;
 
@@ -25,21 +26,23 @@ const Hero = () => {
           __html: JSON.stringify(websiteSchema).replace(/</g, "\\u003c"),
         }}
       />
-      <div className="flex flex-col gap-4 my-8 lg:my-16" id="website">
-        <div className="w-fit mx-auto flex flex-col gap-2 items-center justify-center ">
+      <div className="flex flex-col gap-4 " id="website">
+        <div className="w-fit mx-auto flex flex-col gap-8 md:flex-row items-center justify-center ">
           <Image
             src="/images/primepro.png"
             alt="Primepro Hero"
             width={175}
             height={175}
-            className="mb-8 size-40"
+            className="size-40 md:size-28"
           />
-          <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight lg:tracking-normal">
-            PRIMEPRO INDONESIA
-          </h1>
-          <h2 className="underline text-lg lg:text-xl tracking-tight text-muted-foreground lg:tracking-normal font-sans">
-            Your Private Key to Exceptional Properties
-          </h2>
+          <div className="flex flex-col gap-4 text-center md:text-left">
+            <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight lg:tracking-normal">
+              PRIMEPRO INDONESIA
+            </h1>
+            <h2 className="underline text-lg lg:text-xl tracking-tight text-muted-foreground lg:tracking-normal font-sans">
+              Your Private Key to Exceptional Properties
+            </h2>
+          </div>
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex items-center mx-auto p-2 bg-secondary md:max-w-2xl w-full rounded gap-1">
@@ -154,14 +157,13 @@ const Developers = async () => {
 const HomePage = () => {
   return (
     <>
-      <div className="flex flex-col gap-8 ">
-        <div className="container mx-auto flex flex-col gap-8 p-4 lg:px-0">
-          <Hero />
-          <PopularProperties />
-          <Partners />
-          <Developers />
-          <Faq defaultTab="PRIMEPRO" />
-        </div>
+      <div className="container mx-auto flex flex-col gap-8 px-4">
+        <Banner />
+        <Hero />
+        <PopularProperties />
+        <Partners />
+        <Developers />
+        <Faq defaultTab="PRIMEPRO" />
         <VideoThumbnail />
       </div>
     </>
