@@ -9,6 +9,7 @@ import { PropertiesTitle } from "./title";
 import { PropertyNotFound } from "./not-found";
 import { Faq } from "./faq";
 import { createPropertiesSchema } from "@/lib/schema/create-properties-schema";
+import { Banner } from "@/components/custom-ui/banner";
 
 type PropertiesProps = {
   searchParams: FindPropertyQuery;
@@ -61,6 +62,7 @@ export const Properties = async ({ searchParams }: PropertiesProps) => {
         </div>
 
         <Faq defaultTab="PROPERTY" />
+        <Banner />
       </div>
     </>
   );
