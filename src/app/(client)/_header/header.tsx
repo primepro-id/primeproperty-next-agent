@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { LogoLink } from "./logo-link";
 import { HeaderSheet } from "./sheet";
 import { Navigation } from "./navigation";
