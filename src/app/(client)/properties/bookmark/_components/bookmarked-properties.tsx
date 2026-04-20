@@ -9,7 +9,7 @@ import { BookmarkedPropertyTable } from "./bookmarked-property-table";
 export const BookmarkedProperties = () => {
   const bookmarkedProperties = useQuery(bookmarkedPropertyOptions());
   const properties = useProperties(
-    { ids: bookmarkedProperties.data },
+    {},
     {
       enabled:
         !!bookmarkedProperties.data && bookmarkedProperties?.data?.length > 0,
