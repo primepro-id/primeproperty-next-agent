@@ -11,7 +11,11 @@ import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { RENT_TIME } from "@/lib/enums/rent_time";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { LuCircleUser } from "react-icons/lu";
+import { LuBookmark, LuBookmarkCheck, LuCircleUser } from "react-icons/lu";
+import { Button } from "@/components/ui/button";
+import { bookmarkProperty } from "../_lib/bookmark-property";
+import { useQuery } from "@tanstack/react-query";
+import { bookmarkedPropertyOptions } from "@/hooks/local-storage/bookmark";
 
 type PropertyCardProps = {
   propertyWithAgent: PropertyWithAgent;
@@ -68,6 +72,7 @@ const PropertyContent = ({ propertyWithAgent }: PropertyCardProps) => {
 };
 
 export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
+  const bookmarkedQuery = useQuery(bookmarkedPropertyOptions());
   const baseImgPath = env.NEXT_PUBLIC_S3_ENDPOINT;
   const coverImage =
     propertyWithAgent[0].images.find((img) => img.is_cover) ??
@@ -81,8 +86,8 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
         href={`/properties/${propertyWithAgent[0].id}`}
         className="relative group flex flex-col gap-2"
       >
-        {propertyWithAgent?.[2] && (
-          <div className="bg-white absolute top-1 left-1 z-10 rounded p-1 opacity-50">
+        {propertyWithAgent[2] ? (
+          <div className="bg-white absolute top-1 left-1 z-10 rounded-lg p-1 opacity-75">
             <Image
               width={100}
               height={100}
@@ -90,6 +95,10 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
               alt={propertyWithAgent[2].name}
               className="w-full object-cover "
             />
+          </div>
+        ) : (
+          <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded absolute top-1 left-1 dark:font-semibold uppercase z-10">
+            {propertyWithAgent[0].building_type}
           </div>
         )}
         <WatermarkImage
@@ -106,13 +115,26 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
         />
 
         {propertyWithAgent[0].configurations.is_njop_price && (
-          <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded capitalize absolute top-1 left-1 dark:font-semibold">
+          <div className="bg-secondary text-primary-foreground px-2 py-1 text-xs rounded capitalize absolute top-[54%] right-1 font-semibold">
             HARGA NJOP
           </div>
         )}
-        <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded absolute top-1 right-1 dark:font-semibold uppercase font-sans">
-          {propertyWithAgent[0].building_type}
-        </div>
+        <Button
+          size="icon"
+          variant="outline"
+          className="absolute right-1 top-1"
+          onClick={(e) => {
+            e.preventDefault();
+            bookmarkProperty(propertyWithAgent[0].id);
+            bookmarkedQuery.refetch();
+          }}
+        >
+          {bookmarkedQuery?.data?.includes(propertyWithAgent[0].id) ? (
+            <LuBookmarkCheck />
+          ) : (
+            <LuBookmark />
+          )}
+        </Button>
         <PropertyContent propertyWithAgent={propertyWithAgent} />
       </Link>
       <div className="flex items-center justify-between gap-4 w-full">

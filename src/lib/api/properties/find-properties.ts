@@ -62,5 +62,6 @@ export const findProperties = async (query?: FindPropertyQuery) => {
   if (query?.is_prime) {
     path += `&is_prime=${query.is_prime}`;
   }
+
   return await fetchApi<JsonFindApiResponse<PropertyWithAgent>>(path);
 };
