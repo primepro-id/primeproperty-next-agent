@@ -1,0 +1,48 @@
+import { PropertyWithAgent } from "@/lib/api/properties/find-properties";
+import React, { Dispatch, SetStateAction } from "react";
+import { PropertyCard } from "../../_components/card";
+
+type BookmarkedPropertyTableProps = {
+  bookmarkedProperties?: number[];
+  properties: PropertyWithAgent[];
+  onBookmarkClickAction: () => void;
+  selectedProperties: number[];
+  setSelectedProperties: Dispatch<SetStateAction<number[]>>;
+};
+
+export const BookmarkedPropertyTable = ({
+  properties,
+  bookmarkedProperties,
+  onBookmarkClickAction,
+  selectedProperties,
+  setSelectedProperties,
+}: BookmarkedPropertyTableProps) => {
+  return (
+    <div className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]  w-full">
+      {properties?.map((p) => (
+        <React.Fragment key={p[0].id}>
+          <PropertyCard
+            isComparison
+            propertyWithAgent={p}
+            bookmarkedProperties={bookmarkedProperties}
+            onBookmarkClickAction={onBookmarkClickAction}
+            isComparisonActive={selectedProperties.includes(p[0].id)}
+            isComparisonDisabled={
+              selectedProperties.length >= 2 &&
+              !selectedProperties.includes(p[0].id)
+            }
+            onCompareClick={() => {
+              if (selectedProperties.includes(p[0].id)) {
+                const newSelected = [...selectedProperties];
+                newSelected.splice(selectedProperties.indexOf(p[0].id), 1);
+                setSelectedProperties(newSelected);
+              } else {
+                setSelectedProperties([...selectedProperties, p[0].id]);
+              }
+            }}
+          />
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};

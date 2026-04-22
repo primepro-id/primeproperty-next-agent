@@ -64,7 +64,6 @@ const ImageCarousel = ({
                 {propImg.indonesian_label && (
                   <div className="bg-primary text-primary-foreground text-xs flex gap-1 absolute right-1 bottom-1 items-center px-2 py-1 rounded">
                     <LuTag />
-                    <span>ahoi</span>
                     <span>{propImg.indonesian_label}</span>
                   </div>
                 )}

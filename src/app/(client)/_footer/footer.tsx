@@ -73,9 +73,9 @@ const Organization = () => {
           <MdOutlineLocationOn />
         </div>
         <div>
-          <p>Kemang Icon Jakarta,</p>
-          <p>Jl. Kemang Raya No 1,</p>
-          <p>Jakarta Selatan, 12730</p>
+          <p>Jl Pakubuwono VI No. 35,</p>
+          <p>Kebayoran Baru,</p>
+          <p>Jakarta Selatan, 12120</p>
         </div>
       </div>
     </div>
@@ -306,15 +306,17 @@ export const Footer = () => {
           __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
         }}
       />
-      <footer className="container mx-auto p-4 flex flex-col gap-8">
-        <FooterNavigation />
-        <div className="flex items-center lg:justify-center gap-4 text-muted-foreground ">
-          <LuCopyright />
-          <span className="text-xs ">
-            PrimePro Indonesia {new Date().getFullYear()}
-          </span>
-        </div>
-      </footer>
+      <div className="border-t border-t-primary">
+        <footer className="container mx-auto p-4 flex flex-col gap-8">
+          <FooterNavigation />
+          <div className="flex items-center lg:justify-center gap-4 text-muted-foreground ">
+            <LuCopyright />
+            <span className="text-xs ">
+              PrimePro Indonesia {new Date().getFullYear()}
+            </span>
+          </div>
+        </footer>
+      </div>
     </>
   );
 };

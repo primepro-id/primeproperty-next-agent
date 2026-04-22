@@ -1,58 +1,39 @@
 "use client";
 import { PropertyWithAgent } from "@/lib/api/properties/find-properties";
 import { env } from "@/lib/env";
-import { formatToCurrencyUnit } from "@/lib/intl/format-to-currency-unit";
 import Link from "next/link";
 import { ContactAgentDialog } from "./contact-agent-dialog";
 import { Specifications } from "./specifications";
-import { formatDateToIndonesian } from "@/lib/intl/format-date-to-indonesian";
 import { WatermarkImage } from "@/components/custom-ui/watermark-image";
-import { PurchaseStatus } from "@/lib/enums/purchase-status";
-import { RENT_TIME } from "@/lib/enums/rent_time";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { LuCircleUser } from "react-icons/lu";
+import {
+  LuBookmark,
+  LuBookmarkCheck,
+  LuCircle,
+  LuCircleCheck,
+} from "react-icons/lu";
+import { Button } from "@/components/ui/button";
+import { bookmarkProperty } from "../_lib/bookmark-property";
+import { Tooltip } from "react-tooltip";
+import { PropertyPriceTag } from "./property-price-tag";
+import { PropertyAgentInfo } from "./property-agent-info";
 
 type PropertyCardProps = {
   propertyWithAgent: PropertyWithAgent;
+  bookmarkedProperties?: number[];
+  onBookmarkClickAction: () => void;
+  isComparison?: boolean;
+  onCompareClick?: () => void;
+  isComparisonActive?: boolean;
+  isComparisonDisabled?: boolean;
 };
 
-const PropertyContent = ({ propertyWithAgent }: PropertyCardProps) => {
+const PropertyContent = ({
+  propertyWithAgent,
+}: Pick<PropertyCardProps, "propertyWithAgent">) => {
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-2 text-primary font-semibold">
-        <div className="font-semibold text-lg flex items-center gap-1 group-hover:underline">
-          <p>
-            {formatToCurrencyUnit(
-              propertyWithAgent[0].price,
-              propertyWithAgent[0].currency,
-            )}
-          </p>
-          {propertyWithAgent[0].purchase_status === PurchaseStatus.ForRent &&
-            propertyWithAgent[0].rent_time && (
-              <p>{RENT_TIME[propertyWithAgent[0].rent_time]}</p>
-            )}
-        </div>
-
-        <p
-          className={cn(
-            "text-md",
-            propertyWithAgent[0].price_down_payment &&
-              propertyWithAgent[0].price_down_payment > 0
-              ? "block"
-              : "hidden",
-          )}
-        >
-          (DP:{" "}
-          {propertyWithAgent?.[0]?.price_down_payment &&
-            propertyWithAgent?.[0]?.price_down_payment > 0 &&
-            formatToCurrencyUnit(
-              propertyWithAgent[0].price_down_payment,
-              propertyWithAgent[0].currency,
-            )}
-          )
-        </p>
-      </div>
+      <PropertyPriceTag propertyWithAgent={propertyWithAgent} />
       <p className=" text-lg group-hover:underline line-clamp-2 font-sans">
         {propertyWithAgent[0].title}
       </p>
@@ -67,7 +48,57 @@ const PropertyContent = ({ propertyWithAgent }: PropertyCardProps) => {
   );
 };
 
-export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
+const ComparisonInfo = ({
+  propertyWithAgent,
+  onCompareClick,
+  isComparisonActive,
+  isComparisonDisabled,
+}: {
+  propertyWithAgent: PropertyWithAgent;
+  onCompareClick?: () => void;
+  isComparisonActive?: boolean;
+  isComparisonDisabled?: boolean;
+}) => {
+  return (
+    <div className="flex items-center justify-between gap-4 w-full">
+      <ContactAgentDialog
+        isWhatsapp={true}
+        propertyWithAgent={propertyWithAgent}
+      />
+
+      <Tooltip id="compare-btn-tooltip" />
+      <Button
+        data-tooltip-id="compare-btn-tooltip"
+        data-tooltip-content={
+          isComparisonDisabled ? "2 properti sudah terpilih" : ""
+        }
+        data-tooltip-place="top"
+        variant={
+          isComparisonDisabled
+            ? "ghost"
+            : isComparisonActive
+              ? "default"
+              : "outline"
+        }
+        onClick={onCompareClick}
+        disabled={isComparisonDisabled}
+      >
+        {isComparisonActive ? <LuCircleCheck /> : <LuCircle />}
+        COMPARE
+      </Button>
+    </div>
+  );
+};
+
+export const PropertyCard = ({
+  propertyWithAgent,
+  onBookmarkClickAction,
+  bookmarkedProperties,
+  isComparison,
+  isComparisonActive,
+  onCompareClick,
+  isComparisonDisabled,
+}: PropertyCardProps) => {
   const baseImgPath = env.NEXT_PUBLIC_S3_ENDPOINT;
   const coverImage =
     propertyWithAgent[0].images.find((img) => img.is_cover) ??
@@ -81,8 +112,8 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
         href={`/properties/${propertyWithAgent[0].id}`}
         className="relative group flex flex-col gap-2"
       >
-        {propertyWithAgent?.[2] && (
-          <div className="bg-white absolute top-1 left-1 z-10 rounded p-1 opacity-50">
+        {propertyWithAgent[2] ? (
+          <div className="bg-white absolute top-1 left-1 z-10 rounded-lg p-1 opacity-75">
             <Image
               width={100}
               height={100}
@@ -90,6 +121,10 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
               alt={propertyWithAgent[2].name}
               className="w-full object-cover "
             />
+          </div>
+        ) : (
+          <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded absolute top-1 left-1 dark:font-semibold uppercase z-10">
+            {propertyWithAgent[0].building_type}
           </div>
         )}
         <WatermarkImage
@@ -105,54 +140,39 @@ export const PropertyCard = ({ propertyWithAgent }: PropertyCardProps) => {
           }}
         />
 
-        <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded capitalize absolute top-1 right-1">
-          {propertyWithAgent[0].building_type}
-        </div>
         {propertyWithAgent[0].configurations.is_njop_price && (
-          <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded capitalize absolute top-1 left-1 font-bold">
+          <div className="bg-secondary text-primary-foreground px-2 py-1 text-xs rounded capitalize absolute top-[54%] right-1 font-semibold">
             HARGA NJOP
           </div>
         )}
+        <Button
+          size="icon"
+          variant="outline"
+          className="absolute right-1 top-1"
+          onClick={(e) => {
+            e.preventDefault();
+            bookmarkProperty(propertyWithAgent[0].id);
+            onBookmarkClickAction();
+          }}
+        >
+          {bookmarkedProperties?.includes(propertyWithAgent[0].id) ? (
+            <LuBookmarkCheck />
+          ) : (
+            <LuBookmark />
+          )}
+        </Button>
         <PropertyContent propertyWithAgent={propertyWithAgent} />
       </Link>
-      <div className="flex items-center justify-between gap-4 w-full">
-        <Link
-          title={propertyWithAgent[1].fullname}
-          aria-label={propertyWithAgent[1].fullname}
-          href={`/agents/${propertyWithAgent[1].fullname.replaceAll(" ", "-")}`}
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-        >
-          <div className="w-8 h-8">
-            {propertyWithAgent[1].profile_picture_url ? (
-              <Image
-                src={
-                  env.NEXT_PUBLIC_S3_ENDPOINT +
-                  propertyWithAgent[1].profile_picture_url
-                }
-                alt={propertyWithAgent[1].fullname}
-                width={100}
-                height={100}
-                className="w-full h-full rounded-full object-cover"
-              />
-            ) : (
-              <LuCircleUser className="w-full h-full text-muted-foreground/50" />
-            )}
-          </div>
-          <div className="flex flex-col font-sans ">
-            <span className="text-xs text-muted-foreground">
-              Diperbarui{" "}
-              {formatDateToIndonesian(propertyWithAgent[0].updated_at)}
-            </span>
-            <span className="text-sm capitalize">
-              {propertyWithAgent[1].fullname}
-            </span>
-          </div>
-        </Link>
-        <ContactAgentDialog
-          isWhatsapp={true}
+      {isComparison ? (
+        <ComparisonInfo
           propertyWithAgent={propertyWithAgent}
+          isComparisonActive={isComparisonActive}
+          onCompareClick={onCompareClick}
+          isComparisonDisabled={isComparisonDisabled}
         />
-      </div>
+      ) : (
+        <PropertyAgentInfo propertyWithAgent={propertyWithAgent} />
+      )}
     </div>
   );
 };

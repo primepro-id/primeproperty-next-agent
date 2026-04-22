@@ -215,6 +215,10 @@ export const Navigation = () => {
       title: "TENTANG",
       href: "/about",
     },
+    {
+      title: "PERBANDINGAN",
+      href: "/properties/bookmark",
+    },
   ];
 
   const nav = usePropertiesNavigation();

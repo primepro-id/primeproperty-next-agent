@@ -208,7 +208,7 @@ const CtaSection = () => {
           <div className="flex items-center gap-2">
             <LuMapPin className="h-5 w-5" />
             <span>
-              Kemang Icon Jakarta, Jl Kemang Raya No 1, Jakarta Selatan 12730
+              Jl Pakubuwono VI No. 35, Kebayoran Baru, Jakarta Selatan 12120
             </span>
           </div>
         </div>
