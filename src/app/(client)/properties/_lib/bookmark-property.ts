@@ -9,17 +9,17 @@ export const bookmarkProperty = (propertyId: number) => {
       const index = bookmarkIds.indexOf(propertyId);
       bookmarkIds.splice(index, 1);
       localStorage.setItem(BOOKMARK_STORAGE_TAG, JSON.stringify(bookmarkIds));
-      toast.success("Property removed from bookmark");
+      toast.success("Property removed from listings");
     } else {
       localStorage.setItem(
         BOOKMARK_STORAGE_TAG,
         JSON.stringify([...bookmarkIds, propertyId]),
       );
-      toast.success("Property added to bookmark");
+      toast.success("Property saved to listings");
     }
   } else {
     localStorage.setItem(BOOKMARK_STORAGE_TAG, JSON.stringify([propertyId]));
-    toast.success("Property added to bookmark");
+    toast.success("Property saved to listings");
   }
 };
 

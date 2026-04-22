@@ -306,15 +306,17 @@ export const Footer = () => {
           __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
         }}
       />
-      <footer className="container mx-auto p-4 flex flex-col gap-8">
-        <FooterNavigation />
-        <div className="flex items-center lg:justify-center gap-4 text-muted-foreground ">
-          <LuCopyright />
-          <span className="text-xs ">
-            PrimePro Indonesia {new Date().getFullYear()}
-          </span>
-        </div>
-      </footer>
+      <div className="border-t border-t-primary">
+        <footer className="container mx-auto p-4 flex flex-col gap-8">
+          <FooterNavigation />
+          <div className="flex items-center lg:justify-center gap-4 text-muted-foreground ">
+            <LuCopyright />
+            <span className="text-xs ">
+              PrimePro Indonesia {new Date().getFullYear()}
+            </span>
+          </div>
+        </footer>
+      </div>
     </>
   );
 };

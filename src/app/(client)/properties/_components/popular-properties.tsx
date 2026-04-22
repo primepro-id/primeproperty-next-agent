@@ -1,4 +1,4 @@
-import { findProperties } from "@/lib/api/properties/find-properties";
+"use client";
 import { PropertyCard } from "./card";
 import React from "react";
 import {
@@ -9,11 +9,15 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { createPropertiesSchema } from "@/lib/schema/create-properties-schema";
+import { useProperties } from "@/hooks";
+import { useQuery } from "@tanstack/react-query";
+import { bookmarkedPropertyOptions } from "@/hooks/local-storage/bookmark";
 
-export const PopularProperties = async () => {
-  const properties = await findProperties({ is_popular: "true" });
-  if (properties.data?.data && properties.data?.data.length > 0) {
-    const jsonLd = createPropertiesSchema(properties?.data.data, {});
+export const PopularProperties = () => {
+  const properties = useProperties({ is_popular: "true" });
+  const bookmarkedProperties = useQuery(bookmarkedPropertyOptions());
+  if (properties.data?.data && properties.data?.data?.data.length > 0) {
+    const jsonLd = createPropertiesSchema(properties?.data.data.data, {});
     return (
       <>
         <script
@@ -31,12 +35,16 @@ export const PopularProperties = async () => {
             </div>
           </div>
           <CarouselContent>
-            {properties.data.data.map((propertyWithAgent, index) => (
+            {properties.data.data.data.map((propertyWithAgent, index) => (
               <CarouselItem
                 key={`${index}_popular_properties`}
                 className="basis-4/5 md:basis-1/2 lg:basis-1/3"
               >
-                <PropertyCard propertyWithAgent={propertyWithAgent} />
+                <PropertyCard
+                  propertyWithAgent={propertyWithAgent}
+                  bookmarkedProperties={bookmarkedProperties.data}
+                  onBookmarkClickAction={() => bookmarkedProperties.refetch()}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>

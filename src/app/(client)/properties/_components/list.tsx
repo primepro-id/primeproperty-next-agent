@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { PropertyCard } from "./card";
 import {
@@ -9,6 +10,8 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { FilterDialog } from "./fillters";
+import { useQuery } from "@tanstack/react-query";
+import { bookmarkedPropertyOptions } from "@/hooks/local-storage/bookmark";
 
 type PropertyListProps = {
   searchParams: FindPropertyQuery;
@@ -19,6 +22,7 @@ export const PropertyList = ({
   searchParams,
   propertiesWithAgent,
 }: PropertyListProps) => {
+  const bookmarkedProperties = useQuery(bookmarkedPropertyOptions());
   if (propertiesWithAgent.length === 0) {
     return (
       <div className="w-full h-96 flex flex-col items-center justify-center">
@@ -44,7 +48,11 @@ export const PropertyList = ({
     <div className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]  w-full">
       {propertiesWithAgent.map((propertyWithAgent, index) => (
         <React.Fragment key={`${index}-${propertyWithAgent[0].id}`}>
-          <PropertyCard propertyWithAgent={propertyWithAgent} />
+          <PropertyCard
+            propertyWithAgent={propertyWithAgent}
+            bookmarkedProperties={bookmarkedProperties.data}
+            onBookmarkClickAction={() => bookmarkedProperties.refetch()}
+          />
         </React.Fragment>
       ))}
     </div>

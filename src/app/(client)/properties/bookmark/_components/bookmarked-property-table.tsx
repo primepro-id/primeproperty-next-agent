@@ -1,73 +1,48 @@
-import { WatermarkImage } from "@/components/custom-ui/watermark-image";
-import { Button } from "@/components/ui/button";
 import { PropertyWithAgent } from "@/lib/api/properties/find-properties";
-import { env } from "@/lib/env";
-import { LuCircle, LuDelete } from "react-icons/lu";
-import { Specifications } from "../../_components/specifications";
-import { bookmarkProperty } from "../../_lib/bookmark-property";
+import React, { Dispatch, SetStateAction } from "react";
+import { PropertyCard } from "../../_components/card";
 
 type BookmarkedPropertyTableProps = {
-  properties?: PropertyWithAgent[] | null;
-  onRemoveClick: () => void;
+  bookmarkedProperties?: number[];
+  properties: PropertyWithAgent[];
+  onBookmarkClickAction: () => void;
+  selectedProperties: number[];
+  setSelectedProperties: Dispatch<SetStateAction<number[]>>;
 };
 
 export const BookmarkedPropertyTable = ({
   properties,
-  onRemoveClick,
+  bookmarkedProperties,
+  onBookmarkClickAction,
+  selectedProperties,
+  setSelectedProperties,
 }: BookmarkedPropertyTableProps) => {
-  const baseImgPath = env.NEXT_PUBLIC_S3_ENDPOINT;
   return (
     <div className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]  w-full">
-      {properties?.map((p) => {
-        const coverImage =
-          p[0].images.find((img) => img.is_cover) ?? p[0].images[0];
-        return (
-          <div
-            key={p[0].id}
-            className="rounded shadow flex flex-col gap-2 relative"
-          >
-            <WatermarkImage
-              watermarkProps={{ fontSize: 20 }}
-              imageProps={{
-                src: baseImgPath + coverImage.path,
-                alt: p[0].title,
-                width: 1024,
-                height: 1024,
-                className: "w-full h-48 rounded object-cover aspect-square",
-              }}
-            />
-            <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded absolute top-1 right-1 dark:font-semibold uppercase z-10">
-              {p[0].building_type}
-            </div>
-            <div className="p-2 flex flex-col gap-2">
-              <span className="flex flex-col gap-1">
-                <div className="font-semibold text-lg">{p[0].title}</div>
-                <p className="line-clamp-1 text-muted-foreground">
-                  {p[0].description}
-                </p>
-                <Specifications propertyWithAgent={p} />
-              </span>
-
-              <div className="flex items-center justify-between">
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    bookmarkProperty(p[0].id);
-                    onRemoveClick();
-                  }}
-                >
-                  <LuDelete />
-                  REMOVE
-                </Button>
-                <Button variant="outline" className="w-fit ml-auto">
-                  <LuCircle />
-                  COMPARE
-                </Button>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {properties?.map((p) => (
+        <React.Fragment key={p[0].id}>
+          <PropertyCard
+            isComparison
+            propertyWithAgent={p}
+            bookmarkedProperties={bookmarkedProperties}
+            onBookmarkClickAction={onBookmarkClickAction}
+            isComparisonActive={selectedProperties.includes(p[0].id)}
+            isComparisonDisabled={
+              selectedProperties.length >= 2 &&
+              !selectedProperties.includes(p[0].id)
+            }
+            onCompareClick={() => {
+              if (selectedProperties.includes(p[0].id)) {
+                const newSelected = [...selectedProperties];
+                newSelected.splice(selectedProperties.indexOf(p[0].id), 1);
+                setSelectedProperties(newSelected);
+              } else {
+                setSelectedProperties([...selectedProperties, p[0].id]);
+              }
+            }}
+          />
+        </React.Fragment>
+      ))}
     </div>
   );
 };

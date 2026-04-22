@@ -23,6 +23,7 @@ export type FindPropertyQuery = {
   is_popular?: "true" | "false";
   is_prime?: "true" | "false";
   limit?: string;
+  ids?: string; // separated by commas
 };
 
 export type PropertyWithAgent = [Property, Agent, Developer | null];
@@ -61,6 +62,9 @@ export const findProperties = async (query?: FindPropertyQuery) => {
   }
   if (query?.is_prime) {
     path += `&is_prime=${query.is_prime}`;
+  }
+  if (query?.ids) {
+    path += `&ids=${query.ids}`;
   }
 
   return await fetchApi<JsonFindApiResponse<PropertyWithAgent>>(path);

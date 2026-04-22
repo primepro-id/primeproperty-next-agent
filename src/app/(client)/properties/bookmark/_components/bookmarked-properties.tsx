@@ -5,11 +5,16 @@ import { useQuery } from "@tanstack/react-query";
 import { EmptyBookmarkedProperties } from "./empty-bookmarked-properties";
 import Loading from "@/app/(client)/loading";
 import { BookmarkedPropertyTable } from "./bookmarked-property-table";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export const BookmarkedProperties = () => {
+  const router = useRouter();
+  const [selectedProperties, setSelectedProperties] = useState<number[]>([]);
   const bookmarkedProperties = useQuery(bookmarkedPropertyOptions());
   const properties = useProperties(
-    {},
+    { ids: bookmarkedProperties.data?.join(",") },
     {
       enabled:
         !!bookmarkedProperties.data && bookmarkedProperties?.data?.length > 0,
@@ -20,16 +25,40 @@ export const BookmarkedProperties = () => {
     return <Loading />;
   }
 
-  if (bookmarkedProperties.data?.length === 0) {
+  if (bookmarkedProperties.data?.length === 0 || !properties?.data?.data) {
     return <EmptyBookmarkedProperties />;
   }
 
   return (
     <div>
       <BookmarkedPropertyTable
+        onBookmarkClickAction={() => bookmarkedProperties.refetch()}
+        bookmarkedProperties={bookmarkedProperties?.data}
         properties={properties?.data?.data?.data}
-        onRemoveClick={() => bookmarkedProperties.refetch()}
+        selectedProperties={selectedProperties}
+        setSelectedProperties={setSelectedProperties}
       />
+
+      <div className="fixed left-0 bottom-0 shadow border bg-background w-full p-4 flex items-center justify-end gap-4">
+        <span className="text-right">
+          <p className="font-bold">
+            {selectedProperties.length} Properties Selected
+          </p>
+          <p className="text-muted-foreground">
+            Select up to 2 properties to compare
+          </p>
+        </span>
+        <Button
+          disabled={selectedProperties.length !== 2}
+          onClick={() =>
+            router.push(
+              `/properties/comparison?ids=${selectedProperties.join(",")}`,
+            )
+          }
+        >
+          COMPARE PROPERTIES
+        </Button>
+      </div>
     </div>
   );
 };
