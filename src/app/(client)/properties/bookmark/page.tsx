@@ -1,5 +1,17 @@
+import { Metadata } from "next";
 import { Faq } from "../_components/faq";
 import { BookmarkedProperties } from "./_components/bookmarked-properties";
+import { createMetadata } from "@/lib/metadata";
+
+const seo = {
+  title: "Bandingkan Jual Beli Rumah Apartemen | PRIMEPRO INDONESIA",
+  description:
+    "Cari dan Bandingkan  properti secara online mudah aman sekaligus cepat, hanya di PrimePro Indonesia",
+  keywords:
+    "PrimePro Indonesia, Properti, Properti Prime, Properti Jakarta Selatan",
+  path: "/properties/bookmark",
+};
+export const metadata: Metadata = createMetadata(seo);
 
 export default function Page() {
   return (
