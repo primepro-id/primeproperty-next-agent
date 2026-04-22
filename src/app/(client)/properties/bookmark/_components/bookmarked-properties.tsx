@@ -39,13 +39,13 @@ export const BookmarkedProperties = () => {
         setSelectedProperties={setSelectedProperties}
       />
 
-      <div className="fixed left-0 bottom-0 shadow border bg-background w-full p-4 flex items-center justify-end gap-4">
+      <div className="fixed left-0 bottom-0 shadow border-t border-t-primary bg-background w-full p-4 flex items-center justify-end gap-4">
         <span className="text-right">
           <p className="font-bold">
-            {selectedProperties.length} Properties Selected
+            {selectedProperties.length} Properti dipilih
           </p>
           <p className="text-muted-foreground">
-            Select up to 2 properties to compare
+            Pilih 2 properti untuk perbandingan
           </p>
         </span>
         <Button
@@ -56,7 +56,7 @@ export const BookmarkedProperties = () => {
             )
           }
         >
-          COMPARE PROPERTIES
+          LANJUTKAN
         </Button>
       </div>
     </div>

@@ -73,9 +73,9 @@ const Organization = () => {
           <MdOutlineLocationOn />
         </div>
         <div>
-          <p>Kemang Icon Jakarta,</p>
-          <p>Jl. Kemang Raya No 1,</p>
-          <p>Jakarta Selatan, 12730</p>
+          <p>Jl Pakubuwono VI No. 35,</p>
+          <p>Kebayoran Baru,</p>
+          <p>Jakarta Selatan, 12120</p>
         </div>
       </div>
     </div>

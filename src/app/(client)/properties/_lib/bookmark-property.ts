@@ -9,17 +9,17 @@ export const bookmarkProperty = (propertyId: number) => {
       const index = bookmarkIds.indexOf(propertyId);
       bookmarkIds.splice(index, 1);
       localStorage.setItem(BOOKMARK_STORAGE_TAG, JSON.stringify(bookmarkIds));
-      toast.success("Property removed from listings");
+      toast.success("Properti dihapus dari perbandingan");
     } else {
       localStorage.setItem(
         BOOKMARK_STORAGE_TAG,
         JSON.stringify([...bookmarkIds, propertyId]),
       );
-      toast.success("Property saved to listings");
+      toast.success("Properti disimpan ke perbandingan");
     }
   } else {
     localStorage.setItem(BOOKMARK_STORAGE_TAG, JSON.stringify([propertyId]));
-    toast.success("Property saved to listings");
+    toast.success("Property disimapn ke perbandingan");
   }
 };
 

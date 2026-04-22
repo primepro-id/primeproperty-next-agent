@@ -30,6 +30,7 @@ export const ContactUs = () => {
         <div className="flex items-center gap-3 mb-4">
           <LuMapPin className="h-6 w-6 flex-shrink-0 mt-1 text-primary" />
           <p>Kemang Icon Jakarta, Jl Kemang Raya No 1, Jakarta Selatan 12730</p>
+          <p>Jl Pakubuwono VI No. 35, Kebayoran Baru, Jakarta Selatan 12120</p>
         </div>
 
         <div className="flex items-center gap-3 mb-4">

@@ -70,11 +70,7 @@ const ComparisonInfo = ({
       <Button
         data-tooltip-id="compare-btn-tooltip"
         data-tooltip-content={
-          isComparisonDisabled
-            ? "You have selected two properties"
-            : isComparisonActive
-              ? "Click to remove from comparison"
-              : "Click to compare"
+          isComparisonDisabled ? "2 properti sudah terpilih" : ""
         }
         data-tooltip-place="top"
         variant={
