@@ -1,3 +1,4 @@
+"use client";
 import { PropertyCard } from "@/app/(client)/properties/_components/card";
 import React from "react";
 import {
