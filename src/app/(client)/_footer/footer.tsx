@@ -306,7 +306,7 @@ export const Footer = () => {
           __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
         }}
       />
-      <div className="border-t border-t-primary">
+      <div className="border-t border-t-primary mt-12">
         <footer className="container mx-auto p-4 flex flex-col gap-8">
           <FooterNavigation />
           <div className="flex items-center lg:justify-center gap-4 text-muted-foreground ">
