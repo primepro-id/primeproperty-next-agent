@@ -54,7 +54,7 @@ export const PropertyComparisonImages = ({
       </div>
       <Dialog open={startIndex !== null ? startIndex >= 0 : false}>
         <DialogContent
-          className="max-w-7xl z-[60] border border-primary"
+          className="max-w-3xl z-[60] border border-primary"
           overlayClassName="z-[60]"
           onEscapeKeyDown={() => setStartIndex(null)}
           onOverlayClick={() => setStartIndex(null)}

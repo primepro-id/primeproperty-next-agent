@@ -44,7 +44,7 @@ export const BookmarkedProperties = () => {
           <p className="font-bold">
             {selectedProperties.length} Properti dipilih
           </p>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Pilih 2 properti untuk perbandingan
           </p>
         </span>

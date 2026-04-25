@@ -28,7 +28,7 @@ export const PropertyImages = ({ propertyWithAgent }: PropertyImagesProps) => {
         open={dialogCarouselindex !== null ? dialogCarouselindex >= 0 : false}
       >
         <DialogContent
-          className="max-w-7xl z-[60] border border-primary"
+          className="max-w-3xl z-[60] border border-primary"
           overlayClassName="z-[60]"
           onEscapeKeyDown={() => setDialogCarouselIndex(null)}
           onOverlayClick={() => setDialogCarouselIndex(null)}

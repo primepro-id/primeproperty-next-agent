@@ -1,6 +1,7 @@
 import { PropertyWithAgent } from "@/lib/api/properties/find-properties";
 import React, { Dispatch, SetStateAction } from "react";
 import { PropertyCard } from "../../_components/card";
+import { cn } from "@/lib/utils";
 
 type BookmarkedPropertyTableProps = {
   bookmarkedProperties?: number[];
@@ -18,7 +19,12 @@ export const BookmarkedPropertyTable = ({
   setSelectedProperties,
 }: BookmarkedPropertyTableProps) => {
   return (
-    <div className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]  w-full">
+    <div
+      className={cn(
+        "grid gap-8 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]  w-full",
+        properties.length <= 3 && "lg:grid-cols-3",
+      )}
+    >
       {properties?.map((p) => (
         <React.Fragment key={p[0].id}>
           <PropertyCard
