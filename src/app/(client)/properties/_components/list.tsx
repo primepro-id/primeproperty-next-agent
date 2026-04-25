@@ -45,7 +45,12 @@ export const PropertyList = ({
   }
 
   return (
-    <div className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]  w-full">
+    <div
+      className={cn(
+        "grid gap-8 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]  w-full",
+        propertiesWithAgent.length <= 3 && "lg:grid-cols-3",
+      )}
+    >
       {propertiesWithAgent.map((propertyWithAgent, index) => (
         <React.Fragment key={`${index}-${propertyWithAgent[0].id}`}>
           <PropertyCard

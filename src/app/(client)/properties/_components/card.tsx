@@ -113,7 +113,7 @@ export const PropertyCard = ({
         className="relative group flex flex-col gap-2"
       >
         {propertyWithAgent[2] ? (
-          <div className="bg-white absolute top-1 left-1 z-10 rounded-lg p-1 opacity-75">
+          <div className="bg-white absolute top-1 left-1 z-[5] rounded-lg p-1 opacity-75">
             <Image
               width={100}
               height={100}
@@ -123,7 +123,7 @@ export const PropertyCard = ({
             />
           </div>
         ) : (
-          <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded absolute top-1 left-1 dark:font-semibold uppercase z-10">
+          <div className="bg-primary text-primary-foreground px-2 py-1 text-xs rounded absolute top-1 left-1 dark:font-semibold uppercase z-[5]">
             {propertyWithAgent[0].building_type}
           </div>
         )}
