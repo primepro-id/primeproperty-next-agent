@@ -11,7 +11,9 @@ export const createAgentMetadata = async (
   const { name } = await params;
   const agentWithProperties = await findPropertyByAgent(name);
   return {
-    title: toTitleCase(agentWithProperties.data?.agent.fullname ?? ""),
+    title:
+      toTitleCase(agentWithProperties.data?.agent.fullname ?? "") +
+      "- Agen Properti PRIMEPRO INDONESIA",
     description:
       agentWithProperties.data?.agent.description ||
       `Agen properti ${agentWithProperties.data?.agent.fullname} dari Primepro Indonesia.`,
