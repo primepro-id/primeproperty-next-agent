@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "Primepro Indonesia: Kantor properti spesialis dalam pemasaran properti residensial, komersial, dan investasi. ",
   alternates: {
-    canonical: env.NEXT_PUBLIC_API_URL + "/franchise",
+    canonical: env.NEXT_PUBLIC_HOST_URL + "/franchise",
   },
 };
 

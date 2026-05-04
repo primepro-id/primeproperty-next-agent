@@ -12,7 +12,7 @@ export const BlogPost = ({ article }: BlogPostProps) => {
   return (
     <section id="article" className="flex flex-col gap-4 max-w-5xl">
       <div className="flex flex-col gap-2">
-        <h1 className="text-pretty text-3xl font-semibold">{article.title}</h1>
+        <h2 className="text-pretty text-3xl font-semibold">{article.title}</h2>
         <p className="text-muted-foreground text-sm">
           {new Date(article._publishedAt).toLocaleString()}
         </p>

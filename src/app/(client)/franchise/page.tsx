@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description:
     "Kembangkan Bisnis Anda dengan Jaringan Properti Terkemuka di Indonesia",
   alternates: {
-    canonical: env.NEXT_PUBLIC_API_URL + "/franchise",
+    canonical: env.NEXT_PUBLIC_HOST_URL + "/franchise",
   },
 };
 

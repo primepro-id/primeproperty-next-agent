@@ -228,7 +228,7 @@ export const metadata: Metadata = {
   description:
     "PrimePro Indonesia sedang memperluas timnya dan mencari individu yang termotivasi tinggi untuk bergabung sebagai Marketing Executive.",
   alternates: {
-    canonical: env.NEXT_PUBLIC_API_URL + "/jobs",
+    canonical: env.NEXT_PUBLIC_HOST_URL + "/jobs",
   },
 };
 
