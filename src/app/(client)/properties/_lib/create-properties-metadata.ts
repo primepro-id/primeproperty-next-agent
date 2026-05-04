@@ -27,7 +27,10 @@ export const generateTitle = (searchParams: FindPropertyQuery) => {
     location += searchParams.province.replaceAll("-", " ");
   }
 
-  const fullLocation = `${propertyType} ${purchaseType} di ${location ? location : "Indonesia"}`;
+  let fullLocation = `${propertyType} ${purchaseType} di ${location ? location : "Indonesia"}.`;
+  if (searchParams.page) {
+    fullLocation += ` Halaman ${searchParams.page}`;
+  }
   const date = new Date();
 
   return `${toTitleCase(fullLocation)} | Harga Terbaru ${date.getFullYear()}`;
@@ -54,6 +57,10 @@ export const generateDescription = (searchParams: FindPropertyQuery) => {
   if (!searchParams.regency && searchParams.province) {
     location += " ";
     location += searchParams.province.replaceAll("-", " ");
+  }
+
+  if (searchParams.page) {
+    location += `, Halaman ${searchParams.page}`;
   }
 
   const fullLocation = `${propertyType} ${purchaseType} Murah di ${location ? location : "Indonesia"}`;

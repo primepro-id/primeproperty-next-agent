@@ -20,9 +20,11 @@ export const generateDynamicPropertyMetadata = async (
       purchaseStatus +
       " " +
       `di ${property.data[0].street}, ${property.data[0].regency}. ` +
-      `Properti dipasang oleh ${property.data[1].fullname}`;
+      `Properti dipasang oleh ${property.data[1].fullname}. Property ${property.data[0].id}.`;
     return {
-      title: property.data[0].title + " " + "PRIMEPRO INDONESIA",
+      title:
+        property.data[0].title +
+        `. Property ${property.data[0].id} - PRIMEPRO INDONESIA`,
       description,
       keywords:
         property.data[0].site_path.replaceAll("-", " ").replaceAll("/", ",") +
