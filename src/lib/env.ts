@@ -18,6 +18,7 @@ export const env = createEnv({
     S3_SECRET_KEY: z.string().min(1),
     OSM_URL: z.string().min(1),
     SENTRY_AUTH_TOKEN: z.string(),
+    NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: z.string(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -54,5 +55,7 @@ export const env = createEnv({
     OSM_URL: process.env.OSM_URL,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
+    NEXT_SERVER_ACTIONS_ENCRYPTION_KEY:
+      process.env.NEXT_SERVER_ACTIONS_ENCRYPTION_KEY,
   },
 });
