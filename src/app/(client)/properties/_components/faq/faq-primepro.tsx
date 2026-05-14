@@ -50,9 +50,9 @@ export const FAQ_ONE = [
 const FaqOne = () => {
   return (
     <div className="flex flex-col ">
-      <h3 className="text-muted-foreground">
+      <p className="text-muted-foreground">
         A. Informasi Titip Jual &amp; Sewa Di Primepro Indonesia
-      </h3>
+      </p>
       <Accordion type="single" collapsible className="w-full">
         {FAQ_ONE.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
@@ -98,9 +98,9 @@ export const FAQ_TWO = [
 const FaqTwo = () => {
   return (
     <div className="flex flex-col ">
-      <h3 className="text-muted-foreground">
+      <p className="text-muted-foreground">
         B. Informasi cari beli dan sewa Properti
-      </h3>
+      </p>
       <Accordion type="single" collapsible className="w-full">
         {FAQ_TWO.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
@@ -148,9 +148,9 @@ export const FAQ_THREE = [
 const FaqThree = () => {
   return (
     <div className="flex flex-col ">
-      <h3 className="text-muted-foreground">
+      <p className="text-muted-foreground">
         C. Informasi tentang PrimePro Indonesia
-      </h3>
+      </p>
       <Accordion type="single" collapsible className="w-full">
         {FAQ_THREE.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
