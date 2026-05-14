@@ -30,7 +30,7 @@ const Organization = () => {
           height={25}
           id="logo"
         />
-        <h2 className="text-lg font-semibold">PRIMEPRO INDONESIA</h2>
+        <h6 className="text-lg font-semibold">PRIMEPRO INDONESIA</h6>
       </div>
 
       <div className="flex items-center gap-4">
