@@ -27,6 +27,7 @@ export const uploadPropertyImages = async (
           });
 
           const upload = await s3client.send(command);
+          console.log(file.name, upload);
           return {
             ...img,
             path: upload.ETag ? path : "",
@@ -38,7 +39,9 @@ export const uploadPropertyImages = async (
       }
     });
 
-    return Promise.all(uploadPromises);
+    const promises = await Promise.all(uploadPromises);
+    console.table(promises);
+    return promises;
   } catch (error) {
     console.error("Error uploading property images:", error);
     return [];
