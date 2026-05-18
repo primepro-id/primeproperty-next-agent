@@ -13,33 +13,29 @@ export const uploadPropertyImages = async (
   try {
     const time = new Date().getTime();
     const uploadPromises = propertyImages.map(async (img, index) => {
-      if (img.object_url) {
-        const file = files.find((file) => file.name === img.name);
-        console.log(index, file);
-        console.log(img.name, files.map((a) => a.name).includes(img.name));
+      const file = files.find((file) => file.name === img.name);
+      console.log(index, file);
+      console.log(img.name, files.map((a) => a.name).includes(img.name));
 
-        if (file) {
-          const buffer = Buffer.from(await file.arrayBuffer());
-          const key = `${time}-${index}`;
-          const path = `/${S3_PROPERTY_BUCKET}/${key}`;
+      if (file) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const key = `${time}-${index}`;
+        const path = `/${S3_PROPERTY_BUCKET}/${key}`;
 
-          const command = new PutObjectCommand({
-            Bucket: S3_PROPERTY_BUCKET,
-            Key: key,
-            Body: buffer,
-            ACL: "public-read",
-          });
+        const command = new PutObjectCommand({
+          Bucket: S3_PROPERTY_BUCKET,
+          Key: key,
+          Body: buffer,
+          ACL: "public-read",
+        });
 
-          const upload = await s3client.send(command);
-          return {
-            ...img,
-            path: upload.ETag ? path : "",
-          };
-        }
-        return img;
-      } else {
-        return img;
+        const upload = await s3client.send(command);
+        return {
+          ...img,
+          path: upload.ETag ? path : "",
+        };
       }
+      return img;
     });
 
     const promises = await Promise.all(uploadPromises);
