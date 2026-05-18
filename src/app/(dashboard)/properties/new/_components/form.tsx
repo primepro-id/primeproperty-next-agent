@@ -133,6 +133,12 @@ export const NewPropertyForm = () => {
       facilities,
       images,
     );
+    formData.delete("images");
+    images.forEach((img: any) => {
+      if (img.file) {
+        formData.append("images", img.file);
+      }
+    });
     try {
       if (images.length < 3) {
         toast.error("Minimum 3 gambar");

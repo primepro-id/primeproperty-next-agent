@@ -162,6 +162,12 @@ export const EditPropertyForm = ({
       return;
     }
 
+    formData.delete("images");
+    images.forEach((img: any) => {
+      if (img.file) {
+        formData.append("images", img.file);
+      }
+    });
     const propertyApiData = converPropertyFormDataToApiData(
       dataEntry,
       facilities,
