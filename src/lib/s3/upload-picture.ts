@@ -9,6 +9,7 @@ export const uploadPicture = async (
 ): Promise<string | null> => {
   const picture = formData.get(formDataName ?? "picture") as File;
 
+  const imagePath = `/${S3_PROPERTY_BUCKET}/${imageKey}`;
   try {
     const buffer = Buffer.from(await picture.arrayBuffer());
     const command = new PutObjectCommand({
@@ -18,9 +19,8 @@ export const uploadPicture = async (
       ACL: "public-read",
     });
     const upload = await s3client.send(command);
-    const picturePath = upload.ETag
-      ? `/${S3_PROPERTY_BUCKET}/${imageKey}`
-      : null;
+    console.log(imagePath, upload);
+    const picturePath = upload.ETag ? imagePath : null;
 
     // Warning: Only plain objects can be passed to Client Components from Server Components. Classes or other objects with methods are not supported.
     return picturePath;
