@@ -48,18 +48,10 @@ export const ImagesUpload = () => {
             path: "",
             english_label: "",
             indonesian_label: "",
+            file,
           };
         },
       );
-      // // Revoke old previews to prevent memory leaks
-      images.forEach((propertyImg) => {
-        return {
-          ...propertyImg,
-          object_url: propertyImg.object_url
-            ? URL.revokeObjectURL(propertyImg.object_url)
-            : "",
-        };
-      });
       const newImages = [...images, ...newUploadedImages];
       setStore("images", newImages);
       return;
