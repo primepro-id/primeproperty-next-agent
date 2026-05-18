@@ -19,7 +19,6 @@ export const uploadPicture = async (
       ACL: "public-read",
     });
     const upload = await s3client.send(command);
-    console.log(imagePath, upload);
     const picturePath = upload.ETag ? imagePath : null;
 
     // Warning: Only plain objects can be passed to Client Components from Server Components. Classes or other objects with methods are not supported.
