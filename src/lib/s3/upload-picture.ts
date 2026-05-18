@@ -18,11 +18,10 @@ export const uploadPicture = async (
       Body: buffer,
       ACL: "public-read",
     });
-    const upload = await s3client.send(command);
-    const picturePath = upload.ETag ? imagePath : null;
+    await s3client.send(command);
 
     // Warning: Only plain objects can be passed to Client Components from Server Components. Classes or other objects with methods are not supported.
-    return picturePath;
+    return imagePath;
   } catch (e) {
     console.error(`Error in S3 ${S3_PROPERTY_BUCKET} bucket upload:`, e);
     return null;
