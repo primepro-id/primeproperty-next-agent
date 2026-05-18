@@ -14,6 +14,7 @@ export const uploadPropertyImages = async (
     const uploadPromises = propertyImages.map(async (img, index) => {
       if (img.object_url) {
         const file = files.find((file) => file.name === img.name);
+        console.log(index, file);
         if (file) {
           const buffer = Buffer.from(await file.arrayBuffer());
           const key = `${time}-${index}`;
@@ -26,11 +27,11 @@ export const uploadPropertyImages = async (
             ACL: "public-read",
           });
 
-          await s3client.send(command);
-
+          const upload = await s3client.send(command);
+          console.log(path, upload);
           return {
             ...img,
-            path,
+            path: upload.ETag ? path : "",
           };
         }
         return img;
@@ -39,7 +40,8 @@ export const uploadPropertyImages = async (
       }
     });
 
-    return await Promise.all(uploadPromises);
+    const promises = await Promise.all(uploadPromises);
+    return promises.filter((prom) => prom.path !== "");
   } catch (error) {
     console.error("Error uploading property images:", error);
     return [];
