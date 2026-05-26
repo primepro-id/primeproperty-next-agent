@@ -7,8 +7,9 @@ export const generateDynamicPropertyMetadata = async (
   params: Promise<{ id: string }>,
 ): Promise<Metadata | undefined> => {
   const { id } = await params;
+  const [propertyId] = id.split("-");
 
-  const property = await findPropertyById(Number(id));
+  const property = await findPropertyById(Number(propertyId));
   if (property.data) {
     const purchaseStatus =
       property.data[0].purchase_status === PurchaseStatus.ForRent
@@ -20,11 +21,9 @@ export const generateDynamicPropertyMetadata = async (
       purchaseStatus +
       " " +
       `di ${property.data[0].street}, ${property.data[0].regency}. ` +
-      `Properti dipasang oleh ${property.data[1].fullname}. Property ${property.data[0].id}.`;
+      `Properti dipasang oleh ${property.data[1].fullname}. Property ${id}.`;
     return {
-      title:
-        property.data[0].title +
-        `. Property ${property.data[0].id} - PRIMEPRO INDONESIA`,
+      title: property.data[0].title + `. Property ${id} - PRIMEPRO INDONESIA`,
       description,
       keywords:
         property.data[0].site_path.replaceAll("-", " ").replaceAll("/", ",") +

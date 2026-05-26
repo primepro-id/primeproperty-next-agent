@@ -17,11 +17,12 @@ export const generateMetadata = async ({
 
 const DynamicPropertyPage = async ({ params }: DynamicPropertyPageProps) => {
   const { id } = await params;
+  const [propertyId] = id.split("-");
   return (
     <>
       <PropertiesFilter searchParams={{}} />
       <Suspense>
-        <DynamicProperty propertyId={Number(id)} />
+        <DynamicProperty propertyId={Number(propertyId)} />
       </Suspense>
     </>
   );
