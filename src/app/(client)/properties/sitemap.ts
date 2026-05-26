@@ -5,12 +5,21 @@ import { MetadataRoute } from "next";
 const generateDynamicPropertySitemaps = async () => {
   const properties = await findProperties();
   if (Array.isArray(properties?.data?.data)) {
-    return properties.data?.data.map((property) => {
+    const oldSitemap = properties.data?.data.map((property) => {
       return {
         url: env.NEXT_PUBLIC_HOST_URL + `/properties/${property[0].id}`,
         lastModified: new Date(property[0].updated_at),
       };
     }) as MetadataRoute.Sitemap;
+    const newSitemap = properties.data?.data.map((property) => {
+      return {
+        url:
+          env.NEXT_PUBLIC_HOST_URL +
+          `/properties/${property[0].id}-${property[0].title.replaceAll("&", "").replaceAll(" ", "-")}`,
+        lastModified: new Date(property[0].updated_at),
+      };
+    }) as MetadataRoute.Sitemap;
+    return [...oldSitemap, ...newSitemap];
   }
 
   return [];
