@@ -9,13 +9,10 @@ export const uploadPropertyImages = async (
 ): Promise<PropertyImage[]> => {
   const files = formData.getAll("images") as File[];
 
-  console.table(files);
   try {
     const time = new Date().getTime();
     const uploadPromises = propertyImages.map(async (img, index) => {
       const file = files.find((file) => file.name === img.name);
-      console.log(index, file);
-      console.log(img.name, files.map((a) => a.name).includes(img.name));
 
       if (file) {
         const buffer = Buffer.from(await file.arrayBuffer());

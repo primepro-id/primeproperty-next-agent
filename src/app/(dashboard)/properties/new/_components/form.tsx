@@ -39,8 +39,6 @@ import { useState } from "react";
 import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { CurrencyUnit } from "@/lib/api/properties/type";
 import { PriceDownPaymentInput } from "../../_components/form-input/price-down-payment";
-import { env } from "@/lib/env";
-import { useRouter } from "next/navigation";
 import { useAgentTokenData } from "@/hooks/agents/use-agent-token-data";
 import { AgentRole } from "@/lib/api/agents/type";
 import { updatePropertyConfigurations } from "@/lib/api/properties/update-property-configurations";
@@ -102,7 +100,6 @@ const DetailForm = () => {
 };
 
 export const NewPropertyForm = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const { facilities, images, setStore, loadingText } = useStore(
     useShallow((state) => ({
@@ -178,10 +175,8 @@ export const NewPropertyForm = () => {
       queryClient.invalidateQueries({ queryKey: ["properties"] });
       toast.success("Property created successfully, redirecting...");
       setTimeout(() => {
-        router.push(
-          `${env.NEXT_PUBLIC_CLIENT_URL}/properties/${property?.data?.id}`,
-        );
-      }, 1000);
+        window.location.reload();
+      }, 2000);
       return;
     } catch (error) {
       console.error(error);

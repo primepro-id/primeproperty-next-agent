@@ -216,6 +216,9 @@ export const EditPropertyForm = ({
       });
       queryClient.invalidateQueries({ queryKey: ["properties"] });
       toast.success("Property updated successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
       return;
     } catch (error) {
       console.error(error);
