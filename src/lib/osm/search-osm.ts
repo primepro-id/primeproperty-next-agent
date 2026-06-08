@@ -27,7 +27,10 @@ export const searchOsm = async (
 
   try {
     const response = await fetch(env.OSM_URL + "/search?" + params.toString(), {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "PrimePropertyAgentApp/1.0 (admin@primeproindonesia.com)",
+      },
     });
     const data = await response.json();
     return data;
