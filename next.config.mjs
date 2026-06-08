@@ -3,8 +3,9 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig = {
   output: "standalone",
   experimental: {
+    middlewareClientMaxBodySize: "20mb",
     serverActions: {
-      bodySizeLimit: "15mb",
+      bodySizeLimit: "20mb",
     },
   },
   images: {
