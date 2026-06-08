@@ -172,6 +172,9 @@ export const NewPropertyForm = () => {
         });
       }
 
+      uploadedImages.forEach((img) => {
+        if (img.object_url) URL.revokeObjectURL(img.object_url);
+      });
       queryClient.invalidateQueries({ queryKey: ["properties"] });
       toast.success("Property created successfully, redirecting...");
       setTimeout(() => {
