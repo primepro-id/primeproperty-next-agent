@@ -36,7 +36,7 @@ export const ImagesUpload = () => {
   const handleAdditionalImagesChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (e.target.files && images.length < 8) {
+    if (e.target.files) {
       const files = Array.from(e.target.files);
       const limitedFiles = files.slice(0, 8 - images.length);
       const newUploadedImages: PropertyImage[] = limitedFiles.map(
