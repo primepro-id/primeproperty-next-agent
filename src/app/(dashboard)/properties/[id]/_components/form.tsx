@@ -201,6 +201,7 @@ export const EditPropertyForm = ({
           newImages.map(async (img, index) => {
             const response = await fetch(img.object_url);
             const blob = await response.blob();
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const [_, imageType] = blob.type.split("/");
             return new File([blob], `${index}.${imageType}`, {
               type: blob.type,
