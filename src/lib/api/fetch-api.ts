@@ -1,7 +1,7 @@
 import { getAccessToken } from "../cookie/get-access-token";
 import { env } from "../env";
 
-type JsonApiResponse<T> = {
+export type JsonApiResponse<T> = {
   status: number;
   data: T | null;
   message: string;

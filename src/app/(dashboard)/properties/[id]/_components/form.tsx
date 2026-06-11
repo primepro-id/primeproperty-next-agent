@@ -33,7 +33,6 @@ import {
 } from "../../_libs";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import { uploadPropertyImages } from "@/lib/s3/upload-property-images";
 import { updateProperty } from "@/lib/api/properties/update-property";
 import { AgentRole } from "@/lib/api/agents/type";
 import { useState } from "react";
@@ -43,6 +42,8 @@ import { RentTimeSelect } from "../../_components/form-input/rent-time-select";
 import { PriceDownPaymentInput } from "../../_components/form-input/price-down-payment";
 import { NjopSwitch } from "../../_components/form-input";
 import { updatePropertyConfigurations } from "@/lib/api/properties/update-property-configurations";
+import { PropertyImage } from "@/lib/enums/property-image";
+import { uploadS3Images } from "@/lib/api/s3/upload-s3-image";
 
 type EditPropertyFormProps = {
   userRole?: AgentRole;
@@ -174,24 +175,56 @@ export const EditPropertyForm = ({
       images,
     );
 
+    if (images.length < 3) {
+      toast.error("Minimum 3 gambar");
+      return;
+    }
+    const schemaValidation = PropertyApiSchema.safeParse(propertyApiData);
+    if (!schemaValidation.success) {
+      const errorMsg = schemaValidation.error.errors[0].message;
+      toast.error(errorMsg);
+      return;
+    }
+
     try {
-      if (images.length < 3) {
-        toast.error("Minimum 3 gambar");
-        return;
-      }
-      const schemaValidation = PropertyApiSchema.safeParse(propertyApiData);
-      if (!schemaValidation.success) {
-        const errorMsg = schemaValidation.error.errors[0].message;
-        toast.error(errorMsg);
-        return;
+      setStore("loadingText", "Uploading images...");
+      const keptImages = images.filter((img) => img.path !== "") ?? [];
+      const newImages = images.filter(
+        (img) =>
+          img.object_url !== undefined && img.object_url.includes("blob:"),
+      );
+
+      let newUploadedImages: PropertyImage[] = [];
+
+      if (newImages.length > 0) {
+        const newImageFiles = await Promise.all(
+          newImages.map(async (img, index) => {
+            const response = await fetch(img.object_url);
+            const blob = await response.blob();
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const [_, imageType] = blob.type.split("/");
+            return new File([blob], `${index}.${imageType}`, {
+              type: blob.type,
+            });
+          }),
+        );
+
+        const uploadedImages = await uploadS3Images(newImageFiles);
+        if (uploadedImages?.data && uploadedImages?.data.length > 0) {
+          newUploadedImages = newImages.map((img, index) => ({
+            indonesian_label: img.indonesian_label,
+            is_cover: img.is_cover,
+            english_label: img.english_label,
+            path: uploadedImages?.data?.[index].path,
+          })) as PropertyImage[];
+        } else {
+          toast.error("Fail to upload images, please contact support");
+          return;
+        }
       }
 
-      setStore("loadingText", "Uploading images...");
-      const uploadedImages = await uploadPropertyImages(images, formData);
-      if (uploadedImages.length === 0) {
-        toast.error("Failed to upload images, contact admin immediately!");
-        return;
-      }
+      const productImages = [...keptImages, ...newUploadedImages];
+      console.log(productImages);
 
       setStore("loadingText", "Updating property...");
 
@@ -201,7 +234,7 @@ export const EditPropertyForm = ({
           is_njop_price: dataEntry?.is_njop_price === "on",
         },
       });
-      propertyApiData.images = uploadedImages;
+      propertyApiData.images = productImages;
       const property = await updateProperty(
         propertyWithAgent[0].id,
         propertyApiData,
@@ -211,7 +244,7 @@ export const EditPropertyForm = ({
         return;
       }
 
-      uploadedImages.forEach((img) => {
+      newImages.forEach((img) => {
         if (img.object_url) URL.revokeObjectURL(img.object_url);
       });
       queryClient.invalidateQueries({ queryKey: ["properties"] });

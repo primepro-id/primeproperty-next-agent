@@ -32,7 +32,6 @@ import { useStore } from "../../_stores";
 import { useShallow } from "zustand/react/shallow";
 import { toast } from "react-toastify";
 import { createProperty } from "@/lib/api/properties/create-property";
-import { uploadPropertyImages } from "@/lib/s3/upload-property-images";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { RentTimeSelect } from "../../_components/form-input/rent-time-select";
 import { useState } from "react";
@@ -42,6 +41,8 @@ import { PriceDownPaymentInput } from "../../_components/form-input/price-down-p
 import { useAgentTokenData } from "@/hooks/agents/use-agent-token-data";
 import { AgentRole } from "@/lib/api/agents/type";
 import { updatePropertyConfigurations } from "@/lib/api/properties/update-property-configurations";
+import { uploadS3Images } from "@/lib/api/s3/upload-s3-image";
+import { PropertyImage } from "@/lib/enums/property-image";
 
 const SeoForm = () => {
   return (
@@ -130,34 +131,45 @@ export const NewPropertyForm = () => {
       facilities,
       images,
     );
-    formData.delete("images");
-    images.forEach((img: any) => {
-      if (img.file) {
-        formData.append("images", img.file);
-      }
-    });
-    try {
-      if (images.length < 3) {
-        toast.error("Minimum 3 gambar");
-        return;
-      }
-      const schemaValidation = PropertyApiSchema.safeParse(propertyApiData);
-      if (!schemaValidation.success) {
-        const errorMsg = schemaValidation.error.errors[0].message;
-        toast.error(errorMsg);
-        return;
-      }
+    if (images.length < 3) {
+      toast.error("Minimum 3 gambar");
+      return;
+    }
+    const schemaValidation = PropertyApiSchema.safeParse(propertyApiData);
+    if (!schemaValidation.success) {
+      const errorMsg = schemaValidation.error.errors[0].message;
+      toast.error(errorMsg);
+      return;
+    }
 
+    try {
+      formData.delete("images");
       setStore("loadingText", "Uploading images...");
-      const uploadedImages = await uploadPropertyImages(images, formData);
-      if (uploadedImages.length === 0) {
+      const imageFiles = await Promise.all(
+        images.map(async (img, index) => {
+          const response = await fetch(img.object_url);
+          const blob = await response.blob();
+
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const [_, imageType] = blob.type.split("/");
+          return new File([blob], `${index}.${imageType}`, {
+            type: blob.type,
+          });
+        }),
+      );
+      const uploadedImages = await uploadS3Images(imageFiles);
+      if (!uploadedImages?.data || uploadedImages?.data.length === 0) {
         toast.error("Failed to upload images, contact admin immediately!");
         return;
       }
-
+      const propertyImages = images.map((img, index) => ({
+        indonesian_label: img.indonesian_label,
+        is_cover: img.is_cover,
+        english_label: img.english_label,
+        path: uploadedImages?.data?.[index].path,
+      }));
       setStore("loadingText", "Creating property...");
-
-      propertyApiData.images = uploadedImages;
+      propertyApiData.images = propertyImages as PropertyImage[];
       const property = await createProperty(propertyApiData);
       if (property.status !== 201) {
         toast.error("Error: please check your input and try again");
@@ -172,11 +184,12 @@ export const NewPropertyForm = () => {
         });
       }
 
-      uploadedImages.forEach((img) => {
+      // clean up object url
+      images.forEach((img) => {
         if (img.object_url) URL.revokeObjectURL(img.object_url);
       });
       queryClient.invalidateQueries({ queryKey: ["properties"] });
-      toast.success("Property created successfully, redirecting...");
+      toast.success("Property created successfully, refreshing...");
       setTimeout(() => {
         window.location.reload();
       }, 2000);

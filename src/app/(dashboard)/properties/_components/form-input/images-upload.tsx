@@ -48,7 +48,6 @@ export const ImagesUpload = () => {
             path: "",
             english_label: "",
             indonesian_label: "",
-            file,
           };
         },
       );
