@@ -2,12 +2,6 @@ import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
-  experimental: {
-    middlewareClientMaxBodySize: "50mb",
-    serverActions: {
-      bodySizeLimit: "50mb",
-    },
-  },
   images: {
     remotePatterns: [
       {
