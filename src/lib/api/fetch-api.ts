@@ -11,6 +11,7 @@ export const fetchApi = async <T>(
   path: string,
   options?: RequestInit,
 ): Promise<JsonApiResponse<T>> => {
+  console.log(`[${path}]`);
   try {
     const response = await fetch(env.NEXT_PUBLIC_API_URL + path, {
       headers: {
@@ -20,8 +21,10 @@ export const fetchApi = async <T>(
       ...options,
     });
 
-    return response.json();
+    console.log(`[${path}] SUCCESS`);
+    return await response.json();
   } catch (error) {
+    console.error(`[${path}] ERROR`, error);
     throw error;
   }
 };
