@@ -162,12 +162,13 @@ export const NewPropertyForm = () => {
         toast.error("Failed to upload images, contact admin immediately!");
         return;
       }
-      const propertyImages = images.map((img, index) => ({
-        indonesian_label: img.indonesian_label,
-        is_cover: img.is_cover,
-        english_label: img.english_label,
-        path: uploadedImages?.data?.[index].path,
+      const propertyImages = uploadedImages.data.map((img, index) => ({
+        indonesian_label: images[index].indonesian_label,
+        is_cover: images[index].is_cover,
+        english_label: images[index].english_label,
+        path: img.path,
       }));
+      console.log(propertyImages);
       setStore("loadingText", "Creating property...");
       propertyApiData.images = propertyImages as PropertyImage[];
       const property = await createProperty(propertyApiData);
