@@ -171,7 +171,8 @@ export const NewPropertyForm = () => {
       setStore("loadingText", "Creating property...");
       propertyApiData.images = propertyImages as PropertyImage[];
       const property = await createProperty(propertyApiData);
-      if (property.status !== 201) {
+      console.log(property);
+      if (!property.data?.id) {
         toast.error("Error: please check your input and try again");
         return;
       }
