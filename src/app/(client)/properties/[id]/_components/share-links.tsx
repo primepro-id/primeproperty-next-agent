@@ -22,7 +22,7 @@ type ShareLinksProps = {
 export const ShareLinks = ({ title, property, className }: ShareLinksProps) => {
   const whatsappUrl = useMemo(() => {
     const linkUrl = "https://api.whatsapp.com/send?text=";
-    const text = `*${property[0].title}*\nLokasi: ${property[0].street},${property[0].regency}\n${property[0].description}\n\nContact:\n${property[1].instagram ? `https://instagram.com/${property[1].instagram}` : ""}\nWhatsapp:\nwa.me/62${property[1].phone_number}\nLink:\n${env.NEXT_PUBLIC_HOST_URL}/properties/${property[0].id}`;
+    const text = `*${property[0].title}*\nLokasi: ${property[0].street},${property[0].regency}\n\nContact:\n${property[1].instagram ? `https://instagram.com/${property[1].instagram}` : ""}\nWhatsapp:\nwa.me/62${property[1].phone_number}\nLink:\n${env.NEXT_PUBLIC_HOST_URL}/properties/${property[0].id}`;
     return linkUrl + text;
   }, [property]);
   const pathname = usePathname();
