@@ -6,6 +6,7 @@ import { generateBlogSchema } from "../_lib/generate-blog-schema";
 import { BlogPost } from "./_components/blog-post";
 import { BlogRelated } from "./_components/blog-related";
 import { BlogRelatedProperties } from "./_components/blog-related-properties";
+import { Faq } from "../../properties/_components/faq";
 
 export const revalidate = 0;
 
@@ -47,6 +48,7 @@ const BlogSlug = async ({ params }: BlogSlugProps) => {
             <BlogPost article={article} />
             <BlogRelated slug={slug} allArticles={allArticles} />
           </div>
+          <Faq defaultTab="PROPERTY" />
           {article.showRelatedProperties && (
             <BlogRelatedProperties
               relatedProperties={article.relatedProperties}

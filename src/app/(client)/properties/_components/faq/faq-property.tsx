@@ -100,7 +100,7 @@ export const FAQ_PROPERTY = [
 
 export const FaqProperty = () => {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion className="w-full">
       {FAQ_PROPERTY.map((faq, index) => (
         <AccordionItem key={faq.question} value={faq.question}>
           <AccordionTrigger className="text-left gap-4 tracking-tight">

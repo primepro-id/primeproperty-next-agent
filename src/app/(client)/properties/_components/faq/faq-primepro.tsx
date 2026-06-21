@@ -53,7 +53,7 @@ const FaqOne = () => {
       <p className="text-muted-foreground">
         A. Informasi Titip Jual &amp; Sewa Di Primepro Indonesia
       </p>
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion className="w-full">
         {FAQ_ONE.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
             <AccordionTrigger className="text-left gap-4 tracking-tight ">
@@ -101,7 +101,7 @@ const FaqTwo = () => {
       <p className="text-muted-foreground">
         B. Informasi cari beli dan sewa Properti
       </p>
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion className="w-full">
         {FAQ_TWO.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
             <AccordionTrigger className="text-left gap-4 tracking-tight">
@@ -151,7 +151,7 @@ const FaqThree = () => {
       <p className="text-muted-foreground">
         C. Informasi tentang PrimePro Indonesia
       </p>
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion className="w-full">
         {FAQ_THREE.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
             <AccordionTrigger className="text-left gap-4 tracking-tight">

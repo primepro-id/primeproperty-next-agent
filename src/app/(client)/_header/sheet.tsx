@@ -52,7 +52,7 @@ const SheetMenu = ({ onClick }: SheetMenuProps) => {
   ];
   return (
     <div className="flex flex-col border-y border-primary ">
-      <Accordion type="multiple">
+      <Accordion>
         <AccordionItem value="property" className="border-b-0">
           <AccordionTrigger className="p-4">Properti</AccordionTrigger>
           <AccordionContent className="border-y">
