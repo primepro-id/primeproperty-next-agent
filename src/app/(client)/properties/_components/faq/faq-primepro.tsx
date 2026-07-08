@@ -122,8 +122,8 @@ export const FAQ_THREE = [
     question: "Jam berapa kantor PrimePro Indonesia beroperasional?",
     answer: (
       <>
-        <p>Senin – Jumat jam 09.00 – 17.00</p>
-        <p>Sabtu jam 09.00 – 13.00</p>
+        <p>Senin – Jumat jam 09.00 – 17.30</p>
+        <p>Sabtu jam 09.00 – 13.30</p>
       </>
     ),
   },
@@ -135,7 +135,7 @@ export const FAQ_THREE = [
   {
     question: "Apakah dapat datang langsung ke kantor PrimePro Indonesia?",
     answer:
-      "Lokasi kantor kami di Kemang Icon, Jl. Kemang Raya No. 1, Jakarta Selatan",
+      "Lokasi kantor kami di Jl Pakubuwono VI No. 35, Kebayoran Baru, Jakarta Selatan",
   },
   {
     question:
