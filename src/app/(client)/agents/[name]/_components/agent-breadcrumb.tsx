@@ -2,7 +2,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Agent } from "@/lib/api/properties/find-property-by-agent";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { LuArrowRight, LuChevronRight } from "react-icons/lu";
+import { LuChevronRight } from "react-icons/lu";
 
 export const AgentBreadcrumb = ({ agent }: { agent: Agent }) => {
   return (
