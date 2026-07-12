@@ -50,16 +50,16 @@ export const FAQ_ONE = [
 const FaqOne = () => {
   return (
     <div className="flex flex-col ">
-      <p className="text-muted-foreground">
-        A. Informasi Titip Jual &amp; Sewa Di Primepro Indonesia
+      <p className="font-semibold border-b">
+        A. Informasi Titip Jual &amp; Sewa di Primepro Indonesia
       </p>
       <Accordion className="w-full">
         {FAQ_ONE.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
-            <AccordionTrigger className="text-left gap-4 tracking-tight ">
+            <AccordionTrigger className="font-sans">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="leading-7">
+            <AccordionContent className="border-b">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>
@@ -98,16 +98,16 @@ export const FAQ_TWO = [
 const FaqTwo = () => {
   return (
     <div className="flex flex-col ">
-      <p className="text-muted-foreground">
-        B. Informasi cari beli dan sewa Properti
+      <p className="font-semibold border-b">
+        B. Informasi Beli dan Sewa Properti
       </p>
       <Accordion className="w-full">
         {FAQ_TWO.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
-            <AccordionTrigger className="text-left gap-4 tracking-tight">
+            <AccordionTrigger className="font-sans">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="leading-7">
+            <AccordionContent className="border-b">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>
@@ -148,16 +148,16 @@ export const FAQ_THREE = [
 const FaqThree = () => {
   return (
     <div className="flex flex-col ">
-      <p className="text-muted-foreground">
-        C. Informasi tentang PrimePro Indonesia
+      <p className="font-semibold border-b">
+        C. Informasi Tentang PrimePro Indonesia
       </p>
       <Accordion className="w-full">
         {FAQ_THREE.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
-            <AccordionTrigger className="text-left gap-4 tracking-tight">
+            <AccordionTrigger className="font-sans">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="leading-7">
+            <AccordionContent className="border-b">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>

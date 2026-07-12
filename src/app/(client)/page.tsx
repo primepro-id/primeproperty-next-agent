@@ -107,24 +107,19 @@ const Partners = () => {
 
 const VideoThumbnail = () => {
   return (
-    <div className="w-full py-16 px-4 sm:px-0">
-      <div className="flex flex-col gap-4 container mx-auto">
-        <div className="flex flex-col gap-2">
-          <h3 className="text-xl font-bold text-left lg:text-3xl">
-            Your Private Real Estate Partner
-          </h3>
-          <h4>Agen Properti berpengalaman dan terpercaya</h4>
-        </div>
-        <iframe
-          width="100%"
-          src="https://www.youtube.com/embed/ivN7BfhMv4g?si=zLm4yBwIrF7So1wM"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-          className="h-96 md:h-[400px] lg:h-[600px] rounded-lg"
-        />
-      </div>
+    <div className="flex flex-col gap-4 container mx-auto">
+      <h3 className="text-3xl font-bold text-center lg:text-left lg:text-3xl">
+        A Real Estate Company
+      </h3>
+      <iframe
+        width="100%"
+        src="https://www.youtube.com/embed/ivN7BfhMv4g?si=zLm4yBwIrF7So1wM"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+        className="h-96 md:h-[400px] lg:h-[600px] rounded"
+      />
     </div>
   );
 };
@@ -156,17 +151,15 @@ const Developers = async () => {
 
 const HomePage = () => {
   return (
-    <>
-      <div className="container mx-auto flex flex-col gap-8 px-4">
-        <Banner />
-        <Hero />
-        <PopularProperties />
-        <Partners />
-        <Developers />
-        <Faq defaultTab="PRIMEPRO" />
-        <VideoThumbnail />
-      </div>
-    </>
+    <div className="container mx-auto flex flex-col gap-12 px-4">
+      <Banner />
+      <Hero />
+      <PopularProperties />
+      <Partners />
+      <Developers />
+      <Faq defaultTab="PRIMEPRO" />
+      <VideoThumbnail />
+    </div>
   );
 };
 

@@ -11,7 +11,6 @@ import {
   LuYoutube,
   LuMail,
   LuPhone,
-  LuCopyright,
 } from "react-icons/lu";
 import { buttonVariants } from "@/components/ui/button";
 import { usePropertiesNavigation } from "@/hooks/properties/use-properties-navigation";
