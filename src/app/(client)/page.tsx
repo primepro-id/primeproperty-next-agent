@@ -65,8 +65,9 @@ const Hero = () => {
   );
 };
 
-const Partners = () => {
-  const PARTNERS = [
+const Partners = async () => {
+  const developers = await findManyDevelopers();
+  const BANKS = [
     "/images/banks/bca.png",
     "/images/banks/bni.png",
     "/images/banks/bri.png",
@@ -80,24 +81,31 @@ const Partners = () => {
     "/images/banks/maybank.png",
     "/images/banks/smbc.png",
   ];
+
   return (
     <div className="my-16 flex flex-col gap-4 lg:gap-8">
-      <div className="flex flex-col gap-2 text-center">
-        <h3 className="text-3xl font-bold ">Mitra Kami</h3>
-        <h4 className="text-muted-foreground text-base lg:text-lg">
-          Konsisten memberikan layanan terbaik, menjalin kemitraan dengan
-          perbankan untuk kemudahan transaksi Anda
-        </h4>
-      </div>
-      <div className="grid grid-cols-3 gap-2 md:grid-cols-4 lg:grid-cols-6 lg:gap-4">
-        {PARTNERS.map((part, index) => (
+      <h3 className="text-3xl font-bold text-center lg:text-left">
+        Our Partners
+      </h3>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+        {BANKS.map((bank, index) => (
           <Image
             key={`partner_${index}`}
-            src={part}
-            alt={part}
+            src={bank}
+            alt={bank}
             width={576}
             height={576}
-            className="w-full h-20 lg:h-40 border p-2 object-contain aspect-square rounded "
+            className="w-full  object-contain aspect-square rounded "
+          />
+        ))}
+        {developers?.data?.data.map((dev) => (
+          <Image
+            key={dev.name}
+            src={env.NEXT_PUBLIC_S3_ENDPOINT + dev.logo_path}
+            alt={dev.name}
+            width={576}
+            height={576}
+            className="w-full object-contain aspect-square rounded "
           />
         ))}
       </div>
@@ -124,31 +132,6 @@ const VideoThumbnail = () => {
   );
 };
 
-const Developers = async () => {
-  const developers = await findManyDevelopers();
-  if (developers.data && developers.data?.data.length > 0) {
-    return (
-      <div className="flex flex-col gap-4">
-        <h3 className="text-3xl font-bold ">Rekan Kami</h3>
-        <div className="grid grid-cols-3 lg:grid-cols-5 gap-4">
-          {developers.data.data.map((dev) => (
-            <Image
-              key={dev.name}
-              src={env.NEXT_PUBLIC_S3_ENDPOINT + dev.logo_path}
-              alt={dev.name}
-              width={576}
-              height={576}
-              className="w-full h-20 lg:h-40 border p-2 object-contain aspect-square rounded "
-            />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  return <></>;
-};
-
 const HomePage = () => {
   return (
     <div className="container mx-auto flex flex-col gap-12 px-4">
@@ -156,7 +139,6 @@ const HomePage = () => {
       <Hero />
       <PopularProperties />
       <Partners />
-      <Developers />
       <Faq defaultTab="PRIMEPRO" />
       <VideoThumbnail />
     </div>
