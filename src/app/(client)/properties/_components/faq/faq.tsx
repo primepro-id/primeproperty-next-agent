@@ -13,7 +13,6 @@ export const Faq = ({ defaultTab }: FaqProps) => {
     <>
       <FaqSchema />
       <section className="flex flex-col max-w-2xl gap-4 my-4" id="faq">
-        <div className="text-foreground font-sans">FAQ PRIMEPRO INDONESIA</div>
         <Tabs defaultValue={defaultTab} className="max-w-2xl">
           <TabsList className="rounded">
             <TabsTrigger
