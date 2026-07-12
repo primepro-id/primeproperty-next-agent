@@ -43,7 +43,9 @@ export const Latest = ({ articles }: LatestProps) => {
                 className="line-clamp-2 text-muted-foreground text-sm cursor-pointer hover:underline"
                 onClick={() => router.push(`/blog/${art.slug}`)}
                 dangerouslySetInnerHTML={{
-                  __html: art.content,
+                  __html: art.content
+                    .replaceAll("<h1>", "<p>")
+                    .replaceAll("</h1>", "</p>"),
                 }}
               />
             </div>

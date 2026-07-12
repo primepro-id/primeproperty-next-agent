@@ -15,7 +15,7 @@ const generateDynamicPropertySitemaps = async () => {
       return {
         url:
           env.NEXT_PUBLIC_HOST_URL +
-          `/properties/${property[0].id}-${property[0].title.replaceAll("&", "").replaceAll(" ", "-")}`,
+          `/properties/${property[0].id}-${property[0].title.replaceAll("&", "").replaceAll(" ", "-").replaceAll("/", "")}`,
         lastModified: new Date(property[0].updated_at),
       };
     }) as MetadataRoute.Sitemap;

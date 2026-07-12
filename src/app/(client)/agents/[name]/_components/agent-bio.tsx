@@ -24,7 +24,7 @@ export const AgentBio = ({
     return {};
   }, [propertiesWithAgent]);
   return (
-    <div className="gap-4 flex flex-col sm:flex-row border p-4 rounded w-fit items-center">
+    <div className="gap-4 flex flex-col sm:flex-row border p-4 rounded w-full lg:w-fit items-center">
       {agent.profile_picture_url ? (
         <Image
           alt={agent.fullname}

@@ -109,7 +109,7 @@ export const PropertyCard = ({
       <Link
         title={propertyWithAgent[0].title}
         aria-label={propertyWithAgent[0].title}
-        href={`/properties/${propertyWithAgent[0].id}-${propertyWithAgent[0].title.replaceAll(" ", "-")}`}
+        href={`/properties/${propertyWithAgent[0].id}-${propertyWithAgent[0].title.replaceAll(" ", "-").replaceAll("/", "")}`}
         className="relative group flex flex-col gap-2"
       >
         {propertyWithAgent[2] ? (

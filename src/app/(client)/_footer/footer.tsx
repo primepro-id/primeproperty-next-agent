@@ -11,55 +11,20 @@ import {
   LuYoutube,
   LuMail,
   LuPhone,
-  LuCopyright,
 } from "react-icons/lu";
 import { buttonVariants } from "@/components/ui/button";
 import { usePropertiesNavigation } from "@/hooks/properties/use-properties-navigation";
 import { PurchaseStatus } from "@/lib/enums/purchase-status";
 import { cn, toSlug } from "@/lib/utils";
 import { PropertyNavigation } from "@/lib/api/properties/find-property-navigation";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Organization = () => {
   return (
-    <div id="organization" className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Image
-          src="/images/primepro.png"
-          alt="PrimePro Indonesia"
-          width={25}
-          height={25}
-          id="logo"
-        />
-        <h6 className="text-lg font-semibold">PRIMEPRO INDONESIA</h6>
-      </div>
-
-      <div className="flex items-center gap-4">
-        <Link
-          href="https://www.facebook.com/share/1BHTU7HvZx/"
-          className={buttonVariants({ size: "icon", variant: "outline" })}
-        >
-          <LuFacebook />
-        </Link>
-        <Link
-          href="https://www.instagram.com/primepro_id/"
-          className={buttonVariants({ size: "icon", variant: "outline" })}
-        >
-          <LuInstagram />
-        </Link>
-        <Link
-          href="https://www.linkedin.com/company/primepro-indonesia/"
-          className={buttonVariants({ size: "icon", variant: "outline" })}
-        >
-          <LuLinkedin />
-        </Link>
-        <Link
-          href="https://www.youtube.com/@primeproindonesia"
-          className={buttonVariants({ size: "icon", variant: "outline" })}
-        >
-          <LuYoutube />
-        </Link>
-      </div>
-
+    <div
+      id="organization"
+      className="flex flex-col md:flex-row gap-4 md:gap-12"
+    >
       <div className="flex items-center gap-4">
         <LuMail />
         <p>primeproagent@gmail.com</p>
@@ -72,11 +37,62 @@ const Organization = () => {
         <div className="pt-1">
           <MdOutlineLocationOn />
         </div>
-        <div>
+        <div className="lg:flex gap-1">
           <p>Jl Pakubuwono VI No. 35,</p>
           <p>Kebayoran Baru,</p>
           <p>Jakarta Selatan, 12120</p>
         </div>
+      </div>
+    </div>
+  );
+};
+
+const SocialMedia = () => {
+  const SOCIALS = [
+    {
+      title: "Facebook Primepro Indonesia",
+      href: "https://www.facebook.com/share/1BHTU7HvZx/",
+      icon: <LuFacebook />,
+    },
+    {
+      title: "Instagram Primepro Indonesia",
+      href: "https://www.instagram.com/primepro_id/",
+      icon: <LuInstagram />,
+    },
+    {
+      title: "Linkedin Primepro Indonesia",
+      href: "https://www.linkedin.com/company/primepro-indonesia/",
+      icon: <LuLinkedin />,
+    },
+    {
+      title: "Youtube Primepro Indonesia",
+      href: "https://www.youtube.com/@primeproindonesia",
+      icon: <LuYoutube />,
+    },
+  ];
+  return (
+    <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+      <div className="flex items-center gap-2">
+        <Image
+          src="/images/primepro.png"
+          alt="PrimePro Indonesia"
+          width={25}
+          height={25}
+          id="logo"
+        />
+        <p className="text-xl font-bold">PRIMEPRO INDONESIA</p>
+      </div>
+      <div className="flex items-center gap-4">
+        {SOCIALS.map((soc) => (
+          <Link
+            key={soc.title}
+            title={soc.title}
+            href={soc.href}
+            className={cn(buttonVariants({ size: "icon" }))}
+          >
+            {soc.icon}
+          </Link>
+        ))}
       </div>
     </div>
   );
@@ -123,55 +139,54 @@ const ForSaleList = ({ navigations }: ForSaleListProps) => {
       ]),
   );
   return (
-    <div className="grid md:grid-cols-2 2xl:grid-cols-4 gap-4 ">
-      <ul className="flex flex-col">
+    <div className="flex gap-16 h-fit overflow-y-hidden overflow-x-auto">
+      <div className="flex flex-col">
         {Array.from(forSaleBuildingTypes.values()).map((b) => (
-          <li key={b.value} className="list-disc list-inside">
-            <Link
-              title={`${b.label} Dijual`}
-              href={`/properties/filter${b.value}`}
-              className={cn(
-                buttonVariants({ variant: "link" }),
-                "justify-start capitalize text-base px-0",
-              )}
-            >
-              {b.label} Dijual
-            </Link>
-          </li>
+          <Link
+            key={b.label}
+            title={b.label}
+            href={`/properties/filter${b.value}`}
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "justify-start capitalize text-sm px-0 font-sans ",
+            )}
+          >
+            {b.label}
+          </Link>
         ))}
-      </ul>
-      <ul className="flex flex-col">
+      </div>
+      <div className="flex flex-col ">
         {Array.from(forSaleHomeRegency.values()).map((b) => (
-          <li key={b.value} className="list-disc list-inside">
-            <Link
-              title={`Rumah Dijual di ${b.label}`}
-              href={`/properties/filter${b.value}`}
-              className={cn(
-                buttonVariants({ variant: "link" }),
-                "justify-start capitalize text-base px-0",
-              )}
-            >
-              Rumah Dijual {b.label}
-            </Link>
-          </li>
+          <Link
+            key={b.label}
+            title={`Rumah dijual ${b.label}`}
+            href={`/properties/filter${b.value}`}
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "justify-start text-sm px-0 font-sans gap-1",
+            )}
+          >
+            Rumah dijual
+            <span className="capitalize ">{b.label}</span>
+          </Link>
         ))}
-      </ul>
-      <ul className="flex flex-col md:col-span-2 md:grid-cols-2 md:grid ">
+      </div>
+      <div className="flex flex-col flex-wrap max-h-[500px] gap-x-16">
         {Array.from(forSaleHomeStreet.values()).map((b) => (
-          <li key={b.value} className="list-disc list-inside">
-            <Link
-              title={`Rumah Dijual di ${b.label}`}
-              href={`/properties/filter${b.value}`}
-              className={cn(
-                buttonVariants({ variant: "link" }),
-                "justify-start capitalize text-base px-0",
-              )}
-            >
-              Rumah Dijual {b.label}
-            </Link>
-          </li>
+          <Link
+            key={b.label}
+            title={`Rumah dijual ${b.label}`}
+            href={`/properties/filter${b.value}`}
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "justify-start text-sm px-0 font-sans gap-1",
+            )}
+          >
+            Rumah dijual
+            <span className="capitalize ">{b.label}</span>
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
@@ -213,56 +228,53 @@ const ForRentList = ({ navigations }: ForSaleListProps) => {
       ]),
   );
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 ">
-      <ul className="flex flex-col">
+    <div className="flex gap-16 h-fit overflow-y-hidden overflow-x-auto">
+      <div className="flex flex-col">
         {Array.from(forRentBuildingTypes.values()).map((b) => (
-          <li key={b.value} className="list-disc list-inside">
-            <Link
-              title={`${b.label} Disewa`}
-              href={`/properties/filter${b.value}`}
-              className={cn(
-                buttonVariants({ variant: "link" }),
-                "justify-start capitalize text-base px-0",
-              )}
-            >
-              {b.label} Disewa
-            </Link>
-          </li>
+          <Link
+            key={b.label}
+            title={b.label}
+            href={`/properties/filter${b.value}`}
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "justify-start capitalize text-sm px-0 font-sans ",
+            )}
+          >
+            {b.label}
+          </Link>
         ))}
-      </ul>
-      <ul className="flex flex-col ">
+      </div>
+      <div className="flex flex-col flex-wrap max-h-72 gap-x-16">
         {Array.from(forRentHomeStreet.values()).map((b) => (
-          <li key={b.value} className="list-disc list-inside">
-            <Link
-              title={`Rumah Disewa di ${b.label}`}
-              href={`/properties/filter${b.value}`}
-              className={cn(
-                buttonVariants({ variant: "link" }),
-                "justify-start capitalize text-base px-0",
-              )}
-            >
-              Rumah Disewa {b.label}
-            </Link>
-          </li>
+          <Link
+            key={b.label}
+            title={`Rumah disewa ${b.label}`}
+            href={`/properties/filter${b.value}`}
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "justify-start text-sm px-0 font-sans gap-1",
+            )}
+          >
+            Rumah disewa
+            <span className="capitalize ">{b.label}</span>
+          </Link>
         ))}
-      </ul>
-      <ul className="flex flex-col ">
+
         {Array.from(forRentApartmentStreet.values()).map((b) => (
-          <li key={b.value} className="list-disc list-inside">
-            <Link
-              title={`Apartemen Disewa di ${b.label}`}
-              href={`/properties/filter${b.value}`}
-              className={cn(
-                buttonVariants({ variant: "link" }),
-                "justify-start capitalize text-base px-0",
-              )}
-            >
-              Apartemen Disewa {b.label}
-            </Link>
-          </li>
+          <Link
+            key={b.label}
+            title={`Apartemen disewa ${b.label}`}
+            href={`/properties/filter${b.value}`}
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "justify-start text-sm px-0 font-sans gap-1",
+            )}
+          >
+            Apartemen disewa
+            <span className="capitalize ">{b.label}</span>
+          </Link>
         ))}
-      </ul>
-      <Organization />
+      </div>
     </div>
   );
 };
@@ -278,20 +290,22 @@ const FooterNavigation = () => {
   );
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-4 w-full lg:flex-1">
-        <h3 className="text-xl font-semibold">
-          Properti Dijual PrimePro Indonesia
-        </h3>
+    <Tabs defaultValue="dijual">
+      <TabsList>
+        <TabsTrigger value="dijual" className="text-base">
+          Properti Dijual
+        </TabsTrigger>
+        <TabsTrigger value="disewa" className="text-base">
+          Properti Disewa
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="dijual" className="border-y border-primary px-4 mt-0">
         <ForSaleList navigations={forSaleNav} />
-      </div>
-      <div className="flex flex-col gap-4 w-full lg:flex-1">
-        <h3 className="text-xl font-semibold">
-          Properti Disewa PrimePro Indonesia
-        </h3>
+      </TabsContent>
+      <TabsContent value="disewa" className="border-y border-primary px-4 mt-0">
         <ForRentList navigations={forRentNav} />
-      </div>
-    </div>
+      </TabsContent>
+    </Tabs>
   );
 };
 
@@ -306,15 +320,11 @@ export const Footer = () => {
           __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
         }}
       />
-      <div className="border-t border-t-primary mt-12">
-        <footer className="container mx-auto p-4 flex flex-col gap-8">
+      <div className="mt-16 bg-secondary border-t-2 border-t-primary">
+        <footer className="container mx-auto p-4 flex flex-col gap-4">
+          <SocialMedia />
           <FooterNavigation />
-          <div className="flex items-center lg:justify-center gap-4 text-muted-foreground ">
-            <LuCopyright />
-            <span className="text-xs ">
-              PrimePro Indonesia {new Date().getFullYear()}
-            </span>
-          </div>
+          <Organization />
         </footer>
       </div>
     </>

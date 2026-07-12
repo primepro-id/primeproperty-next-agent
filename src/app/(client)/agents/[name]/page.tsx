@@ -1,5 +1,5 @@
 import { findPropertyByAgent } from "@/lib/api/properties/find-property-by-agent";
-import { AgentBio } from "./_components";
+import { AgentBio, AgentBreadcrumb } from "./_components";
 import { redirect } from "next/navigation";
 import { PropertyList } from "../../properties/_components/list";
 import { createAgentMetadata } from "./_lib/create-agent-metadata";
@@ -22,6 +22,7 @@ export default async function AgentPage({ params }: AgentPageProps) {
   }
   return (
     <div className="flex flex-col gap-8 container mx-auto p-4">
+      <AgentBreadcrumb agent={agentWithProperties.data.agent} />
       <AgentBio
         agent={agentWithProperties.data?.agent}
         propertiesWithAgent={agentWithProperties.data.properties}

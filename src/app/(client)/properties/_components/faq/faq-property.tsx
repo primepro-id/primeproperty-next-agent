@@ -103,12 +103,10 @@ export const FaqProperty = () => {
     <Accordion className="w-full">
       {FAQ_PROPERTY.map((faq, index) => (
         <AccordionItem key={faq.question} value={faq.question}>
-          <AccordionTrigger className="text-left gap-4 tracking-tight">
+          <AccordionTrigger className="font-sans">
             {index + 1} {faq.question}
           </AccordionTrigger>
-          <AccordionContent className="leading-7">
-            {faq.answer}
-          </AccordionContent>
+          <AccordionContent className="border-b">{faq.answer}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

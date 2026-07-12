@@ -22,8 +22,8 @@ export const createOrganizationSchema = () => {
     url: env.NEXT_PUBLIC_HOST_URL,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Jl. Kemang Raya No.1",
-      addressLocality: "Kemang, Jakarta Selatan",
+      streetAddress: "Jl Pakubuwono VI No. 35",
+      addressLocality: "Kebayoran Baru, Jakarta Selatan",
       addressRegion: "DKI Jakarta",
       postalCode: "12730",
       addressCountry: {
