@@ -42,7 +42,7 @@ export const ImagesUpload = () => {
       const newUploadedImages: PropertyImage[] = limitedFiles.map(
         (file, index) => {
           return {
-            is_cover: images.length === 0 && index === 0,
+            is_cover: index === 0,
             object_url: URL.createObjectURL(file),
             name: file.name,
             path: "",
