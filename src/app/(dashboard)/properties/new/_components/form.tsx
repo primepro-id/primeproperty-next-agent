@@ -179,7 +179,7 @@ export const NewPropertyForm = () => {
         indonesian_label: images[index].indonesian_label,
         is_cover: images[index].is_cover,
         english_label: images[index].english_label,
-        path: img.path,
+        path: img?.path ?? "",
       }));
       setStore("loadingText", "Creating property...");
       propertyApiData.images = propertyImages as PropertyImage[];
