@@ -5,6 +5,7 @@ import { env } from "@/lib/env";
 
 export const uploadS3Images = async (
   files: File[] | null,
+  token?: string,
 ): Promise<JsonApiResponse<PropertyImage[]> | undefined> => {
   if (!files) {
     return undefined;
@@ -17,7 +18,7 @@ export const uploadS3Images = async (
   try {
     const res = await fetch(env.NEXT_PUBLIC_API_URL + `/s3/images`, {
       headers: {
-        "x-access-token": await getAccessToken(),
+        "x-access-token": token ?? (await getAccessToken()),
       },
       method: "POST",
       body: formData,
