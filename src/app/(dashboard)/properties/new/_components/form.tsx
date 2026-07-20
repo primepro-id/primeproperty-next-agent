@@ -43,6 +43,8 @@ import { AgentRole } from "@/lib/api/agents/type";
 import { updatePropertyConfigurations } from "@/lib/api/properties/update-property-configurations";
 import { uploadS3Images } from "@/lib/api/s3/upload-s3-image";
 import { PropertyImage } from "@/lib/enums/property-image";
+import { getAccessToken } from "@/lib/cookie/get-access-token";
+import { useRouter } from "next/navigation";
 
 const SeoForm = () => {
   return (
@@ -102,6 +104,13 @@ const DetailForm = () => {
 
 export const NewPropertyForm = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const accessToken = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => {
+      return await getAccessToken();
+    },
+  });
   const { facilities, images, setStore, loadingText } = useStore(
     useShallow((state) => ({
       facilities: state.selectedFacilities,
@@ -157,7 +166,11 @@ export const NewPropertyForm = () => {
           });
         }),
       );
-      const uploadedImages = await uploadS3Images(imageFiles);
+      const uploadedImages = await uploadS3Images(
+        imageFiles,
+        accessToken?.data,
+      );
+      console.log(uploadedImages);
       if (!uploadedImages?.data || uploadedImages?.data.length === 0) {
         toast.error("Failed to upload images, contact admin immediately!");
         return;
@@ -168,11 +181,9 @@ export const NewPropertyForm = () => {
         english_label: images[index].english_label,
         path: img.path,
       }));
-      console.log(propertyImages);
       setStore("loadingText", "Creating property...");
       propertyApiData.images = propertyImages as PropertyImage[];
       const property = await createProperty(propertyApiData);
-      console.log(property);
       if (!property.data?.id) {
         toast.error("Error: please check your input and try again");
         return;
@@ -192,6 +203,7 @@ export const NewPropertyForm = () => {
       });
       queryClient.invalidateQueries({ queryKey: ["properties"] });
       toast.success("Property created successfully, refreshing...");
+      router.refresh();
       setTimeout(() => {
         window.location.reload();
       }, 2000);
