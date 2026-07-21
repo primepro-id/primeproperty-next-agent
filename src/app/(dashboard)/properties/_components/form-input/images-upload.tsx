@@ -39,10 +39,11 @@ export const ImagesUpload = () => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
       const limitedFiles = files.slice(0, 8 - images.length);
+      const oldCover = images.find((img) => img.is_cover);
       const newUploadedImages: PropertyImage[] = limitedFiles.map(
         (file, index) => {
           return {
-            is_cover: index === 0,
+            is_cover: !oldCover && index === 0,
             object_url: URL.createObjectURL(file),
             name: file.name,
             path: "",
