@@ -31,3 +31,5 @@ Sitemap: https://primeproindonesia.com/properties/sitemap.xml
 Sitemap: https://primeproindonesia.com/properties/filter/sitemap.xml
 Sitemap: https://primeproindonesia.com/agents/sitemap.xml
 Sitemap: https://primeproindonesia.com/blog/sitemap.xml
+Sitemap: https://primeproindonesia.com/blog/rss.xml
+Sitemap: https://primeproindonesia.com/properties/rss.xml

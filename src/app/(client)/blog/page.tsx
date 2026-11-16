@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { createMetadata } from "@/lib/metadata";
+import { BLOG_FEED } from "@/lib/rss/feed";
 import { generateBlogHomeSchema } from "./_lib/generate-blog-home-schema";
 import { Suspense } from "react";
 import Loading from "@/app/(client)/loading";
@@ -14,6 +15,7 @@ export const metadata: Metadata = createMetadata({
   title,
   description,
   path: "/blog",
+  rssTitle: BLOG_FEED.title,
 });
 
 const Blog = () => {
@@ -48,6 +50,9 @@ const Blog = () => {
               Temukan tips dan trik properti terkini seputar properti dan ulasan
               mengenai rumah hingga gaya hidup dari PrimePro Indonesia
             </h2>
+            <a className="w-fit underline" href="/blog/rss.xml">
+              RSS
+            </a>
           </div>
         </div>
         <Suspense fallback={<Loading />}>

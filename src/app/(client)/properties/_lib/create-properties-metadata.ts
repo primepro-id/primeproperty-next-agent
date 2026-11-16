@@ -5,6 +5,7 @@ import {
   normalizeSeoText,
 } from "@/lib/metadata/seo-domain";
 import { PropertyPurchaseStatus } from "@/lib/types";
+import { PROPERTY_FEED } from "@/lib/rss/feed";
 import { toTitleCase } from "@/lib/to-title-case";
 import type { Metadata } from "next";
 
@@ -62,6 +63,7 @@ export async function generatePropertiesMetadata(
     title: generateTitle(searchParams),
     description: generateDescription(searchParams),
     path: "/properties",
+    rssTitle: PROPERTY_FEED.title,
     index: !hasPropertyQuery(searchParams),
   });
 }
