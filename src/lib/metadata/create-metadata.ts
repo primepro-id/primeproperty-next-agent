@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { env } from "../env";
+import { RSS_CONTENT_TYPE } from "../rss/feed";
 import { createSeoMetadataFields } from "./seo-domain";
 
 type MetadataParams = {
@@ -8,6 +9,7 @@ type MetadataParams = {
   path: string;
   image?: string;
   index?: boolean;
+  rssTitle?: string;
 };
 
 export const createMetadata = ({
@@ -16,8 +18,9 @@ export const createMetadata = ({
   path,
   image = `${env.NEXT_PUBLIC_HOST_URL}/images/primepro.png`,
   index = true,
+  rssTitle,
 }: MetadataParams): Metadata => {
-  return createSeoMetadataFields({
+  const metadata = createSeoMetadataFields({
     hostUrl: env.NEXT_PUBLIC_HOST_URL,
     title,
     description,
@@ -25,4 +28,17 @@ export const createMetadata = ({
     image,
     index,
   });
+  if (!rssTitle) return metadata;
+
+  return {
+    ...metadata,
+    alternates: {
+      ...metadata.alternates,
+      types: {
+        [RSS_CONTENT_TYPE]: [
+          { url: `${metadata.alternates.canonical}/rss.xml`, title: rssTitle },
+        ],
+      },
+    },
+  };
 };
